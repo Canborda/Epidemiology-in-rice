@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           localStorage.setItem('access_token', res.access_token);
           alert('Autenticación exitosa. Bienvenido!');
-          this._router.navigate([ROUTES.dashboard.home]);
+          // this._router.navigate([ROUTES.dashboard.home]); //TODO add redirection
         },
         error: (err) => {
           alert('Error en autenticación');
