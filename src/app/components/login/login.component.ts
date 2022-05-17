@@ -32,10 +32,11 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           localStorage.setItem('access_token', res.access_token);
           alert('Autenticación exitosa. Bienvenido!');
-          // this._router.navigate([ROUTES.dashboard.home]); //TODO add redirection
+          this._router.navigate(['/dashboard']);
         },
         error: (err) => {
           alert('Error en autenticación');
+          this._router.navigate(['/dashboard']); //FIXME remove redirection on error
         },
       });
     }
