@@ -1,17 +1,32 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+// Own components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { MapComponent } from './components/map/map.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { MapComponent } from './components/map/map.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, MapComponent, DashboardComponent],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    DashboardComponent,
+    SidebarComponent,
+    MapComponent,
+    ChartComponent,
+  ],
+  imports: [
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
