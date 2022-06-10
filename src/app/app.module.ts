@@ -8,14 +8,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Own components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { MapComponent } from './components/map/map.component';
 import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MapComponent,
     ChartComponent,
   ],
   imports: [
