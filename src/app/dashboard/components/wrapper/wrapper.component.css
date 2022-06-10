@@ -8,10 +8,13 @@ mat-sidenav-container {
 }
 
 .div_map {
+    min-height: 500px;
     background-color: green;
     padding: 10px;
 }
 
 .div_chart{
+    min-height: 500px;
     background-color: blue;
+    padding: 10px;
 }
