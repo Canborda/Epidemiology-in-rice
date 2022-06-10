@@ -1,5 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
-import * as L from 'leaflet';
+
+import * as Leaflet from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -13,12 +14,12 @@ export class MapComponent implements AfterViewInit {
 
   private initMap(): void {
     // Create leaflet map
-    this.map = L.map('map', {
+    this.map = Leaflet.map('map', {
       center: [4.711, -74.0721],
       zoom: 12,
     });
     // Add openStreetMap layer to map
-    const tiles = L.tileLayer(
+    const tiles = Leaflet.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
         maxZoom: 18,
