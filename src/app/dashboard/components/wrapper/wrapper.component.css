@@ -1,3 +1,17 @@
 mat-sidenav-container {
     height: 100%;
 }
+
+.user-config {
+    position: absolute;
+    bottom: 0;
+}
+
+.div_map {
+    background-color: green;
+    padding: 10px;
+}
+
+.div_chart{
+    background-color: blue;
+}

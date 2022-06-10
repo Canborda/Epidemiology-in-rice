@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wrapper.component.css']
 })
 export class WrapperComponent implements OnInit {
+  isExpanded: boolean = false;
+  userName: string = 'Camilo Borda';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
