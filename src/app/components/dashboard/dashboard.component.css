@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+}
+
+header {
+    background-color: gray;
+}
+
+.div_sidebar {
+    background-color: red;
+}
+
+.div_map {
+    background-color: green;
+    padding: 10px;
+}
+
+
+.div_chart{
+    background-color: blue;
+}
