@@ -1,6 +1,14 @@
 {
-  "name": "epidemiology-in-rice",
+  "name": "epidemiology-in-rice-frontend",
   "version": "0.0.0",
+  "description": "Angular based microservice to render the GUI for the Epidemiology in Rice web application",
+  "author": {
+    "name": "Camilo Andres Borda Gil",
+    "email": "caabordagi@unal.edu.co"
+  },
+  "repository": {
+    "url": "https://github.com/Canborda/Epidemiology-in-rice-frontend"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
