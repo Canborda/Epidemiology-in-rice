@@ -1,1 +1,51 @@
-<p>signup works!</p>
+<form class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Registrarse</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Email -->
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Ingrese Email</mat-label>
+        <input matInput placeholder="test@example.com" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <br> <br>
+      <!-- Password -->
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Ingrese contraseña</mat-label>
+        <input matInput #input [type]="hide ? 'password' : 'text'" [formControl]="password" required minlength="6">
+        <mat-hint>{{input.value?.length || 0}}/6</mat-hint>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <br> <br>
+      <!-- Name -->
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Nombre y Apellido</mat-label>
+        <input matInput placeholder="John Doe" [formControl]="name" required>
+        <mat-error *ngIf="name.invalid">{{getNameErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <br> <br>
+      <!-- Country -->
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Departamento</mat-label>
+        <input type="text" placeholder="Seleccione" aria-label="Departamento" matInput [formControl]="region"
+          [matAutocomplete]="auto" required>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="region.invalid">{{getRegionErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <br>
+    </mat-card-content>
+    <mat-card-actions>
+      <button (click)="send()" mat-raised-button color="primary">Enviar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
