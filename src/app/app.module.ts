@@ -7,10 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Own components
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     AppRoutingModule,
     HttpClientModule,
