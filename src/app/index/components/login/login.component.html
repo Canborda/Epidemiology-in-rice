@@ -23,9 +23,10 @@
         <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
       </mat-form-field>
       <br>
+      <mat-card-actions>
+        <button (click)="send()" mat-raised-button color="primary">Enviar</button>
+      </mat-card-actions>
+      <a routerLink="/home/signup">No tengo una cuenta, registrarme.</a>
     </mat-card-content>
-    <mat-card-actions>
-      <button (click)="send()" mat-raised-button color="primary">Enviar</button>
-    </mat-card-actions>
   </mat-card>
 </form>
