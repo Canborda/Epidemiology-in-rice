@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -16,16 +16,16 @@ export class SignupComponent implements OnInit {
   hide = true;
 
   // Form variables
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [
+  email = new UntypedFormControl('', [Validators.required, Validators.email]);
+  password = new UntypedFormControl('', [
     Validators.required,
     Validators.minLength(6),
   ]);
-  name = new FormControl('', [
+  name = new UntypedFormControl('', [
     Validators.required,
     Validators.pattern(/^[A-zÀ-ú ]{2,30}$/),
   ]);
-  region = new FormControl('', [Validators.required]);
+  region = new UntypedFormControl('', [Validators.required]);
   options: string[] = [
     'Amazonas',
     'Antioquia',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 
 import { UserService } from 'src/app/services/user.service';
 import { AuthI, LoginI } from 'src/app/models/user.model';
@@ -14,8 +14,8 @@ export class LoginComponent {
   hide = true;
 
   // Form variables
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [
+  email = new UntypedFormControl('', [Validators.required, Validators.email]);
+  password = new UntypedFormControl('', [
     Validators.required,
     Validators.minLength(6),
   ]);
