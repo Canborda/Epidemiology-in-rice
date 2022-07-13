@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
 import { SignupI } from 'src/app/models/user.model';
-import { ApiErrorI, ApiSuccessI } from 'src/app/models/api.model';
+import { ApiErrorI, ApiUserSuccessI } from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-signup',
@@ -86,7 +86,7 @@ export class SignupComponent implements OnInit {
         region: this.region.value,
       };
       this.userService.signup(data).subscribe({
-        next: (v: ApiSuccessI) => {
+        next: (v: ApiUserSuccessI) => {
           this.toastr.success(v.message, 'SUCCESS');
           this.router.navigate(['home/login']);
         },

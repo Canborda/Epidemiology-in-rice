@@ -1,6 +1,7 @@
 export const ROUTES = {
   users: {
-    signup: '/users/signup',
-    login: '/users/login',
+    BASE: '/api/v1/users',
+    signup: '/api/v1/users/signup',
+    login: '/api/v1/users/login',
   },
 };

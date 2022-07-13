@@ -1,5 +1,7 @@
-export interface ApiSuccessI {
-  data: object;
+import { SignupI } from './user.model';
+
+export interface ApiUserSuccessI {
+  data: SignupI;
   message: string;
 }
 
