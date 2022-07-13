@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
 import { AuthI, LoginI, SignupI } from '../models/user.model';
+import { ApiSuccessI } from '../models/api.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -18,7 +19,10 @@ export class UserService {
     return this.http.post<AuthI>(this.baseUrl + ROUTES.users.login, data);
   }
 
-  signup(data: SignupI): Observable<unknown> {
-    return this.http.post<SignupI>(this.baseUrl + ROUTES.users.signup, data);
+  signup(data: SignupI): Observable<ApiSuccessI> {
+    return this.http.post<ApiSuccessI>(
+      this.baseUrl + ROUTES.users.signup,
+      data
+    );
   }
 }

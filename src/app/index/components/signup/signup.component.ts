@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
 import { SignupI } from 'src/app/models/user.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ApiErrorI, ApiSuccessI } from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-signup',
@@ -63,7 +65,10 @@ export class SignupComponent implements OnInit {
   ];
   filteredOptions: Observable<string[]> | undefined;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private toastr: ToastrService
+  ) {}
 
   onSubmit() {
     if (
@@ -79,14 +84,13 @@ export class SignupComponent implements OnInit {
         region: this.region.value,
       };
       this.userService.signup(data).subscribe({
-        next: (v) => {
-          console.log('SUCCESS');
-          console.log(v);
+        next: (v: ApiSuccessI) => {
+          this.toastr.success(v.message, 'SUCCESS');
           // TODO Redirect to login
         },
         error: (e: HttpErrorResponse) => {
-          console.log('ERROR');
-          console.log(e.error);
+          const error: ApiErrorI = e.error;
+          this.toastr.error(error.message, 'ERROR');
         },
       });
     }

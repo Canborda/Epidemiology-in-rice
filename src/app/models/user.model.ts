@@ -16,8 +16,3 @@ export interface AuthI {
   expires_in: string;
   scope: string;
 }
-
-export interface ResultI {
-  success: boolean;
-  message: string;
-}

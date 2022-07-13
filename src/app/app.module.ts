@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Own components
 import { AppComponent } from './app.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,8 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
+    // Custom modules
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

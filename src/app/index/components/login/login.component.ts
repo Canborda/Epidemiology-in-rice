@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
 import { AuthI, LoginI } from 'src/app/models/user.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ApiErrorI } from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,10 @@ export class LoginComponent {
     Validators.minLength(6),
   ]);
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private toastr: ToastrService
+  ) {}
 
   onSubmit() {
     if (!this.getEmailErrorMessage() && !this.getPasswordErrorMessage()) {
@@ -30,12 +35,12 @@ export class LoginComponent {
       };
       this.userService.login(data).subscribe({
         next: (v: AuthI) => {
-          console.log('SUCCESS');
-          console.log(v);
+          this.toastr.success('Iniciando sesión', 'SUCCESS');
+          // TODO Redirect to dashboard
         },
         error: (e: HttpErrorResponse) => {
-          console.log('ERROR');
-          console.log(e.error);
+          const error: ApiErrorI = e.error;
+          this.toastr.error(error.message, 'ERROR');
         },
       });
     }
