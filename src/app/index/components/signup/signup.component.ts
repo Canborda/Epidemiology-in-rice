@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -66,6 +67,7 @@ export class SignupComponent implements OnInit {
   filteredOptions: Observable<string[]> | undefined;
 
   constructor(
+    private router: Router,
     private userService: UserService,
     private toastr: ToastrService
   ) {}
@@ -86,7 +88,7 @@ export class SignupComponent implements OnInit {
       this.userService.signup(data).subscribe({
         next: (v: ApiSuccessI) => {
           this.toastr.success(v.message, 'SUCCESS');
-          // TODO Redirect to login
+          this.router.navigate(['home/login']);
         },
         error: (e: HttpErrorResponse) => {
           const error: ApiErrorI = e.error;

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
@@ -23,6 +24,7 @@ export class LoginComponent {
   ]);
 
   constructor(
+    private router: Router,
     private userService: UserService,
     private toastr: ToastrService
   ) {}
@@ -35,8 +37,9 @@ export class LoginComponent {
       };
       this.userService.login(data).subscribe({
         next: (v: AuthI) => {
-          this.toastr.success('Iniciando sesión', 'SUCCESS');
-          // TODO Redirect to dashboard
+          this.toastr.success('Bienvenido(a)', 'SUCCESS');
+          localStorage.setItem('access_token', v.access_token);
+          this.router.navigate(['dashboard']);
         },
         error: (e: HttpErrorResponse) => {
           const error: ApiErrorI = e.error;
