@@ -1,6 +1,6 @@
 export const ROUTES = {
-  user: {
-    register: '/user/register',
+  users: {
+    signup: '/users/signup',
     login: '/users/login',
   },
 };

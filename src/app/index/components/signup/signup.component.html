@@ -43,7 +43,7 @@
         <mat-error *ngIf="region.invalid">{{getRegionErrorMessage()}}</mat-error>
       </mat-form-field>
       <mat-card-actions>
-        <button (click)="send()" mat-raised-button color="primary">Enviar</button>
+        <button (click)="onSubmit()" mat-raised-button color="primary">Enviar</button>
       </mat-card-actions>
       <a routerLink="/home/login">Ya tengo una cuenta, iniciar sesión.</a>
     </mat-card-content>

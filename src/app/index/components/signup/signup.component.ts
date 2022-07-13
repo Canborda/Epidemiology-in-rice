@@ -3,6 +3,10 @@ import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
+import { UserService } from 'src/app/services/user.service';
+import { SignupI } from 'src/app/models/user.model';
+import { HttpErrorResponse } from '@angular/common/http';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -19,7 +23,7 @@ export class SignupComponent implements OnInit {
   ]);
   name = new FormControl('', [
     Validators.required,
-    Validators.pattern(/^[a-zA-Z ]{2,30}$/),
+    Validators.pattern(/^[A-zÀ-ú ]{2,30}$/),
   ]);
   region = new FormControl('', [Validators.required]);
   options: string[] = [
@@ -53,27 +57,37 @@ export class SignupComponent implements OnInit {
     'Santander',
     'Sucre',
     'Tolima',
-    'Valle',
+    'Valle del Cauca',
     'Vaupés',
     'Vichada',
   ];
   filteredOptions: Observable<string[]> | undefined;
 
-  send() {
-    console.log(this.getRegionErrorMessage());
-    
+  constructor(private userService: UserService) {}
+
+  onSubmit() {
     if (
       !this.getEmailErrorMessage() &&
       !this.getPasswordErrorMessage() &&
       !this.getNameErrorMessage() &&
       !this.getRegionErrorMessage()
     ) {
-      // TODO send request
-      console.log('Form data is:', {
+      const data: SignupI = {
         email: this.email.value,
         password: this.password.value,
         name: this.name.value,
         region: this.region.value,
+      };
+      this.userService.signup(data).subscribe({
+        next: (v) => {
+          console.log('SUCCESS');
+          console.log(v);
+          // TODO Redirect to login
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log('ERROR');
+          console.log(e.error);
+        },
       });
     }
   }
