@@ -1,0 +1,25 @@
+<section id="background-radial-gradient" class="overflow-hidden">
+  <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+    <br /><br />
+    <div class="row gx-lg-5 align-items-center mb-5">
+      <div class="imgAux col-sm-6 px-0 d-none d-sm-block">
+        <img *ngIf="router.isActive('/home/login', true)" src="../../../../assets/img//rice_2.jpg" alt="Rice fields"
+          class="w-100 vh-90" style="object-fit: cover; object-position: left" />
+        <img *ngIf="router.isActive('/home/signup', true)" src="../../../../assets/img//rice.jpg" alt="Rice fields"
+          class="w-100 vh-90" style="object-fit: cover; object-position: left" />
+      </div>
+      <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+        <div id="radius-shape" class="position-absolute shadow-5-strong"></div>
+        <div class="card">
+          <div class="card-body px-4 py-5 px-md-5">
+            <img class="imgLogoUnal" src="../../../../assets/img/unal_logo.png" alt="Logo Unal" />
+            <br /><br /><br />
+            <!-- Component by route -->
+            <app-login *ngIf="router.isActive('/home/login', true)"></app-login>
+            <app-signup *ngIf="router.isActive('/home/signup', true)"></app-signup>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
