@@ -1,6 +1,8 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, Input } from '@angular/core';
 
 import * as Leaflet from 'leaflet';
+
+import { MapI } from 'src/app/models/map.model';
 
 @Component({
   selector: 'app-map',
@@ -8,13 +10,14 @@ import * as Leaflet from 'leaflet';
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements AfterViewInit {
-  private map: any;
+  private LEAFLET_MAP: Leaflet.Map | undefined;
+  @Input() currentMap: MapI | undefined;
 
   constructor() {}
 
   private initMap(): void {
     // Create leaflet map
-    this.map = Leaflet.map('map', {
+    this.LEAFLET_MAP = Leaflet.map('map', {
       center: [4.711, -74.0721],
       zoom: 12,
     });
@@ -28,10 +31,22 @@ export class MapComponent implements AfterViewInit {
           '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }
     );
-    tiles.addTo(this.map);
+    tiles.addTo(this.LEAFLET_MAP);
   }
 
   ngAfterViewInit(): void {
     this.initMap();
+  }
+
+  drawMap(map: MapI) {
+    // Clean previous map
+    //TODO this.LEAFLET_MAP?.removeLayer()
+    // Add polygon
+    const polygon = Leaflet.polygon(map.polygon as [number, number][], {
+      color: 'red',
+    }).addTo(this.LEAFLET_MAP as Leaflet.Map);
+    this.LEAFLET_MAP?.fitBounds(polygon.getBounds());
+
+    console.log(polygon);
   }
 }

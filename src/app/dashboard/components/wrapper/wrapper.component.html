@@ -27,7 +27,7 @@
             <div class="user-config">
                 <mat-list-item>
                     <mat-icon mat-list-icon>account_circle</mat-icon>
-                    <span *ngIf="isExpanded">{{this.user?.name}}</span>
+                    <span *ngIf="isExpanded">{{currentUser?.name}}</span>
                 </mat-list-item>
                 <mat-list-item (click)="onLogout()">
                     <mat-icon mat-list-icon>logout</mat-icon>

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
 import { MaplistComponent } from '../maplist/maplist.component';
+import { MapComponent } from '../map/map.component';
 import { UserService } from 'src/app/services/user.service';
 import { SignupI } from 'src/app/models/user.model';
 import { MapI } from 'src/app/models/map.model';
@@ -15,8 +16,9 @@ import { MapI } from 'src/app/models/map.model';
 })
 export class WrapperComponent implements OnInit {
   isExpanded: boolean = true;
-  user: SignupI | undefined;
-  map: MapI | undefined;
+  currentUser?: SignupI;
+
+  @ViewChild(MapComponent) map?: MapComponent;
 
   constructor(
     private router: Router,
@@ -34,20 +36,25 @@ export class WrapperComponent implements OnInit {
     } else {
       // Get user with token
       this.userService.getUser().subscribe((result) => {
-        this.user = result.data;
+        this.currentUser = result.data;
       });
-      //TODO Get stored maps
+      this.onMaps();
     }
   }
+
+  ngAfterViewInit() {}
 
   // #region NavBar actions
 
   onMaps(): void {
     const dialogRef = this.dialog.open(MaplistComponent);
     dialogRef.afterClosed().subscribe((result) => {
-      this.map = result;
-      // TODO draw map on Leaflet
-      console.log(this.map);
+      this.toastr.info(
+        `Obteniendo información del lote "${result.name}".`,
+        'INFO'
+      );
+      // Draw map on Leaflet
+      this.map?.drawMap(result);
     });
   }
 
