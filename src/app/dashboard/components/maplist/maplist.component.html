@@ -1,1 +1,14 @@
-<p>{{maplist}}</p>
+<h2>Mis Lotes</h2>
+<mat-dialog-content>
+  <div *ngFor="let map of maplist">
+    <mat-list-item mat-button (click)="selectMap(map)">
+      - {{map.name}} ({{map.polygon.length}} coordenadas)
+    </mat-list-item>
+    <br> <br>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>
+    <mat-icon mat-list-icon>edit_location_alt</mat-icon>Agregar lote
+  </button>
+</mat-dialog-actions>

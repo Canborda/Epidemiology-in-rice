@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MaplistComponent } from '../maplist/maplist.component';
 import { UserService } from 'src/app/services/user.service';
 import { SignupI } from 'src/app/models/user.model';
+import { MapI } from 'src/app/models/map.model';
 
 @Component({
   selector: 'app-wrapper',
@@ -15,6 +16,7 @@ import { SignupI } from 'src/app/models/user.model';
 export class WrapperComponent implements OnInit {
   isExpanded: boolean = true;
   user: SignupI | undefined;
+  map: MapI | undefined;
 
   constructor(
     private router: Router,
@@ -31,8 +33,8 @@ export class WrapperComponent implements OnInit {
       this.router.navigate(['home/login']);
     } else {
       // Get user with token
-      this.userService.getUser().subscribe((v) => {
-        this.user = v.data;
+      this.userService.getUser().subscribe((result) => {
+        this.user = result.data;
       });
       //TODO Get stored maps
     }
@@ -41,8 +43,11 @@ export class WrapperComponent implements OnInit {
   // #region NavBar actions
 
   onMaps(): void {
-    this.dialog.open(MaplistComponent, {
-      data: "test",
+    const dialogRef = this.dialog.open(MaplistComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      this.map = result;
+      // TODO draw map on Leaflet
+      console.log(this.map);
     });
   }
 

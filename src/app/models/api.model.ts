@@ -1,7 +1,13 @@
 import { SignupI } from './user.model';
+import { MapI } from './map.model';
 
 export interface ApiUserSuccessI {
   data: SignupI;
+  message: string;
+}
+
+export interface ApiMapSuccessI {
+  data: MapI[];
   message: string;
 }
 
