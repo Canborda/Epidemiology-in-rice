@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
+import { MaplistComponent } from '../maplist/maplist.component';
 import { UserService } from 'src/app/services/user.service';
 import { SignupI } from 'src/app/models/user.model';
 
@@ -16,6 +18,7 @@ export class WrapperComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private dialog: MatDialog,
     private userService: UserService,
     private toastr: ToastrService
   ) {}
@@ -36,6 +39,12 @@ export class WrapperComponent implements OnInit {
   }
 
   // #region NavBar actions
+
+  onMaps(): void {
+    this.dialog.open(MaplistComponent, {
+      data: "test",
+    });
+  }
 
   onLogout(): void {
     localStorage.clear();
