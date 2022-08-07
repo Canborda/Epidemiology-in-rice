@@ -1,0 +1,17 @@
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
+  color: rgb(255, 0, 0);
+}
+
+.hide {
+  display: none;
+}
+
+.mat-row:hover {
+  background-color: rgb(200,200,200);
+}
+
+.cellName:hover {
+  cursor: pointer;
+}
