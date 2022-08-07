@@ -26,7 +26,11 @@ export class MaplistComponent implements OnInit {
   }
 
   selectMap(map: MapI): void {
-    this.dialogRef.close(map);
+    this.dialogRef.close({ event: 'select', data: map });
+  }
+
+  createMap(): void {
+    this.dialogRef.close({ event: 'create' });
   }
 
   // TODO Logic to create new map

@@ -37,24 +37,27 @@ export class WrapperComponent implements OnInit {
       this.userService.getUser().subscribe((result) => {
         this.currentUser = result.data;
       });
-      this.onGetMaps();
+      this.onMapList();
     }
   }
 
-  ngAfterViewInit() {}
-
   // #region NavBar actions
 
-  onGetMaps(): void {
+  onMapList(): void {
     const dialogRef = this.dialog.open(MaplistComponent);
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+      if (result?.event === 'select') {
+        this.map?.drawExistingPolygon(result.data);
         this.toastr.info(
           `Obteniendo información del lote "${result.name}".`,
           'INFO'
         );
-        // Draw map on Leaflet
-        this.map?.loadPolygon(result);
+      } else if (result?.event === 'create') {
+        this.map?.drawNewPolygon();
+        this.toastr.info(
+          `Agregue puntos en el mapa hasta crear una forma cerrada.`,
+          'INFO'
+        );
       }
     });
   }
