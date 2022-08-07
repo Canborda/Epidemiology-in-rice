@@ -7,13 +7,9 @@
                 <mat-icon mat-list-icon>menu</mat-icon>
             </mat-list-item>
             <!-- Menu options -->
-            <mat-list-item (click)="onMaps()">
+            <mat-list-item (click)="onMapList()">
                 <mat-icon mat-list-icon>map</mat-icon>
                 <span *ngIf="isExpanded">Mis lotes</span>
-            </mat-list-item>
-            <mat-list-item>
-                <mat-icon mat-list-icon>edit_location_alt</mat-icon>
-                <span *ngIf="isExpanded">Agregar lote</span>
             </mat-list-item>
             <mat-list-item>
                 <mat-icon mat-list-icon>timeline</mat-icon>

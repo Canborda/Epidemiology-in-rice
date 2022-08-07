@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
 import { ApiMapSuccessI } from '../models/api.model';
+import { MapI } from '../models/map.model';
 
 @Injectable({ providedIn: 'root' })
 export class MapsService {
@@ -20,5 +21,14 @@ export class MapsService {
     });
   }
 
-  // TODO createMap service
+  createMap(map: MapI): Observable<ApiMapSuccessI> {
+    const access_token = localStorage.getItem('access_token');
+    const headers = { Authorization: `Bearer ${access_token}` };
+    const body = map;
+    return this.http.post<ApiMapSuccessI>(
+      this.baseUrl + ROUTES.maps.BASE,
+      body,
+      { headers }
+    );
+  }
 }

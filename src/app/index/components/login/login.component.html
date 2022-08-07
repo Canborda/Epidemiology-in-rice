@@ -15,7 +15,7 @@
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Ingrese contraseña</mat-label>
         <input matInput #input [type]="hide ? 'password' : 'text'" [formControl]="password" required minlength="6">
-        <mat-hint>{{input.value?.length || 0}}/6</mat-hint>
+        <mat-hint>{{input.value.length || 0}}/6</mat-hint>
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

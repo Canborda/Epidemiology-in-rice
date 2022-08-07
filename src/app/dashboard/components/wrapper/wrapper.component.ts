@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
-import { MaplistComponent } from '../maplist/maplist.component';
-import { MapComponent } from '../map/map.component';
 import { UserService } from 'src/app/services/user.service';
 import { SignupI } from 'src/app/models/user.model';
-import { MapI } from 'src/app/models/map.model';
+
+import { MapComponent } from '../map/map.component';
+import { MapListComponent } from '../map-list/map-list.component';
 
 @Component({
   selector: 'app-wrapper',
@@ -38,23 +38,28 @@ export class WrapperComponent implements OnInit {
       this.userService.getUser().subscribe((result) => {
         this.currentUser = result.data;
       });
-      this.onMaps();
+      this.onMapList();
     }
   }
 
-  ngAfterViewInit() {}
-
   // #region NavBar actions
 
-  onMaps(): void {
-    const dialogRef = this.dialog.open(MaplistComponent);
+  onMapList(): void {
+    const dialogRef = this.dialog.open(MapListComponent);
     dialogRef.afterClosed().subscribe((result) => {
-      this.toastr.info(
-        `Obteniendo información del lote "${result.name}".`,
-        'INFO'
-      );
-      // Draw map on Leaflet
-      this.map?.drawMap(result);
+      if (result?.event === 'select') {
+        this.map?.drawExistingPolygon(result.data);
+        this.toastr.info(
+          `Obteniendo información del lote "${result.data.name}".`,
+          'INFO'
+        );
+      } else if (result?.event === 'create') {
+        this.map?.drawNewPolygon();
+        this.toastr.info(
+          `Agregue puntos en el mapa hasta crear una forma cerrada.`,
+          'INFO'
+        );
+      }
     });
   }
 
