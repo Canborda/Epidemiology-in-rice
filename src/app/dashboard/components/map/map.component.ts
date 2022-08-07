@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
 
 import * as Leaflet from 'leaflet';
+import 'leaflet-draw';
 
 import { MapI } from 'src/app/models/map.model';
 
@@ -10,35 +11,67 @@ import { MapI } from 'src/app/models/map.model';
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements AfterViewInit {
-  private LEAFLET_MAP: Leaflet.Map | undefined;
-  @Input() currentMap: MapI | undefined;
+  private LEAFLET_MAP?: Leaflet.Map;
+  @Input() currentMap?: MapI;
 
   constructor() {}
 
   private initMap(): void {
     // Create leaflet map
-    this.LEAFLET_MAP = Leaflet.map('map', {
-      center: [4.711, -74.0721],
-      zoom: 12,
+    this.LEAFLET_MAP = Leaflet.map('map').setView([4.711, -74.0721], 12);
+    // Declare tile layers
+    let osm = Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>',
     });
-    // Add openStreetMap layer to map
-    const tiles = Leaflet.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    // TODO add google attributions
+    let googleSat = Leaflet.tileLayer(
+      'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
       {
-        maxZoom: 18,
-        minZoom: 3,
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        minZoom: 2,
+        maxZoom: 21,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
       }
     );
-    tiles.addTo(this.LEAFLET_MAP);
+    let googleHybrid = Leaflet.tileLayer(
+      'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
+      {
+        minZoom: 2,
+        maxZoom: 21,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      }
+    );
+
+    // Add tile layers
+    // this.LEAFLET_MAP.addLayer(osm);
+    this.LEAFLET_MAP.addLayer(googleSat);
+    // this.LEAFLET_MAP.addLayer(googleHybrid);
+
+    // Add edit toolbar
+    const drawnItems = new Leaflet.FeatureGroup();
+    this.LEAFLET_MAP?.addLayer(drawnItems);
+    const drawControl = new Leaflet.Control.Draw({
+      draw: {
+        polyline: false,
+        circlemarker: false,
+      },
+      edit: { featureGroup: drawnItems },
+    });
+    this.LEAFLET_MAP?.addControl(drawControl);
+
+    // Add callbacks
+
+    this.LEAFLET_MAP.on(Leaflet.Draw.Event.CREATED, (e) => {
+      console.log(e.layer._latlngs);
+      this.LEAFLET_MAP?.addLayer(e.layer);
+    });
   }
 
   ngAfterViewInit(): void {
     this.initMap();
   }
 
-  drawMap(map: MapI) {
+  loadPolygon(map: MapI) {
     // Clean previous map
     //TODO this.LEAFLET_MAP?.removeLayer()
     // Add polygon
@@ -46,7 +79,7 @@ export class MapComponent implements AfterViewInit {
       color: 'red',
     }).addTo(this.LEAFLET_MAP as Leaflet.Map);
     this.LEAFLET_MAP?.fitBounds(polygon.getBounds());
-
-    console.log(polygon);
+    // Add map name
+    polygon.bindPopup(map.name).openPopup();
   }
 }

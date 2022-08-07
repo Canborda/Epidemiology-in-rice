@@ -7,7 +7,6 @@ import { MaplistComponent } from '../maplist/maplist.component';
 import { MapComponent } from '../map/map.component';
 import { UserService } from 'src/app/services/user.service';
 import { SignupI } from 'src/app/models/user.model';
-import { MapI } from 'src/app/models/map.model';
 
 @Component({
   selector: 'app-wrapper',
@@ -38,7 +37,7 @@ export class WrapperComponent implements OnInit {
       this.userService.getUser().subscribe((result) => {
         this.currentUser = result.data;
       });
-      this.onMaps();
+      this.onGetMaps();
     }
   }
 
@@ -46,15 +45,17 @@ export class WrapperComponent implements OnInit {
 
   // #region NavBar actions
 
-  onMaps(): void {
+  onGetMaps(): void {
     const dialogRef = this.dialog.open(MaplistComponent);
     dialogRef.afterClosed().subscribe((result) => {
-      this.toastr.info(
-        `Obteniendo información del lote "${result.name}".`,
-        'INFO'
-      );
-      // Draw map on Leaflet
-      this.map?.drawMap(result);
+      if (result) {
+        this.toastr.info(
+          `Obteniendo información del lote "${result.name}".`,
+          'INFO'
+        );
+        // Draw map on Leaflet
+        this.map?.loadPolygon(result);
+      }
     });
   }
 
