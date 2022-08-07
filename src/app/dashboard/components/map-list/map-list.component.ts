@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { WrapperComponent } from '../wrapper/wrapper.component';
 import { MapsService } from 'src/app/services/maps.service';
@@ -11,17 +11,16 @@ import { MapI } from 'src/app/models/map.model';
   styleUrls: ['./map-list.component.css'],
 })
 export class MapListComponent implements OnInit {
-  maplist: MapI[] | undefined;
+  maplist?: MapI[];
 
   constructor(
     public dialogRef: MatDialogRef<WrapperComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string,
     private mapsService: MapsService
   ) {}
 
   ngOnInit(): void {
     this.mapsService.getMaps().subscribe((result) => {
-      this.maplist = result.data;
+      this.maplist = result.data as MapI[];
     });
   }
 
@@ -32,6 +31,4 @@ export class MapListComponent implements OnInit {
   createMap(): void {
     this.dialogRef.close({ event: 'create' });
   }
-
-  // TODO Logic to create new map
 }

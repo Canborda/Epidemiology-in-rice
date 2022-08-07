@@ -7,7 +7,7 @@ export interface ApiUserSuccessI {
 }
 
 export interface ApiMapSuccessI {
-  data: MapI[];
+  data: MapI[] | MapI;
   message: string;
 }
 

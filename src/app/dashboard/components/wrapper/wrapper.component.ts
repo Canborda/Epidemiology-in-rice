@@ -50,7 +50,7 @@ export class WrapperComponent implements OnInit {
       if (result?.event === 'select') {
         this.map?.drawExistingPolygon(result.data);
         this.toastr.info(
-          `Obteniendo información del lote "${result.name}".`,
+          `Obteniendo información del lote "${result.data.name}".`,
           'INFO'
         );
       } else if (result?.event === 'create') {

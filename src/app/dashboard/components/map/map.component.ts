@@ -1,9 +1,16 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 import * as Leaflet from 'leaflet';
 import 'leaflet-draw';
 
+import { MapAddComponent } from '../map-add/map-add.component';
 import { MapI } from 'src/app/models/map.model';
+
+import { MapsService } from 'src/app/services/maps.service';
+import { ApiErrorI, ApiMapSuccessI } from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-map',
@@ -14,7 +21,11 @@ export class MapComponent implements AfterViewInit {
   private LEAFLET_MAP?: Leaflet.DrawMap;
   @Input() currentMap?: MapI;
 
-  constructor() {}
+  constructor(
+    private dialog: MatDialog,
+    private mapsService: MapsService,
+    private toastr: ToastrService
+  ) {}
 
   ngAfterViewInit(): void {
     // Create leaflet map
@@ -71,8 +82,27 @@ export class MapComponent implements AfterViewInit {
   }
 
   storeNewPolygon(event: Leaflet.LeafletEvent) {
-    // TODO Rise dialog to store new map
-    console.log(event.layer._latlngs);
-    this.LEAFLET_MAP?.addLayer(event.layer);
+    const dialogRef = this.dialog.open(MapAddComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const map: MapI = {
+          name: result,
+          polygon: event.layer._latlngs[0].map(
+            (pt: { lat: number; lng: number }) => [pt.lat, pt.lng]
+          ),
+        };
+        // Http request
+        this.mapsService.createMap(map).subscribe({
+          next: (v: ApiMapSuccessI) => {
+            this.toastr.success('Lote guardado exitosamente', 'SUCCESS');
+            this.drawExistingPolygon(map);
+          },
+          error: (e: HttpErrorResponse) => {
+            const error: ApiErrorI = e.error;
+            this.toastr.error(error.message, 'ERROR');
+          },
+        });
+      }
+    });
   }
 }
