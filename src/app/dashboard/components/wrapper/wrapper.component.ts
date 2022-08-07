@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
-import { MaplistComponent } from '../maplist/maplist.component';
-import { MapComponent } from '../map/map.component';
 import { UserService } from 'src/app/services/user.service';
 import { SignupI } from 'src/app/models/user.model';
+
+import { MapComponent } from '../map/map.component';
+import { MapListComponent } from '../map-list/map-list.component';
 
 @Component({
   selector: 'app-wrapper',
@@ -44,7 +45,7 @@ export class WrapperComponent implements OnInit {
   // #region NavBar actions
 
   onMapList(): void {
-    const dialogRef = this.dialog.open(MaplistComponent);
+    const dialogRef = this.dialog.open(MapListComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.event === 'select') {
         this.map?.drawExistingPolygon(result.data);

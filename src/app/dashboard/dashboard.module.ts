@@ -4,8 +4,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HighchartsChartModule } from 'highcharts-angular';
 
 import { WrapperComponent } from './components/wrapper/wrapper.component';
-import { MaplistComponent } from './components/maplist/maplist.component';
 import { MapComponent } from './components/map/map.component';
+import { MapListComponent } from './components/map-list/map-list.component';
 import { ChartComponent } from './components/chart/chart.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -19,7 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     WrapperComponent,
     MapComponent,
     ChartComponent,
-    MaplistComponent,
+    MapListComponent,
   ],
   imports: [
     CommonModule,

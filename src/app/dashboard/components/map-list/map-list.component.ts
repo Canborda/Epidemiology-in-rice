@@ -6,11 +6,11 @@ import { MapsService } from 'src/app/services/maps.service';
 import { MapI } from 'src/app/models/map.model';
 
 @Component({
-  selector: 'app-maplist',
-  templateUrl: './maplist.component.html',
-  styleUrls: ['./maplist.component.css'],
+  selector: 'app-map-list',
+  templateUrl: './map-list.component.html',
+  styleUrls: ['./map-list.component.css'],
 })
-export class MaplistComponent implements OnInit {
+export class MapListComponent implements OnInit {
   maplist: MapI[] | undefined;
 
   constructor(
