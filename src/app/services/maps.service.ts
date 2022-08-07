@@ -31,4 +31,12 @@ export class MapsService {
       { headers }
     );
   }
+
+  deleteMap(map_id: string) {
+    const access_token = localStorage.getItem('access_token');
+    const headers = { Authorization: `Bearer ${access_token}` };
+    return this.http.delete(this.baseUrl + ROUTES.maps.BASE + '/' + map_id, {
+      headers,
+    });
+  }
 }
