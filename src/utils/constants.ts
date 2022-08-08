@@ -7,4 +7,8 @@ export const ROUTES = {
   maps: {
     BASE: '/api/v1/maps',
   },
+  gee: {
+    BASE: '/api/v1/gee',
+    ndvi: '/api/v1/gee/ndvi',
+  },
 };
