@@ -10,7 +10,12 @@ import { MapAddComponent } from '../map-add/map-add.component';
 import { MapI } from 'src/app/models/map.model';
 
 import { MapsService } from 'src/app/services/maps.service';
-import { ApiErrorI, ApiMapSuccessI } from 'src/app/models/api.model';
+import { GeeService } from 'src/app/services/gee.service';
+import {
+  ApiErrorI,
+  ApiGeeSuccessI,
+  ApiMapSuccessI,
+} from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-map',
@@ -24,6 +29,7 @@ export class MapComponent implements AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private mapsService: MapsService,
+    private geeService: GeeService,
     private toastr: ToastrService
   ) {}
 
@@ -65,6 +71,8 @@ export class MapComponent implements AfterViewInit {
     );
   }
 
+  // #region Maps CRUD
+
   drawExistingPolygon(map: MapI) {
     // Clean previous map
     //TODO this.LEAFLET_MAP?.removeLayer()
@@ -75,6 +83,8 @@ export class MapComponent implements AfterViewInit {
     this.LEAFLET_MAP?.fitBounds(polygon.getBounds());
     // Add map name
     polygon.bindPopup(map.name).openPopup();
+    // Update current map
+    this.currentMap = map;
   }
 
   drawNewPolygon() {
@@ -102,7 +112,34 @@ export class MapComponent implements AfterViewInit {
             this.toastr.error(error.message, 'ERROR');
           },
         });
+        // Update current map
+        this.currentMap = map;
       }
     });
   }
+
+  // #endregion
+
+  // #region GEE operations
+
+  overlayImage(): void {
+    if (this.currentMap) {
+      this.geeService.getNdviImage(this.currentMap._id!).subscribe({
+        next: (v: ApiGeeSuccessI) => {
+          Leaflet.imageOverlay(
+            v.data.url,
+            v.data.bbox as Leaflet.LatLngBoundsExpression,
+            { opacity: 0.8 }
+          ).addTo(this.LEAFLET_MAP as Leaflet.Map);
+          this.toastr.success(`Obtenido NDVI de ${v.data.date}`, 'SUCCESS');
+        },
+        error: (e: HttpErrorResponse) => {
+          const error: ApiErrorI = e.error;
+          this.toastr.error(error.message, 'ERROR');
+        },
+      });
+    }
+  }
+
+  // #endregion
 }
