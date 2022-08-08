@@ -68,5 +68,9 @@ export class WrapperComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  geeTest(): void {
+    this.map?.overlayImage();
+  }
+
   // #endregion
 }
