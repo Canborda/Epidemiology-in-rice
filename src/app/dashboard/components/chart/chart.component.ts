@@ -7,9 +7,12 @@ import {
 } from '@angular/core';
 
 import * as Highcharts from 'highcharts';
+import addMore from 'highcharts/highcharts-more';
 import { Options } from 'highcharts';
 import { PointI } from 'src/app/models/chart.model';
 import { tempSeries } from './chartOptions';
+
+addMore(Highcharts);
 
 @Component({
   selector: 'app-chart',
@@ -29,9 +32,6 @@ export class ChartComponent implements OnInit, AfterViewInit {
     const selectedSeries = tempSeries.find((serie) => serie.index === index);
     if (selectedSeries) {
       const options: Options = {
-        chart: {
-          borderColor: '#BBBBBB',
-        },
         title: {
           text: `Índice ${selectedSeries.index} estandarizado vs. pronosticado`,
         },
@@ -51,13 +51,40 @@ export class ChartComponent implements OnInit, AfterViewInit {
           {
             name: 'Modelo estándar',
             type: 'line',
+            lineWidth: 3,
             color: '#0000FF',
+            marker: {
+              symbol: 'circle',
+              radius: 5,
+            },
             data: selectedSeries.standardized,
+          },
+          {
+            name: 'Range',
+            // TODO dynamic range?
+            data: selectedSeries.standardized.map((point) => [
+              point.x,
+              point.y - 0.1,
+              point.y + 0.1,
+            ]),
+            type: 'arearange',
+            linkedTo: ':previous',
+            lineWidth: 0,
+            color: '#0000FF',
+            fillOpacity: 0.2,
+            marker: {
+              enabled: false,
+            },
           },
           {
             name: 'Pronosticado',
             type: 'line',
+            lineWidth: 3,
             color: '#FF0000',
+            marker: {
+              symbol: 'circle',
+              radius: 5,
+            },
             data: selectedSeries.estimated,
           },
         ],
