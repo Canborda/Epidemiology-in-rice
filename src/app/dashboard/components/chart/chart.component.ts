@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import * as Highcharts from 'highcharts';
-import { testChartOptions1, testChartOptions2 } from './chartOptions';
+import { tempChartOptions } from './chartOptions';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css'],
 })
-export class ChartComponent implements OnInit {
-  highcharts = Highcharts;
-  chartOptions1 = testChartOptions1;
-  chartOptions2 = testChartOptions2;
-
+export class ChartComponent implements OnInit, AfterViewInit {
+  @ViewChild('mainChart') mainChartRef!: ElementRef<HTMLDivElement>;
   constructor() {}
+
+  ngAfterViewInit(): void {
+    Highcharts.chart({
+      ...tempChartOptions,
+      chart: { ...tempChartOptions, renderTo: this.mainChartRef.nativeElement },
+    });
+  }
 
   ngOnInit(): void {}
 }
