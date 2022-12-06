@@ -62,8 +62,8 @@ export class MapComponent implements AfterViewInit {
 
     // Add tile layers
     // this.LEAFLET_MAP.addLayer(osm);
-    this.LEAFLET_MAP.addLayer(googleSat);
-    // this.LEAFLET_MAP.addLayer(googleHybrid);
+    // this.LEAFLET_MAP.addLayer(googleSat);
+    this.LEAFLET_MAP.addLayer(googleHybrid);
 
     // Add leaflet-draw callbacks
     this.LEAFLET_MAP.on(Leaflet.Draw.Event.CREATED, (e) =>
@@ -93,14 +93,12 @@ export class MapComponent implements AfterViewInit {
 
   storeNewPolygon(event: Leaflet.LeafletEvent) {
     const dialogRef = this.dialog.open(MapAddComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const map: MapI = {
-          name: result,
-          polygon: event.layer._latlngs[0].map(
-            (pt: { lat: number; lng: number }) => [pt.lat, pt.lng]
-          ),
-        };
+    dialogRef.afterClosed().subscribe((map: MapI) => {
+      if (map) {
+        // Add polygon coordinates
+        map.polygon = event.layer._latlngs[0].map(
+          (pt: { lat: number; lng: number }) => [pt.lat, pt.lng]
+        );
         // Http request
         this.mapsService.createMap(map).subscribe({
           next: (v: ApiMapSuccessI) => {

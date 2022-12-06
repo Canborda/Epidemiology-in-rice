@@ -8,6 +8,7 @@ import { SignupI } from 'src/app/models/user.model';
 
 import { MapComponent } from '../map/map.component';
 import { MapListComponent } from '../map-list/map-list.component';
+import { ChartComponent } from '../chart/chart.component';
 
 @Component({
   selector: 'app-wrapper',
@@ -19,6 +20,7 @@ export class WrapperComponent implements OnInit {
   currentUser?: SignupI;
 
   @ViewChild(MapComponent) map?: MapComponent;
+  @ViewChild(ChartComponent) chart?: ChartComponent;
 
   constructor(
     private router: Router,
@@ -66,6 +68,10 @@ export class WrapperComponent implements OnInit {
   onLogout(): void {
     localStorage.clear();
     this.router.navigate(['']);
+  }
+
+  onIndexSelected(index: string): void {
+    this.chart?.plotPolygonInfo(index);
   }
 
   geeTest(): void {

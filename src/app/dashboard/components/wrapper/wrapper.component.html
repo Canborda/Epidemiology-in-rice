@@ -35,10 +35,25 @@
     <!-- Content -->
     <div class="container-fluid h-100">
         <div class="row h-100">
+            <!-- MAP column -->
             <div class="div_map col-md-6">
                 <app-map></app-map>
             </div>
+            <!-- CHART column -->
             <div class="div_chart col-md-6">
+                <h2>Visualización de modelos asociados a respuestas espectrales de Sistemas de producción de Arroz</h2>
+                <mat-divider></mat-divider>
+                Índice:
+                <mat-form-field>
+                    <mat-label>Seleccione...</mat-label>
+                    <!-- TODO implement dynamic indexes list -->
+                    <mat-select (selectionChange)="onIndexSelected($event.value)">
+                        <mat-option value="NDVI">NDVI</mat-option>
+                        <mat-option value="EVI">EVI</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-divider></mat-divider>
+                <br>
                 <app-chart></app-chart>
             </div>
         </div>

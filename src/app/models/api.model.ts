@@ -1,9 +1,15 @@
 import { SignupI } from './user.model';
+import { CropI } from './crop.model';
 import { MapI } from './map.model';
 import { NdviI } from './gee.model';
 
 export interface ApiUserSuccessI {
   data: SignupI;
+  message: string;
+}
+
+export interface ApiCropSuccessI {
+  data: CropI[] | CropI;
   message: string;
 }
 
