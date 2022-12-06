@@ -13,8 +13,12 @@ mat-sidenav-container {
     padding: 10px;
 }
 
-.div_chart{
+.div_chart {
     min-height: 500px;
     background-color: blue;
     padding: 10px;
+}
+
+h2 {
+    text-align: center;
 }
