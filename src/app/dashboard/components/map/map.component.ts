@@ -23,8 +23,9 @@ import {
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements AfterViewInit {
-  private LEAFLET_MAP?: Leaflet.DrawMap;
   @Input() currentMap?: MapI;
+  private LEAFLET_MAP?: Leaflet.DrawMap;
+  private currentPolygon?: Leaflet.Polygon;
 
   constructor(
     private dialog: MatDialog,
@@ -77,12 +78,12 @@ export class MapComponent implements AfterViewInit {
     // Clean previous map
     //TODO this.LEAFLET_MAP?.removeLayer()
     // Add polygon
-    const polygon = Leaflet.polygon(map.polygon as [number, number][], {
+    this.currentPolygon = Leaflet.polygon(map.polygon as [number, number][], {
       color: 'red',
     }).addTo(this.LEAFLET_MAP as Leaflet.Map);
-    this.LEAFLET_MAP?.fitBounds(polygon.getBounds());
+    this.LEAFLET_MAP?.fitBounds(this.currentPolygon.getBounds());
     // Add map name
-    polygon.bindPopup(map.name).openPopup();
+    this.currentPolygon.bindPopup(map.name).openPopup();
     // Update current map
     this.currentMap = map;
   }
@@ -127,7 +128,7 @@ export class MapComponent implements AfterViewInit {
           Leaflet.imageOverlay(
             v.data.url,
             v.data.bbox as Leaflet.LatLngBoundsExpression,
-            { opacity: 0.8 }
+            { opacity: 1 }
           ).addTo(this.LEAFLET_MAP as Leaflet.Map);
           this.toastr.success(`Obtenido NDVI de ${v.data.date}`, 'SUCCESS');
         },
@@ -136,6 +137,7 @@ export class MapComponent implements AfterViewInit {
           this.toastr.error(error.message, 'ERROR');
         },
       });
+      this.currentPolygon?.remove();
     }
   }
 

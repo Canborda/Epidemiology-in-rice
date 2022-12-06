@@ -71,6 +71,7 @@ export class WrapperComponent implements OnInit {
   }
 
   onIndexSelected(index: string): void {
+    this.map?.overlayImage();
     this.chart?.plotPolygonInfo(index);
   }
 
