@@ -164,7 +164,7 @@ export const tempChartOptions: Options = {
       ],
     },
     {
-      name: 'Pronosticado',
+      name: 'Índice Real',
       type: 'line',
       color: '#FF0000',
       data: [

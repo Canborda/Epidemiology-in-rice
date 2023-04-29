@@ -33,7 +33,10 @@ export class ChartComponent implements OnInit, AfterViewInit {
     if (selectedSeries) {
       const options: Options = {
         title: {
-          text: `Índice ${selectedSeries.index} estandarizado vs. pronosticado`,
+          text: `Índice ${selectedSeries.index} estandarizado vs. real`,
+        },
+        subtitle: {
+          text: 'Región: Caribe Seco  |  Variedad: Fedearroz 67',
         },
         xAxis: {
           type: 'datetime',
@@ -77,7 +80,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
             },
           },
           {
-            name: 'Pronosticado',
+            name: 'Índice real',
             type: 'line',
             lineWidth: 3,
             color: '#FF0000',
