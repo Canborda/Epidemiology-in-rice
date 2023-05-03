@@ -69,7 +69,7 @@ export class MapAddComponent implements OnInit {
   // #region form validations
 
   getNameErrorMessage() {
-    if (this.name.hasError('required')) return 'Campo Obligatorio';
+    if (this.name.hasError('required')) return 'Campo obligatorio';
     return null;
   }
 

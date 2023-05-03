@@ -9,6 +9,7 @@ import { SignupI } from 'src/app/models/user.model';
 import { MapComponent } from '../map/map.component';
 import { MapListComponent } from '../map-list/map-list.component';
 import { ChartComponent } from '../chart/chart.component';
+import { ImageLoadComponent } from '../image-load/image-load.component';
 
 @Component({
   selector: 'app-wrapper',
@@ -40,13 +41,13 @@ export class WrapperComponent implements OnInit {
       this.userService.getUser().subscribe((result) => {
         this.currentUser = result.data;
       });
-      this.onMapList();
+      this.onLoadMaps();
     }
   }
 
   // #region NavBar actions
 
-  onMapList(): void {
+  onLoadMaps(): void {
     const dialogRef = this.dialog.open(MapListComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.event === 'select') {
@@ -62,6 +63,13 @@ export class WrapperComponent implements OnInit {
           'INFO'
         );
       }
+    });
+  }
+
+  onLoadImages(): void {
+    const dialogRef = this.dialog.open(ImageLoadComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
     });
   }
 

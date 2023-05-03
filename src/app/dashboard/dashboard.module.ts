@@ -6,6 +6,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { MapComponent } from './components/map/map.component';
 import { MapListComponent } from './components/map-list/map-list.component';
+import { ImageLoadComponent } from './components/image-load/image-load.component';
 import { ChartComponent } from './components/chart/chart.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -31,6 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ChartComponent,
     MapListComponent,
     MapAddComponent,
+    ImageLoadComponent,
   ],
   imports: [
     CommonModule,

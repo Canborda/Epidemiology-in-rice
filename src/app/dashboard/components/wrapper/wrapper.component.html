@@ -7,13 +7,13 @@
                 <mat-icon mat-list-icon>menu</mat-icon>
             </mat-list-item>
             <!-- Menu options -->
-            <mat-list-item (click)="onMapList()">
+            <mat-list-item (click)="onLoadMaps()">
                 <mat-icon mat-list-icon>map</mat-icon>
-                <span *ngIf="isExpanded">Mis lotes</span>
+                <span *ngIf="isExpanded">Cargar Lote</span>
             </mat-list-item>
-            <mat-list-item (click)="geeTest()">
-                <mat-icon mat-list-icon>timeline</mat-icon>
-                <span *ngIf="isExpanded">Seleccionar Cultivo</span>
+            <mat-list-item (click)="onLoadImages()">
+                <mat-icon mat-list-icon>satellite</mat-icon>
+                <span *ngIf="isExpanded">Cargar Imagen</span>
             </mat-list-item>
             <mat-list-item>
                 <mat-icon mat-list-icon>upload</mat-icon>
