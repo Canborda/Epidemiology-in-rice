@@ -1,5 +1,23 @@
 <h2>Opciones de imagen</h2>
 <mat-dialog-content>
-  
-
+  <!-- Index -->
+  <mat-form-field class="full-width" appearance="fill">
+    <mat-label>Índice</mat-label>
+    <mat-select [formControl]="index" required>
+      <mat-option *ngFor="let index of indexList" [value]="index">{{index}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="index.invalid">{{getIndexErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <!-- Cloudy Percentage -->
+    <label>Porcentaje de Nubosidad</label>
+    <mat-slider min="0" max="100" step="5" thumbLabel [displayWith]="formatLabel" [formControl]="cloudyPercentage" required>
+      <input matSliderThumb value="30">
+    </mat-slider>
+  <br>
 </mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onSend()" mat-raised-button color="primary">Cargar</button>
+  <button mat-button mat-stroked-button mat-dialog-close color="primary">Cancelar</button>
+</mat-dialog-actions>

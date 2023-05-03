@@ -22,10 +22,16 @@ export class ImageLoadComponent implements OnInit {
   onSend() {
     if (!this.getIndexErrorMessage()) {
       console.log('SEND REQUEST');
+      console.log(this.cloudyPercentage.value);
+      console.log(this.index.value);
     }
   }
 
   // #region form validations
+
+  formatLabel(value: number): string {
+    return `${value}%`;
+  }
 
   getIndexErrorMessage() {
     if (this.index.hasError('required')) return 'Campo obligatorio';
