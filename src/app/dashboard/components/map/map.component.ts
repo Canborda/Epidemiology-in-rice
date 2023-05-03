@@ -26,6 +26,7 @@ export class MapComponent implements AfterViewInit {
   @Input() currentMap?: MapI;
   private LEAFLET_MAP?: Leaflet.DrawMap;
   private currentPolygon?: Leaflet.Polygon;
+  private currentImage?: Leaflet.ImageOverlay;
 
   constructor(
     private dialog: MatDialog,
@@ -76,7 +77,8 @@ export class MapComponent implements AfterViewInit {
 
   drawExistingPolygon(map: MapI) {
     // Clean previous map
-    //TODO this.LEAFLET_MAP?.removeLayer()
+    this.currentPolygon?.remove();
+    this.currentImage?.remove();
     // Add polygon
     this.currentPolygon = Leaflet.polygon(map.polygon as [number, number][], {
       color: 'red',
@@ -125,11 +127,12 @@ export class MapComponent implements AfterViewInit {
     if (this.currentMap) {
       this.geeService.getNdviImage(this.currentMap._id!).subscribe({
         next: (v: ApiGeeSuccessI) => {
-          Leaflet.imageOverlay(
+          this.currentImage = Leaflet.imageOverlay(
             v.data.url,
             v.data.bbox as Leaflet.LatLngBoundsExpression,
             { opacity: 1 }
-          ).addTo(this.LEAFLET_MAP as Leaflet.Map);
+          );
+          this.currentImage.addTo(this.LEAFLET_MAP as Leaflet.Map);
           this.toastr.success(`Obtenido NDVI de ${v.data.date}`, 'SUCCESS');
         },
         error: (e: HttpErrorResponse) => {
@@ -137,7 +140,9 @@ export class MapComponent implements AfterViewInit {
           this.toastr.error(error.message, 'ERROR');
         },
       });
+      // Clean previous map
       this.currentPolygon?.remove();
+      this.currentImage?.remove();
     }
   }
 
