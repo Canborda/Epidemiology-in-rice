@@ -4,10 +4,11 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HighchartsChartModule } from 'highcharts-angular';
 
 import { DashboardWrapperComponent } from './components/dashboardWrapper/dashboardWrapper.component';
+import { MenuComponent } from './components/menu/menu.component';
 import { MapComponent } from './components/map/map.component';
+import { ChartComponent } from './components/chart/chart.component';
 import { MapListComponent } from './components/map-list/map-list.component';
 import { ImageLoadComponent } from './components/image-load/image-load.component';
-import { ChartComponent } from './components/chart/chart.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     DashboardWrapperComponent,
+    MenuComponent,
     MapComponent,
     ChartComponent,
     MapListComponent,

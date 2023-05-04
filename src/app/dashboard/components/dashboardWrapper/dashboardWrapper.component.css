@@ -2,9 +2,9 @@ mat-sidenav-container {
     height: 100%;
 }
 
-.user-config {
-    position: absolute;
-    bottom: 0;
+mat-sidenav {
+    background-color: lightgrey;
+    padding: 5px;
 }
 
 .div_map {
