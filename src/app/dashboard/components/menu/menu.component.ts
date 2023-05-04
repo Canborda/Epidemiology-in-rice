@@ -15,11 +15,12 @@ import { ImageRequestI } from 'src/app/models/gee.model';
 })
 export class MenuComponent implements OnInit {
   isExpanded: boolean = true;
-  userName: string = 'USUARIO DE PRUEBA';
+  userName: string = 'USER NAME';
 
   @Output() drawMapEvent = new EventEmitter<void>();
   @Output() selectMapEvent = new EventEmitter<MapI>();
   @Output() generateImageEvent = new EventEmitter<ImageRequestI>();
+  @Output() logoutEvent = new EventEmitter<void>();
 
   constructor(private dialog: MatDialog) {}
 
@@ -59,7 +60,7 @@ export class MenuComponent implements OnInit {
   }
 
   onLogout(): void {
-    console.log('ON LOGOUT');
+    this.logoutEvent.emit();
   }
 
   // #endregion

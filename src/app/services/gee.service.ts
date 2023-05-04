@@ -24,7 +24,7 @@ export class GeeService {
     );
   }
 
-  getImages(data: ImageRequestI): Observable<ApiSuccessI<ImageResponseI>> {
+  getImage(data: ImageRequestI): Observable<ApiSuccessI<ImageResponseI>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
     const params = data as {};

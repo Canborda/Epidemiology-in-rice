@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
+import { MenuComponent } from '../menu/menu.component';
 import { MapComponent } from '../map/map.component';
 import { ChartComponent } from '../chart/chart.component';
 
@@ -24,6 +25,7 @@ export class DashboardWrapperComponent implements OnInit {
   isExpanded: boolean = true;
   currentUser?: UserI;
 
+  @ViewChild(MenuComponent) menu?: MenuComponent;
   @ViewChild(MapComponent) map?: MapComponent;
   @ViewChild(ChartComponent) chart?: ChartComponent;
 
@@ -44,6 +46,7 @@ export class DashboardWrapperComponent implements OnInit {
       // Get user with token
       this.userService.getUser().subscribe((result) => {
         this.currentUser = result.data;
+        if (this.menu) this.menu.userName = this.currentUser.name;
       });
     }
   }
@@ -63,7 +66,7 @@ export class DashboardWrapperComponent implements OnInit {
       // Add map_id
       imgReq.map_id = this.map?.currentMap?._id;
       // Http request
-      this.geeService.getImages(imgReq).subscribe({
+      this.geeService.getImage(imgReq).subscribe({
         next: (v: ApiSuccessI<ImageResponseI>) => {
           this.map?.overlayImage(v.data);
           this.toastr.success(
@@ -81,22 +84,9 @@ export class DashboardWrapperComponent implements OnInit {
     }
   }
 
-  // #endregion
-
-  // #region NavBar actions
-
   onLogout(): void {
     localStorage.clear();
     this.router.navigate(['']);
-  }
-
-  onIndexSelected(index: string): void {
-    // this.map?.overlayImage();
-    this.chart?.plotPolygonInfo(index);
-  }
-
-  geeTest(): void {
-    // this.map?.overlayImage();
   }
 
   // #endregion
