@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IndexRoutingModule } from './index-routing.module';
+import { HomeRoutingModule } from './home-routing.module';
 
-import { WrapperComponent } from './components/wrapper/wrapper.component';
+import { HomeWrapperComponent } from './components/homeWrapper/homeWrapper.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 
@@ -16,10 +16,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [WrapperComponent, SignupComponent, LoginComponent],
+  declarations: [HomeWrapperComponent, SignupComponent, LoginComponent],
   imports: [
     CommonModule,
-    IndexRoutingModule,
+    HomeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     // Ng Material Modules
@@ -31,4 +31,4 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
   ],
 })
-export class IndexModule {}
+export class HomeModule {}

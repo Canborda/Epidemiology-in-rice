@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { WrapperComponent } from './components/wrapper/wrapper.component';
+import { HomeWrapperComponent } from './components/homeWrapper/homeWrapper.component';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: WrapperComponent,
+    component: HomeWrapperComponent,
   },
   {
     path: 'signup',
-    component: WrapperComponent,
+    component: HomeWrapperComponent,
   },
   {
     path: '**',
@@ -23,4 +23,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class IndexRoutingModule {}
+export class HomeRoutingModule {}

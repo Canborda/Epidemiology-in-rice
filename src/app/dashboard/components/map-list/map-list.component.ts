@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { WrapperComponent } from '../wrapper/wrapper.component';
+import { DashboardWrapperComponent } from '../dashboardWrapper/dashboardWrapper.component';
 import { MapI } from 'src/app/models/map.model';
 
 import { MapsService } from 'src/app/services/maps.service';
@@ -20,7 +20,7 @@ export class MapListComponent implements OnInit {
   columnsToDisplay: string[] = ['name', 'actions'];
 
   constructor(
-    public dialogRef: MatDialogRef<WrapperComponent>,
+    public dialogRef: MatDialogRef<DashboardWrapperComponent>,
     private mapsService: MapsService,
     private toastr: ToastrService
   ) {}

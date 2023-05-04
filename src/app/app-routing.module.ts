@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./index/index.module').then((m) => m.IndexModule),
+      import('./home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'dashboard',

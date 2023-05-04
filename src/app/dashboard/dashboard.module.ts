@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HighchartsChartModule } from 'highcharts-angular';
 
-import { WrapperComponent } from './components/wrapper/wrapper.component';
+import { DashboardWrapperComponent } from './components/dashboardWrapper/dashboardWrapper.component';
 import { MapComponent } from './components/map/map.component';
 import { MapListComponent } from './components/map-list/map-list.component';
 import { ImageLoadComponent } from './components/image-load/image-load.component';
@@ -28,7 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    WrapperComponent,
+    DashboardWrapperComponent,
     MapComponent,
     ChartComponent,
     MapListComponent,

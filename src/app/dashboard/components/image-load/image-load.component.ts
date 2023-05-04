@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { WrapperComponent } from '../wrapper/wrapper.component';
+import { DashboardWrapperComponent } from '../dashboardWrapper/dashboardWrapper.component';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 import { ImagesRequestI } from 'src/app/models/gee.model';
 
@@ -22,7 +22,7 @@ export class ImageLoadComponent implements OnInit {
   index = new UntypedFormControl('', [Validators.required]);
 
   constructor(
-    public dialogRef: MatDialogRef<WrapperComponent>,
+    public dialogRef: MatDialogRef<DashboardWrapperComponent>,
     private geeService: GeeService,
     private toastr: ToastrService
   ) {}

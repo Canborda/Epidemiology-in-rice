@@ -16,11 +16,11 @@ import { ChartComponent } from '../chart/chart.component';
 import { ImageLoadComponent } from '../image-load/image-load.component';
 
 @Component({
-  selector: 'app-wrapper',
-  templateUrl: './wrapper.component.html',
-  styleUrls: ['./wrapper.component.css'],
+  selector: 'app-dashboard-wrapper',
+  templateUrl: './dashboardWrapper.component.html',
+  styleUrls: ['./dashboardWrapper.component.css'],
 })
-export class WrapperComponent implements OnInit {
+export class DashboardWrapperComponent implements OnInit {
   isExpanded: boolean = true;
   currentUser?: UserI;
 
