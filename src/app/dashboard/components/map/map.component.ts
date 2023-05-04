@@ -6,12 +6,13 @@ import { ToastrService } from 'ngx-toastr';
 import * as Leaflet from 'leaflet';
 import 'leaflet-draw';
 
-import { MapAddComponent } from '../map-add/map-add.component';
+import { MapAddComponent } from '../../modals/map-add/map-add.component';
+
+import { MapsService } from 'src/app/services/maps.service';
+
 import { MapI } from 'src/app/models/map.model';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 import { ImageResponseI } from 'src/app/models/gee.model';
-
-import { MapsService } from 'src/app/services/maps.service';
 
 @Component({
   selector: 'app-map',
@@ -90,28 +91,30 @@ export class MapComponent implements AfterViewInit {
   }
 
   storeNewPolygon(event: Leaflet.LeafletEvent) {
-    const dialogRef = this.dialog.open(MapAddComponent);
-    dialogRef.afterClosed().subscribe((map: MapI) => {
-      if (map) {
-        // Add polygon coordinates
-        map.polygon = event.layer._latlngs[0].map(
-          (pt: { lat: number; lng: number }) => [pt.lat, pt.lng]
-        );
-        // Http request
-        this.mapsService.createMap(map).subscribe({
-          next: (v: ApiSuccessI<MapI>) => {
-            this.toastr.success('Lote guardado exitosamente', 'SUCCESS');
-            this.drawExistingPolygon(map);
-          },
-          error: (e: HttpErrorResponse) => {
-            const error: ApiErrorI = e.error;
-            this.toastr.error(error.message, 'ERROR');
-          },
-        });
-        // Update current map
-        this.currentMap = map;
-      }
-    });
+    this.dialog
+      .open(MapAddComponent)
+      .afterClosed()
+      .subscribe((map: MapI) => {
+        if (map) {
+          // Add polygon coordinates
+          map.polygon = event.layer._latlngs[0].map(
+            (pt: { lat: number; lng: number }) => [pt.lat, pt.lng]
+          );
+          // Http request
+          this.mapsService.createMap(map).subscribe({
+            next: (v: ApiSuccessI<MapI>) => {
+              this.toastr.success('Lote guardado exitosamente', 'SUCCESS');
+              this.drawExistingPolygon(map);
+            },
+            error: (e: HttpErrorResponse) => {
+              const error: ApiErrorI = e.error;
+              this.toastr.error(error.message, 'ERROR');
+            },
+          });
+          // Update current map
+          this.currentMap = map;
+        }
+      });
   }
 
   // #endregion

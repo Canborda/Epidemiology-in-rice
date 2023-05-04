@@ -8,7 +8,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { MapComponent } from './components/map/map.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { MapDrawComponent } from './modals/map-draw/map-draw.component';
-import { MapAddComponent } from './components/map-add/map-add.component';
+import { MapAddComponent } from './modals/map-add/map-add.component';
 import { MapListComponent } from './modals/map-list/map-list.component';
 import { MapImageComponent } from './modals/map-image/map-image.component';
 
