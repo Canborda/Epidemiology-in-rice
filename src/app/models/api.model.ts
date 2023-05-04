@@ -1,7 +1,6 @@
 import { SignupI } from './user.model';
 import { CropI } from './crop.model';
 import { MapI } from './map.model';
-import { NdviI } from './gee.model';
 
 export interface ApiUserSuccessI {
   data: SignupI;
@@ -18,8 +17,8 @@ export interface ApiMapSuccessI {
   message: string;
 }
 
-export interface ApiGeeSuccessI {
-  data: NdviI;
+export interface ApiSuccessI<T> {
+  data: T;
   message: string;
 }
 

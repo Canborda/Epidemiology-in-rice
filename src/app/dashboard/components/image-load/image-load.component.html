@@ -11,10 +11,12 @@
   <br>
   <br>
   <!-- Cloudy Percentage -->
-    <label>Porcentaje de Nubosidad</label>
-    <mat-slider min="0" max="100" step="5" thumbLabel [displayWith]="formatLabel" [formControl]="cloudyPercentage" required>
-      <input matSliderThumb value="30">
-    </mat-slider>
+  <mat-label>Porcentaje de Nubosidad</mat-label>
+  <mat-slider min="0" max="100" step="5" thumbLabel [displayWith]="formatLabel" [formControl]="cloudyPercentage"
+    required>
+    <input matSliderThumb value="30">
+  </mat-slider>
+  <mat-error *ngIf="index.invalid">{{getCloudyPercentageErrorMessage()}}</mat-error>
   <br>
 </mat-dialog-content>
 <mat-dialog-actions>

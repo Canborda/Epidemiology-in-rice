@@ -12,6 +12,7 @@ export const ROUTES = {
   },
   gee: {
     BASE: '/api/v1/gee',
-    ndvi: '/api/v1/gee/ndvi',
+    indexes: '/api/v1/gee/indexes',
+    images: '/api/v1/gee/images',
   },
 };

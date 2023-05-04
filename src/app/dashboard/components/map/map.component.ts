@@ -8,14 +8,10 @@ import 'leaflet-draw';
 
 import { MapAddComponent } from '../map-add/map-add.component';
 import { MapI } from 'src/app/models/map.model';
+import { ApiErrorI, ApiMapSuccessI } from 'src/app/models/api.model';
+import { ImagesResponseI } from 'src/app/models/gee.model';
 
 import { MapsService } from 'src/app/services/maps.service';
-import { GeeService } from 'src/app/services/gee.service';
-import {
-  ApiErrorI,
-  ApiGeeSuccessI,
-  ApiMapSuccessI,
-} from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-map',
@@ -31,7 +27,6 @@ export class MapComponent implements AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private mapsService: MapsService,
-    private geeService: GeeService,
     private toastr: ToastrService
   ) {}
 
@@ -123,26 +118,17 @@ export class MapComponent implements AfterViewInit {
 
   // #region GEE operations
 
-  overlayImage(): void {
+  overlayImage(data: ImagesResponseI): void {
+    // Clean previous map
+    this.currentPolygon?.remove();
+    this.currentImage?.remove();
     if (this.currentMap) {
-      this.geeService.getNdviImage(this.currentMap._id!).subscribe({
-        next: (v: ApiGeeSuccessI) => {
-          this.currentImage = Leaflet.imageOverlay(
-            v.data.url,
-            v.data.bbox as Leaflet.LatLngBoundsExpression,
-            { opacity: 1 }
-          );
-          this.currentImage.addTo(this.LEAFLET_MAP as Leaflet.Map);
-          this.toastr.success(`Obtenido NDVI de ${v.data.date}`, 'SUCCESS');
-        },
-        error: (e: HttpErrorResponse) => {
-          const error: ApiErrorI = e.error;
-          this.toastr.error(error.message, 'ERROR');
-        },
-      });
-      // Clean previous map
-      this.currentPolygon?.remove();
-      this.currentImage?.remove();
+      this.currentImage = Leaflet.imageOverlay(
+        data.url,
+        data.bbox as Leaflet.LatLngBoundsExpression,
+        { opacity: 1 }
+      );
+      this.currentImage.addTo(this.LEAFLET_MAP as Leaflet.Map);
     }
   }
 
