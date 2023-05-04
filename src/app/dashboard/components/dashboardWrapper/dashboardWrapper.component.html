@@ -1,7 +1,7 @@
 <mat-sidenav-container autosize>
     <!-- Sidenav -->
     <mat-sidenav #sidenav mode="side" opened="true">
-        <app-menu></app-menu>
+        <app-menu (drawMapEvent)="onDrawMap()"></app-menu>
     </mat-sidenav>
     <!-- Content -->
     <div class="container-fluid h-100">

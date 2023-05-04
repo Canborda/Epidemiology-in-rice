@@ -18,6 +18,7 @@ export class DrawMapComponent implements OnInit {
   onStart(): void {
     this.dialogRef.close(true);
   }
+
   onCancel(): void {
     this.dialogRef.close(false);
   }

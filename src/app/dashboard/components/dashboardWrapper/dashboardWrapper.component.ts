@@ -50,6 +50,14 @@ export class DashboardWrapperComponent implements OnInit {
     }
   }
 
+  // #region MENU OPTIONS actions
+
+  onDrawMap() {
+    this.map?.drawNewPolygon();
+  }
+
+  // #endregion
+
   // #region NavBar actions
 
   onLoadMaps(): void {
