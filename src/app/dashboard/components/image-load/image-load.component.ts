@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { WrapperComponent } from '../wrapper/wrapper.component';
-import { ApiErrorI, ApiSuccessI } from 'src/app/models/api.model';
+import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 import { ImagesRequestI } from 'src/app/models/gee.model';
 
 import { GeeService } from 'src/app/services/gee.service';

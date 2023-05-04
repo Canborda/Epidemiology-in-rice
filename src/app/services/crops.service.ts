@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
-import { ApiCropSuccessI } from '../models/api.model';
+import { ApiSuccessI } from '../models/api.model';
+import { CropI } from '../models/crop.model';
 
 @Injectable({ providedIn: 'root' })
 export class CropsService {
@@ -12,11 +13,14 @@ export class CropsService {
 
   constructor(private http: HttpClient) {}
 
-  getCrops(): Observable<ApiCropSuccessI> {
+  getCrops(): Observable<ApiSuccessI<CropI[]>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
-    return this.http.get<ApiCropSuccessI>(this.baseUrl + ROUTES.crops.BASE, {
-      headers,
-    });
+    return this.http.get<ApiSuccessI<CropI[]>>(
+      this.baseUrl + ROUTES.crops.BASE,
+      {
+        headers,
+      }
+    );
   }
 }

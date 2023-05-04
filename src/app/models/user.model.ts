@@ -3,7 +3,7 @@ export interface LoginI {
   password: string;
 }
 
-export interface SignupI {
+export interface UserI {
   email: string;
   password: string;
   name: string;

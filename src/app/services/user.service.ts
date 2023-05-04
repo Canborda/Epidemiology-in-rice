@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
-import { AuthI, LoginI, SignupI } from '../models/user.model';
-import { ApiUserSuccessI } from '../models/api.model';
+import { AuthI, LoginI, UserI } from '../models/user.model';
+import { ApiSuccessI } from '../models/api.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -17,18 +17,21 @@ export class UserService {
     return this.http.post<AuthI>(this.baseUrl + ROUTES.users.login, data);
   }
 
-  signup(data: SignupI): Observable<ApiUserSuccessI> {
-    return this.http.post<ApiUserSuccessI>(
+  signup(data: UserI): Observable<ApiSuccessI<UserI>> {
+    return this.http.post<ApiSuccessI<UserI>>(
       this.baseUrl + ROUTES.users.signup,
       data
     );
   }
 
-  getUser(): Observable<ApiUserSuccessI> {
+  getUser(): Observable<ApiSuccessI<UserI>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
-    return this.http.get<ApiUserSuccessI>(this.baseUrl + ROUTES.users.BASE, {
-      headers,
-    });
+    return this.http.get<ApiSuccessI<UserI>>(
+      this.baseUrl + ROUTES.users.BASE,
+      {
+        headers,
+      }
+    );
   }
 }

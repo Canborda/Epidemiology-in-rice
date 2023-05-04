@@ -7,8 +7,8 @@ import { map, startWith } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
-import { SignupI } from 'src/app/models/user.model';
-import { ApiErrorI, ApiUserSuccessI } from 'src/app/models/api.model';
+import { UserI } from 'src/app/models/user.model';
+import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-signup',
@@ -79,15 +79,15 @@ export class SignupComponent implements OnInit {
       !this.getNameErrorMessage() &&
       !this.getRegionErrorMessage()
     ) {
-      const data: SignupI = {
+      const data: UserI = {
         email: this.email.value,
         password: this.password.value,
         name: this.name.value,
         region: this.region.value,
       };
       this.userService.signup(data).subscribe({
-        next: (v: ApiUserSuccessI) => {
-          this.toastr.success(v.message, 'SUCCESS');
+        next: (v: ApiSuccessI<UserI>) => {
+          this.toastr.success('Usuario creado correctamente', 'SUCCESS');
           this.router.navigate(['home/login']);
         },
         error: (e: HttpErrorResponse) => {

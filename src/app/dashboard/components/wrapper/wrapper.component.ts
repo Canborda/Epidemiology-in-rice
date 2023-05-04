@@ -6,9 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 
 import { GeeService } from 'src/app/services/gee.service';
 import { UserService } from 'src/app/services/user.service';
-import { SignupI } from 'src/app/models/user.model';
+import { UserI } from 'src/app/models/user.model';
 import { ImagesRequestI, ImagesResponseI } from 'src/app/models/gee.model';
-import { ApiErrorI, ApiSuccessI } from 'src/app/models/api.model';
+import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 
 import { MapComponent } from '../map/map.component';
 import { MapListComponent } from '../map-list/map-list.component';
@@ -22,7 +22,7 @@ import { ImageLoadComponent } from '../image-load/image-load.component';
 })
 export class WrapperComponent implements OnInit {
   isExpanded: boolean = true;
-  currentUser?: SignupI;
+  currentUser?: UserI;
 
   @ViewChild(MapComponent) map?: MapComponent;
   @ViewChild(ChartComponent) chart?: ChartComponent;
