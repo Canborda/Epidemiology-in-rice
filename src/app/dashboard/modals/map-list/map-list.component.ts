@@ -4,11 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { DashboardWrapperComponent } from '../dashboardWrapper/dashboardWrapper.component';
-import { MapI } from 'src/app/models/map.model';
+import { MenuComponent } from '../../components/menu/menu.component';
 
 import { MapsService } from 'src/app/services/maps.service';
+
 import { ApiErrorI } from 'src/app/models/api.model';
+import { MapI } from 'src/app/models/map.model';
 
 @Component({
   selector: 'app-map-list',
@@ -20,7 +21,7 @@ export class MapListComponent implements OnInit {
   columnsToDisplay: string[] = ['name', 'actions'];
 
   constructor(
-    public dialogRef: MatDialogRef<DashboardWrapperComponent>,
+    public dialogRef: MatDialogRef<MenuComponent>,
     private mapsService: MapsService,
     private toastr: ToastrService
   ) {}
@@ -31,15 +32,13 @@ export class MapListComponent implements OnInit {
     });
   }
 
-  selectMap(map: MapI): void {
-    this.dialogRef.close({ event: 'select', data: map });
+  // #region BUTTON ACTIONS
+
+  onSelectMap(map: MapI): void {
+    this.dialogRef.close(map);
   }
 
-  createMap(): void {
-    this.dialogRef.close({ event: 'create' });
-  }
-
-  deleteMap(map: MapI): void {
+  onDeleteMap(map: MapI): void {
     this.mapsService.deleteMap(map._id!).subscribe({
       next: () => {
         // Update table
@@ -54,4 +53,6 @@ export class MapListComponent implements OnInit {
       },
     });
   }
+
+  // #endregion
 }

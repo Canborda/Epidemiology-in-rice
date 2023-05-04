@@ -9,7 +9,7 @@ mat-footer-row mat-footer-cell {
 }
 
 .mat-row:hover {
-  background-color: rgb(200,200,200);
+  background-color: rgb(200, 200, 200);
 }
 
 .cellName:hover {

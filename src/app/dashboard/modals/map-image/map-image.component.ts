@@ -4,25 +4,26 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { DashboardWrapperComponent } from '../dashboardWrapper/dashboardWrapper.component';
-import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
-import { ImagesRequestI } from 'src/app/models/gee.model';
+import { MenuComponent } from '../../components/menu/menu.component';
 
 import { GeeService } from 'src/app/services/gee.service';
 
+import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { ImageRequestI } from 'src/app/models/gee.model';
+
 @Component({
-  selector: 'app-image-load',
-  templateUrl: './image-load.component.html',
-  styleUrls: ['./image-load.component.css'],
+  selector: 'app-map-image',
+  templateUrl: './map-image.component.html',
+  styleUrls: ['./map-image.component.css'],
 })
-export class ImageLoadComponent implements OnInit {
+export class MapImageComponent implements OnInit {
   indexList!: string[];
   // Form variables
   cloudyPercentage = new UntypedFormControl('', [Validators.required]);
   index = new UntypedFormControl('', [Validators.required]);
 
   constructor(
-    public dialogRef: MatDialogRef<DashboardWrapperComponent>,
+    public dialogRef: MatDialogRef<MenuComponent>,
     private geeService: GeeService,
     private toastr: ToastrService
   ) {}
@@ -42,13 +43,15 @@ export class ImageLoadComponent implements OnInit {
     }
   }
 
-  onSend() {
+  // #region BUTTON ACTIONS
+
+  onGenerate(): void {
     if (
       !this.getIndexErrorMessage() &&
       !this.getCloudyPercentageErrorMessage()
     ) {
       // Build request info (map_id added on WrapperComponent)
-      const data: ImagesRequestI = {
+      const data: ImageRequestI = {
         map_id: '',
         index: this.index.value,
         cloudyPercentage: this.cloudyPercentage.value,
@@ -56,6 +59,8 @@ export class ImageLoadComponent implements OnInit {
       this.dialogRef.close(data);
     }
   }
+
+  // #endregion
 
   // #region form validations
 

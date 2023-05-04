@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
-import { MapComponent } from '../map/map.component';
-import { CropI } from 'src/app/models/crop.model';
-import { MapI } from 'src/app/models/map.model';
+import { MapComponent } from '../../components/map/map.component';
 
 import { CropsService } from 'src/app/services/crops.service';
+
+import { CropI } from 'src/app/models/crop.model';
+import { MapI } from 'src/app/models/map.model';
 
 @Component({
   selector: 'app-map-add',
@@ -44,7 +45,9 @@ export class MapAddComponent implements OnInit {
     });
   }
 
-  onSave() {
+  // #region BUTTON ACTIONS
+
+  onSave(): void {
     if (
       !this.getNameErrorMessage() &&
       !this.getCropErrorMessage() &&
@@ -65,6 +68,8 @@ export class MapAddComponent implements OnInit {
       this.dialogRef.close(data);
     }
   }
+
+  // #endregion
 
   // #region form validations
 

@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
+
 import { ApiSuccessI } from '../models/api.model';
-import { ImagesRequestI, ImagesResponseI } from '../models/gee.model';
+import { ImageRequestI, ImageResponseI } from '../models/gee.model';
 
 @Injectable({ providedIn: 'root' })
 export class GeeService {
@@ -24,11 +25,11 @@ export class GeeService {
     );
   }
 
-  getImages(data: ImagesRequestI): Observable<ApiSuccessI<ImagesResponseI>> {
+  getImage(data: ImageRequestI): Observable<ApiSuccessI<ImageResponseI>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
     const params = data as {};
-    return this.http.get<ApiSuccessI<ImagesResponseI>>(
+    return this.http.get<ApiSuccessI<ImageResponseI>>(
       this.baseUrl + ROUTES.gee.images,
       {
         headers,

@@ -4,15 +4,17 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HighchartsChartModule } from 'highcharts-angular';
 
 import { DashboardWrapperComponent } from './components/dashboardWrapper/dashboardWrapper.component';
+import { MenuComponent } from './components/menu/menu.component';
 import { MapComponent } from './components/map/map.component';
-import { MapListComponent } from './components/map-list/map-list.component';
-import { ImageLoadComponent } from './components/image-load/image-load.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { MapDrawComponent } from './modals/map-draw/map-draw.component';
+import { MapAddComponent } from './modals/map-add/map-add.component';
+import { MapListComponent } from './modals/map-list/map-list.component';
+import { MapImageComponent } from './modals/map-image/map-image.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MapAddComponent } from './components/map-add/map-add.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,11 +31,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     DashboardWrapperComponent,
+    MenuComponent,
     MapComponent,
     ChartComponent,
-    MapListComponent,
+    MapDrawComponent,
     MapAddComponent,
-    ImageLoadComponent,
+    MapListComponent,
+    MapImageComponent,
   ],
   imports: [
     CommonModule,

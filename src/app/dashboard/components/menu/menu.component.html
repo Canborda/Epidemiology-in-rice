@@ -1,0 +1,34 @@
+<mat-nav-list>
+  <!-- Expand/Collapse menu -->
+  <mat-list-item (click)="isExpanded = !isExpanded">
+    <mat-icon mat-list-icon>menu</mat-icon>
+  </mat-list-item>
+  <!-- Menu options -->
+  <mat-list-item (click)="onDrawMap()">
+    <mat-icon mat-list-icon>edit_location_alt</mat-icon>
+    <span *ngIf="isExpanded">Dibujar lote</span>
+  </mat-list-item>
+  <mat-list-item (click)="onSelectMap()">
+    <mat-icon mat-list-icon>map</mat-icon>
+    <span *ngIf="isExpanded">Seleccionar lote</span>
+  </mat-list-item>
+  <mat-list-item (click)="onGenerateImage()">
+    <mat-icon mat-list-icon>satellite</mat-icon>
+    <span *ngIf="isExpanded">Generar imagen</span>
+  </mat-list-item>
+  <mat-list-item (click)="onGenerateChart()">
+    <mat-icon mat-list-icon>insert_chart</mat-icon>
+    <span *ngIf="isExpanded">Generar gráfica</span>
+  </mat-list-item>
+  <!-- User config -->
+  <div class="user-config">
+    <mat-list-item>
+      <mat-icon mat-list-icon>account_circle</mat-icon>
+      <span *ngIf="isExpanded">{{userName}}</span>
+    </mat-list-item>
+    <mat-list-item (click)="onLogout()">
+      <mat-icon mat-list-icon>logout</mat-icon>
+      <span *ngIf="isExpanded">Cerrar sesión</span>
+    </mat-list-item>
+  </div>
+</mat-nav-list>

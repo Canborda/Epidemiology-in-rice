@@ -6,12 +6,13 @@ import { ToastrService } from 'ngx-toastr';
 import * as Leaflet from 'leaflet';
 import 'leaflet-draw';
 
-import { MapAddComponent } from '../map-add/map-add.component';
-import { MapI } from 'src/app/models/map.model';
-import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
-import { ImagesResponseI } from 'src/app/models/gee.model';
+import { MapAddComponent } from '../../modals/map-add/map-add.component';
 
 import { MapsService } from 'src/app/services/maps.service';
+
+import { MapI } from 'src/app/models/map.model';
+import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { ImageResponseI } from 'src/app/models/gee.model';
 
 @Component({
   selector: 'app-map',
@@ -68,9 +69,9 @@ export class MapComponent implements AfterViewInit {
     );
   }
 
-  // #region Maps CRUD
+  // #region MAP actions
 
-  drawExistingPolygon(map: MapI) {
+  drawExistingPolygon(map: MapI): void {
     // Clean previous map
     this.currentPolygon?.remove();
     this.currentImage?.remove();
@@ -85,40 +86,42 @@ export class MapComponent implements AfterViewInit {
     this.currentMap = map;
   }
 
-  drawNewPolygon() {
+  drawNewPolygon(): void {
     if (this.LEAFLET_MAP) new Leaflet.Draw.Polygon(this.LEAFLET_MAP).enable();
   }
 
-  storeNewPolygon(event: Leaflet.LeafletEvent) {
-    const dialogRef = this.dialog.open(MapAddComponent);
-    dialogRef.afterClosed().subscribe((map: MapI) => {
-      if (map) {
-        // Add polygon coordinates
-        map.polygon = event.layer._latlngs[0].map(
-          (pt: { lat: number; lng: number }) => [pt.lat, pt.lng]
-        );
-        // Http request
-        this.mapsService.createMap(map).subscribe({
-          next: (v: ApiSuccessI<MapI>) => {
-            this.toastr.success('Lote guardado exitosamente', 'SUCCESS');
-            this.drawExistingPolygon(map);
-          },
-          error: (e: HttpErrorResponse) => {
-            const error: ApiErrorI = e.error;
-            this.toastr.error(error.message, 'ERROR');
-          },
-        });
-        // Update current map
-        this.currentMap = map;
-      }
-    });
+  storeNewPolygon(event: Leaflet.LeafletEvent): void {
+    this.dialog
+      .open(MapAddComponent)
+      .afterClosed()
+      .subscribe((map: MapI) => {
+        if (map) {
+          // Add polygon coordinates
+          map.polygon = event.layer._latlngs[0].map(
+            (pt: { lat: number; lng: number }) => [pt.lat, pt.lng]
+          );
+          // Http request
+          this.mapsService.createMap(map).subscribe({
+            next: (v: ApiSuccessI<MapI>) => {
+              this.toastr.success('Lote guardado exitosamente', 'SUCCESS');
+              this.drawExistingPolygon(map);
+            },
+            error: (e: HttpErrorResponse) => {
+              const error: ApiErrorI = e.error;
+              this.toastr.error(error.message, 'ERROR');
+            },
+          });
+          // Update current map
+          this.currentMap = map;
+        }
+      });
   }
 
   // #endregion
 
-  // #region GEE operations
+  // #region GEE actions
 
-  overlayImage(data: ImagesResponseI): void {
+  overlayImage(data: ImageResponseI): void {
     // Clean previous map
     this.currentPolygon?.remove();
     this.currentImage?.remove();

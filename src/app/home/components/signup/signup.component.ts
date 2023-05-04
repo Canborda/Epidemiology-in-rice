@@ -7,6 +7,7 @@ import { map, startWith } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
+
 import { UserI } from 'src/app/models/user.model';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 
@@ -17,18 +18,6 @@ import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 })
 export class SignupComponent implements OnInit {
   hide = true;
-
-  // Form variables
-  email = new UntypedFormControl('', [Validators.required, Validators.email]);
-  password = new UntypedFormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-  ]);
-  name = new UntypedFormControl('', [
-    Validators.required,
-    Validators.pattern(/^[A-zÀ-ú ]{2,30}$/),
-  ]);
-  region = new UntypedFormControl('', [Validators.required]);
   options: string[] = [
     'Amazonas',
     'Antioquia',
@@ -65,6 +54,17 @@ export class SignupComponent implements OnInit {
     'Vichada',
   ];
   filteredOptions: Observable<string[]> | undefined;
+  // Form variables
+  email = new UntypedFormControl('', [Validators.required, Validators.email]);
+  password = new UntypedFormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  name = new UntypedFormControl('', [
+    Validators.required,
+    Validators.pattern(/^[A-zÀ-ú ]{2,30}$/),
+  ]);
+  region = new UntypedFormControl('', [Validators.required]);
 
   constructor(
     private router: Router,
@@ -72,7 +72,22 @@ export class SignupComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  onSubmit() {
+  ngOnInit(): void {
+    // Update region array according to filter
+    this.filteredOptions = this.region.valueChanges.pipe(
+      startWith(''),
+      map((value: string) => {
+        const filterValue = value.toLowerCase();
+        return this.options.filter((option) =>
+          option.toLowerCase().includes(filterValue)
+        );
+      })
+    );
+  }
+
+  // #region BUTTON ACTIONS
+
+  onSubmit(): void {
     if (
       !this.getEmailErrorMessage() &&
       !this.getPasswordErrorMessage() &&
@@ -96,20 +111,6 @@ export class SignupComponent implements OnInit {
         },
       });
     }
-  }
-
-  ngOnInit() {
-    this.filteredOptions = this.region.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filter(value || ''))
-    );
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter((option) =>
-      option.toLowerCase().includes(filterValue)
-    );
   }
 
   // #region form validations

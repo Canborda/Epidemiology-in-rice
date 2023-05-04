@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
+
 import { AuthI, LoginI } from 'src/app/models/user.model';
 import { ApiErrorI } from 'src/app/models/api.model';
 
@@ -13,9 +14,8 @@ import { ApiErrorI } from 'src/app/models/api.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   hide = true;
-
   // Form variables
   email = new UntypedFormControl('', [Validators.required, Validators.email]);
   password = new UntypedFormControl('', [
@@ -29,7 +29,11 @@ export class LoginComponent {
     private toastr: ToastrService
   ) {}
 
-  onSubmit() {
+  ngOnInit(): void {}
+
+  // #region BUTTON ACTIONS
+
+  onSubmit(): void {
     if (!this.getEmailErrorMessage() && !this.getPasswordErrorMessage()) {
       const data: LoginI = {
         email: this.email.value,
@@ -48,6 +52,8 @@ export class LoginComponent {
       });
     }
   }
+
+  // #endregion
 
   // #region form validations
 
