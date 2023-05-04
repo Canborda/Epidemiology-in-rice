@@ -9,7 +9,7 @@ import 'leaflet-draw';
 import { MapAddComponent } from '../map-add/map-add.component';
 import { MapI } from 'src/app/models/map.model';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
-import { ImagesResponseI } from 'src/app/models/gee.model';
+import { ImageResponseI } from 'src/app/models/gee.model';
 
 import { MapsService } from 'src/app/services/maps.service';
 
@@ -118,7 +118,7 @@ export class MapComponent implements AfterViewInit {
 
   // #region GEE operations
 
-  overlayImage(data: ImagesResponseI): void {
+  overlayImage(data: ImageResponseI): void {
     // Clean previous map
     this.currentPolygon?.remove();
     this.currentImage?.remove();

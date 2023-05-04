@@ -1,19 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { MapComponent } from '../map/map.component';
 import { ChartComponent } from '../chart/chart.component';
-import { ImageLoadComponent } from '../image-load/image-load.component';
 
 import { UserService } from 'src/app/services/user.service';
 import { GeeService } from 'src/app/services/gee.service';
 
 import { UserI } from 'src/app/models/user.model';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
-import { ImagesRequestI, ImagesResponseI } from 'src/app/models/gee.model';
+import { ImageRequestI, ImageResponseI } from 'src/app/models/gee.model';
 
 import { MapI } from 'src/app/models/map.model';
 
@@ -31,7 +29,6 @@ export class DashboardWrapperComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dialog: MatDialog,
     private userService: UserService,
     private geeService: GeeService,
     private toastr: ToastrService
@@ -61,33 +58,32 @@ export class DashboardWrapperComponent implements OnInit {
     this.map?.drawExistingPolygon(map);
   }
 
+  onGenerateImage(imgReq: ImageRequestI) {
+    if (this.map?.currentMap?._id) {
+      // Add map_id
+      imgReq.map_id = this.map?.currentMap?._id;
+      // Http request
+      this.geeService.getImages(imgReq).subscribe({
+        next: (v: ApiSuccessI<ImageResponseI>) => {
+          this.map?.overlayImage(v.data);
+          this.toastr.success(
+            `Obtenida imagen para índice ${imgReq.index} de ${v.data.date}`,
+            'SUCCESS'
+          );
+        },
+        error: (e: HttpErrorResponse) => {
+          const error: ApiErrorI = e.error;
+          this.toastr.error(error.message, 'ERROR');
+        },
+      });
+    } else {
+      this.toastr.error('Debe seleccionar un mapa primero', 'ERROR');
+    }
+  }
+
   // #endregion
 
   // #region NavBar actions
-
-  onLoadImages(): void {
-    const dialogRef = this.dialog.open(ImageLoadComponent);
-    dialogRef.afterClosed().subscribe((data: ImagesRequestI) => {
-      if (this.map?.currentMap?._id) {
-        // Add map_id
-        data.map_id = this.map.currentMap._id;
-        // Http request
-        this.geeService.getImages(data).subscribe({
-          next: (v: ApiSuccessI<ImagesResponseI>) => {
-            this.map?.overlayImage(v.data);
-            this.toastr.success(
-              `Obtenida imagen para índice ${data.index} de ${v.data.date}`,
-              'SUCCESS'
-            );
-          },
-          error: (e: HttpErrorResponse) => {
-            const error: ApiErrorI = e.error;
-            this.toastr.error(error.message, 'ERROR');
-          },
-        });
-      }
-    });
-  }
 
   onLogout(): void {
     localStorage.clear();

@@ -3,8 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { MapDrawComponent } from '../../modals/map-draw/map-draw.component';
 import { MapListComponent } from '../../modals/map-list/map-list.component';
+import { MapImageComponent } from '../../modals/map-image/map-image.component';
 
 import { MapI } from 'src/app/models/map.model';
+import { ImageRequestI } from 'src/app/models/gee.model';
 
 @Component({
   selector: 'app-menu',
@@ -17,6 +19,7 @@ export class MenuComponent implements OnInit {
 
   @Output() drawMapEvent = new EventEmitter<void>();
   @Output() selectMapEvent = new EventEmitter<MapI>();
+  @Output() generateImageEvent = new EventEmitter<ImageRequestI>();
 
   constructor(private dialog: MatDialog) {}
 
@@ -43,7 +46,12 @@ export class MenuComponent implements OnInit {
   }
 
   onGenerateImage(): void {
-    console.log('ON GENERATE IMAGE');
+    this.dialog
+      .open(MapImageComponent)
+      .afterClosed()
+      .subscribe((imgReq: ImageRequestI) => {
+        if (imgReq) this.generateImageEvent.emit(imgReq);
+      });
   }
 
   onGenerateChart(): void {

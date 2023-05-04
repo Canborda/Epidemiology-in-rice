@@ -1,7 +1,8 @@
 <mat-sidenav-container autosize>
     <!-- Sidenav -->
     <mat-sidenav #sidenav mode="side" opened="true">
-        <app-menu (drawMapEvent)="onDrawMap()" (selectMapEvent)="onSelectMap($event)"></app-menu>
+        <app-menu (drawMapEvent)="onDrawMap()" (selectMapEvent)="onSelectMap($event)"
+            (generateImageEvent)="onGenerateImage($event)"></app-menu>
     </mat-sidenav>
     <!-- Content -->
     <div class="container-fluid h-100">
