@@ -2,6 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { MapDrawComponent } from '../../modals/map-draw/map-draw.component';
+import { MapListComponent } from '../../modals/map-list/map-list.component';
+
+import { MapI } from 'src/app/models/map.model';
 
 @Component({
   selector: 'app-menu',
@@ -13,6 +16,7 @@ export class MenuComponent implements OnInit {
   userName: string = 'USUARIO DE PRUEBA';
 
   @Output() drawMapEvent = new EventEmitter<void>();
+  @Output() selectMapEvent = new EventEmitter<MapI>();
 
   constructor(private dialog: MatDialog) {}
 
@@ -21,16 +25,21 @@ export class MenuComponent implements OnInit {
   // #region MENU OPTIONS actions
 
   onDrawMap(): void {
-    const dialogRef = this.dialog.open(MapDrawComponent);
-    dialogRef.afterClosed().subscribe((flag) => {
-      if (flag) {
-        this.drawMapEvent.emit(flag);
-      }
-    });
+    this.dialog
+      .open(MapDrawComponent)
+      .afterClosed()
+      .subscribe((flag: boolean) => {
+        if (flag) this.drawMapEvent.emit();
+      });
   }
 
   onSelectMap(): void {
-    console.log('ON SELECT MAP');
+    this.dialog
+      .open(MapListComponent)
+      .afterClosed()
+      .subscribe((map: MapI) => {
+        if (map) this.selectMapEvent.emit(map);
+      });
   }
 
   onGenerateImage(): void {

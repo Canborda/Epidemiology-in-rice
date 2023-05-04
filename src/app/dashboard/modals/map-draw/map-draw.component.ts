@@ -13,14 +13,10 @@ export class MapDrawComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // #region DIALOG ACTIONS
+  // #region BUTTON ACTIONS
 
   onStart(): void {
     this.dialogRef.close(true);
-  }
-
-  onCancel(): void {
-    this.dialogRef.close(false);
   }
 
   // #endregion

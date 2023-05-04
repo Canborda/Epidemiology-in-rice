@@ -4,16 +4,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { GeeService } from 'src/app/services/gee.service';
-import { UserService } from 'src/app/services/user.service';
-import { UserI } from 'src/app/models/user.model';
-import { ImagesRequestI, ImagesResponseI } from 'src/app/models/gee.model';
-import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
-
 import { MapComponent } from '../map/map.component';
-import { MapListComponent } from '../../modals/map-list/map-list.component';
 import { ChartComponent } from '../chart/chart.component';
 import { ImageLoadComponent } from '../image-load/image-load.component';
+
+import { UserService } from 'src/app/services/user.service';
+import { GeeService } from 'src/app/services/gee.service';
+
+import { UserI } from 'src/app/models/user.model';
+import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { ImagesRequestI, ImagesResponseI } from 'src/app/models/gee.model';
+
+import { MapI } from 'src/app/models/map.model';
 
 @Component({
   selector: 'app-dashboard-wrapper',
@@ -46,7 +48,6 @@ export class DashboardWrapperComponent implements OnInit {
       this.userService.getUser().subscribe((result) => {
         this.currentUser = result.data;
       });
-      this.onLoadMaps();
     }
   }
 
@@ -56,28 +57,13 @@ export class DashboardWrapperComponent implements OnInit {
     this.map?.drawNewPolygon();
   }
 
+  onSelectMap(map: MapI) {
+    this.map?.drawExistingPolygon(map);
+  }
+
   // #endregion
 
   // #region NavBar actions
-
-  onLoadMaps(): void {
-    const dialogRef = this.dialog.open(MapListComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result?.event === 'select') {
-        this.map?.drawExistingPolygon(result.data);
-        this.toastr.info(
-          `Obteniendo información del lote "${result.data.name}".`,
-          'INFO'
-        );
-      } else if (result?.event === 'create') {
-        this.map?.drawNewPolygon();
-        this.toastr.info(
-          `Agregue puntos en el mapa hasta crear una forma cerrada.`,
-          'INFO'
-        );
-      }
-    });
-  }
 
   onLoadImages(): void {
     const dialogRef = this.dialog.open(ImageLoadComponent);
