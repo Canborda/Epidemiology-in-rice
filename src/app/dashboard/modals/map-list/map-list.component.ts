@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { DashboardWrapperComponent } from '../dashboardWrapper/dashboardWrapper.component';
+import { DashboardWrapperComponent } from '../../components/dashboardWrapper/dashboardWrapper.component';
 import { MapI } from 'src/app/models/map.model';
 
 import { MapsService } from 'src/app/services/maps.service';

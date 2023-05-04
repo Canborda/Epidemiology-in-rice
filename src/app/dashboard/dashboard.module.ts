@@ -7,8 +7,8 @@ import { DashboardWrapperComponent } from './components/dashboardWrapper/dashboa
 import { MenuComponent } from './components/menu/menu.component';
 import { MapComponent } from './components/map/map.component';
 import { ChartComponent } from './components/chart/chart.component';
-import { DrawMapComponent } from './modals/draw-map/draw-map.component';
-import { MapListComponent } from './components/map-list/map-list.component';
+import { MapDrawComponent } from './modals/map-draw/map-draw.component';
+import { MapListComponent } from './modals/map-list/map-list.component';
 import { ImageLoadComponent } from './components/image-load/image-load.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -34,7 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MenuComponent,
     MapComponent,
     ChartComponent,
-    DrawMapComponent,
+    MapDrawComponent,
     MapListComponent,
     MapAddComponent,
     ImageLoadComponent,

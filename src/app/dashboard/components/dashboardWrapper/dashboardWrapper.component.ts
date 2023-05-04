@@ -11,7 +11,7 @@ import { ImagesRequestI, ImagesResponseI } from 'src/app/models/gee.model';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 
 import { MapComponent } from '../map/map.component';
-import { MapListComponent } from '../map-list/map-list.component';
+import { MapListComponent } from '../../modals/map-list/map-list.component';
 import { ChartComponent } from '../chart/chart.component';
 import { ImageLoadComponent } from '../image-load/image-load.component';
 

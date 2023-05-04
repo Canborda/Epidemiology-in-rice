@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { DrawMapComponent } from '../../modals/draw-map/draw-map.component';
+import { MapDrawComponent } from '../../modals/map-draw/map-draw.component';
 
 @Component({
   selector: 'app-menu',
@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit {
   // #region MENU OPTIONS actions
 
   onDrawMap(): void {
-    const dialogRef = this.dialog.open(DrawMapComponent);
+    const dialogRef = this.dialog.open(MapDrawComponent);
     dialogRef.afterClosed().subscribe((flag) => {
       if (flag) {
         this.drawMapEvent.emit(flag);
