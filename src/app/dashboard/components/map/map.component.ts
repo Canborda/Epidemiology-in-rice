@@ -69,9 +69,9 @@ export class MapComponent implements AfterViewInit {
     );
   }
 
-  // #region Maps CRUD
+  // #region MAP actions
 
-  drawExistingPolygon(map: MapI) {
+  drawExistingPolygon(map: MapI): void {
     // Clean previous map
     this.currentPolygon?.remove();
     this.currentImage?.remove();
@@ -86,11 +86,11 @@ export class MapComponent implements AfterViewInit {
     this.currentMap = map;
   }
 
-  drawNewPolygon() {
+  drawNewPolygon(): void {
     if (this.LEAFLET_MAP) new Leaflet.Draw.Polygon(this.LEAFLET_MAP).enable();
   }
 
-  storeNewPolygon(event: Leaflet.LeafletEvent) {
+  storeNewPolygon(event: Leaflet.LeafletEvent): void {
     this.dialog
       .open(MapAddComponent)
       .afterClosed()
@@ -119,7 +119,7 @@ export class MapComponent implements AfterViewInit {
 
   // #endregion
 
-  // #region GEE operations
+  // #region GEE actions
 
   overlayImage(data: ImageResponseI): void {
     // Clean previous map

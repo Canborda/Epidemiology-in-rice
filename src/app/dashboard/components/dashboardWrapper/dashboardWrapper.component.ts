@@ -53,15 +53,15 @@ export class DashboardWrapperComponent implements OnInit {
 
   // #region MENU OPTIONS actions
 
-  onDrawMap() {
+  onDrawMap(): void {
     this.map?.drawNewPolygon();
   }
 
-  onSelectMap(map: MapI) {
+  onSelectMap(map: MapI): void {
     this.map?.drawExistingPolygon(map);
   }
 
-  onGenerateImage(imgReq: ImageRequestI) {
+  onGenerateImage(imgReq: ImageRequestI): void {
     if (this.map?.currentMap?._id) {
       // Add map_id
       imgReq.map_id = this.map?.currentMap?._id;
