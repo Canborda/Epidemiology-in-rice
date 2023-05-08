@@ -9,7 +9,7 @@ import { MenuComponent } from '../../components/menu/menu.component';
 import { GeeService } from 'src/app/services/gee.service';
 
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
-import { ImageRequestI } from 'src/app/models/gee.model';
+import { GeeRequestI } from 'src/app/models/gee.model';
 
 @Component({
   selector: 'app-map-image',
@@ -51,7 +51,7 @@ export class MapImageComponent implements OnInit {
       !this.getCloudyPercentageErrorMessage()
     ) {
       // Build request info (map_id added on WrapperComponent)
-      const data: ImageRequestI = {
+      const data: GeeRequestI = {
         map_id: '',
         index: this.index.value,
         cloudyPercentage: this.cloudyPercentage.value,

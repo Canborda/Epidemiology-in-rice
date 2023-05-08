@@ -6,7 +6,11 @@ import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
 
 import { ApiSuccessI } from '../models/api.model';
-import { ImageRequestI, ImageResponseI } from '../models/gee.model';
+import {
+  GeeRequestI,
+  GeeImageResponseI,
+  GeeDataResponseI,
+} from '../models/gee.model';
 
 @Injectable({ providedIn: 'root' })
 export class GeeService {
@@ -25,16 +29,23 @@ export class GeeService {
     );
   }
 
-  getImage(data: ImageRequestI): Observable<ApiSuccessI<ImageResponseI>> {
+  getImage(data: GeeRequestI): Observable<ApiSuccessI<GeeImageResponseI>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
     const params = data as {};
-    return this.http.get<ApiSuccessI<ImageResponseI>>(
+    return this.http.get<ApiSuccessI<GeeImageResponseI>>(
       this.baseUrl + ROUTES.gee.images,
-      {
-        headers,
-        params,
-      }
+      { headers, params }
+    );
+  }
+
+  getPhenology(data: GeeRequestI): Observable<ApiSuccessI<GeeDataResponseI>> {
+    const access_token = localStorage.getItem('access_token');
+    const headers = { Authorization: `Bearer ${access_token}` };
+    const params = data as {};
+    return this.http.get<ApiSuccessI<GeeDataResponseI>>(
+      this.baseUrl + ROUTES.gee.phenology,
+      { headers, params }
     );
   }
 }
