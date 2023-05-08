@@ -2,7 +2,7 @@
     <!-- Sidenav -->
     <mat-sidenav #sidenav mode="side" opened="true">
         <app-menu (drawMapEvent)="onDrawMap()" (selectMapEvent)="onSelectMap($event)"
-            (generateImageEvent)="onGenerateImage($event)" (logoutEvent)="onLogout()"></app-menu>
+            (analyzeMapEvent)="onAnalyzeMap($event)" (logoutEvent)="onLogout()"></app-menu>
     </mat-sidenav>
     <!-- Content -->
     <div class="container-fluid h-100">

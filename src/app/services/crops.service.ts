@@ -26,11 +26,11 @@ export class CropsService {
     );
   }
 
-  getPhenology(data: GeeRequestI): Observable<ApiSuccessI<GeeDataResponseI>> {
+  getPhenology(data: GeeRequestI): Observable<ApiSuccessI<GeeDataResponseI[]>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
     const params = { map_id: data.map_id, index: data.index };
-    return this.http.get<ApiSuccessI<GeeDataResponseI>>(
+    return this.http.get<ApiSuccessI<GeeDataResponseI[]>>(
       this.baseUrl + ROUTES.crops.phenology,
       { headers, params }
     );

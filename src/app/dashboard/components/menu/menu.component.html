@@ -12,13 +12,9 @@
     <mat-icon mat-list-icon>map</mat-icon>
     <span *ngIf="isExpanded">Seleccionar lote</span>
   </mat-list-item>
-  <mat-list-item (click)="onGenerateImage()">
+  <mat-list-item (click)="onAnalyzeMap()">
     <mat-icon mat-list-icon>satellite</mat-icon>
-    <span *ngIf="isExpanded">Generar imagen</span>
-  </mat-list-item>
-  <mat-list-item (click)="onGenerateChart()">
-    <mat-icon mat-list-icon>insert_chart</mat-icon>
-    <span *ngIf="isExpanded">Generar gráfica</span>
+    <span *ngIf="isExpanded">Analizar lote</span>
   </mat-list-item>
   <!-- User config -->
   <div class="user-config">

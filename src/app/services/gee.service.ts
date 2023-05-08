@@ -39,11 +39,11 @@ export class GeeService {
     );
   }
 
-  getPhenology(data: GeeRequestI): Observable<ApiSuccessI<GeeDataResponseI>> {
+  getPhenology(data: GeeRequestI): Observable<ApiSuccessI<GeeDataResponseI[]>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
     const params = data as {};
-    return this.http.get<ApiSuccessI<GeeDataResponseI>>(
+    return this.http.get<ApiSuccessI<GeeDataResponseI[]>>(
       this.baseUrl + ROUTES.gee.phenology,
       { headers, params }
     );

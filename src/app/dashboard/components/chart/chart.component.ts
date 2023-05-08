@@ -9,8 +9,8 @@ import {
 import * as Highcharts from 'highcharts';
 import addMore from 'highcharts/highcharts-more';
 import { Options } from 'highcharts';
-import { PointI } from 'src/app/models/chart.model';
-import { tempSeries } from './chartOptions';
+
+import { GeeDataResponseI } from 'src/app/models/gee.model';
 
 addMore(Highcharts);
 
@@ -20,77 +20,30 @@ addMore(Highcharts);
   styleUrls: ['./chart.component.css'],
 })
 export class ChartComponent implements OnInit, AfterViewInit {
+  cropData?: GeeDataResponseI[];
+  geeData?: GeeDataResponseI[];
+
   @ViewChild('mainChart') mainChartRef!: ElementRef<HTMLDivElement>;
+
   constructor() {}
 
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {}
 
-  plotPolygonInfo(index: string) {
-    // TODO get chart series from API
-    const selectedSeries = tempSeries.find((serie) => serie.index === index);
-    if (selectedSeries) {
+  updateChart(index: string) {
+    const selectedSeries: Highcharts.SeriesOptionsType[] =
+      this.buildChartData();
+    if (selectedSeries.length) {
       const options: Options = {
         title: {
-          text: `Índice ${selectedSeries.index} estandarizado vs. real`,
+          text: `Índice ${index} estandarizado vs. real`,
         },
         subtitle: {
           text: 'Región: Caribe Seco  |  Variedad: Fedearroz 67',
         },
-        xAxis: {
-          type: 'datetime',
-          minPadding: 0,
-          maxPadding: 0.05,
-          plotLines: selectedSeries.standardized.map((point: PointI) => {
-            return {
-              value: point.x,
-              color: '#000000',
-              dashStyle: 'Dash',
-            };
-          }),
-        },
-        series: [
-          {
-            name: 'Modelo estándar',
-            type: 'line',
-            lineWidth: 3,
-            color: '#0000FF',
-            marker: {
-              symbol: 'circle',
-              radius: 5,
-            },
-            data: selectedSeries.standardized,
-          },
-          {
-            name: 'Range',
-            // TODO dynamic range?
-            data: selectedSeries.standardized.map((point) => [
-              point.x,
-              point.y - 0.1,
-              point.y + 0.1,
-            ]),
-            type: 'arearange',
-            linkedTo: ':previous',
-            lineWidth: 0,
-            color: '#0000FF',
-            fillOpacity: 0.2,
-            marker: {
-              enabled: false,
-            },
-          },
-          {
-            name: 'Índice real',
-            type: 'line',
-            lineWidth: 3,
-            color: '#FF0000',
-            marker: {
-              symbol: 'circle',
-              radius: 5,
-            },
-            data: selectedSeries.estimated,
-          },
-        ],
+        xAxis: this.buildXAxis(),
+        series: selectedSeries,
         legend: {
           layout: 'horizontal',
           align: 'center',
@@ -102,6 +55,83 @@ export class ChartComponent implements OnInit, AfterViewInit {
         ...options,
         chart: { ...options, renderTo: this.mainChartRef.nativeElement },
       });
+    }
+  }
+
+  private buildChartData(): Highcharts.SeriesOptionsType[] {
+    const series: Highcharts.SeriesOptionsType[] = [];
+    if (this.cropData) {
+      // Add standardized serie
+      const cropSerie: Highcharts.SeriesOptionsType = {
+        type: 'line',
+        name: 'Modelo Estándar',
+        lineWidth: 3,
+        color: '#0000FF',
+        marker: {
+          symbol: 'circle',
+          radius: 5,
+        },
+        data: this.cropData.map((data) => {
+          return { x: new Date(data.date).getTime(), y: data.value };
+        }),
+      };
+      series.push(cropSerie);
+      // Add range for standardized serie
+      const cropRange: Highcharts.SeriesOptionsType = {
+        type: 'arearange',
+        linkedTo: ':previous',
+        lineWidth: 0,
+        color: '#0000FF',
+        fillOpacity: 0.2,
+        marker: {
+          enabled: false,
+        },
+        data: this.cropData.map((data) => [
+          new Date(data.date).getTime(),
+          data.value - 0.1,
+          data.value + 0.1,
+        ]),
+      };
+      series.push(cropRange);
+    }
+    if (this.geeData) {
+      // Add estimated serie
+      const geeSerie: Highcharts.SeriesOptionsType = {
+        type: 'line',
+        name: 'Índice Real',
+        lineWidth: 3,
+        color: '#FF0000',
+        marker: {
+          symbol: 'circle',
+          radius: 5,
+        },
+        data: this.geeData.map((data) => {
+          return { x: new Date(data.date).getTime(), y: data.value };
+        }),
+      };
+      series.push(geeSerie);
+    }
+    return series;
+  }
+
+  private buildXAxis(): Highcharts.XAxisOptions | undefined {
+    if (this.cropData) {
+      const axis: Highcharts.XAxisOptions = {
+        type: 'datetime',
+        minPadding: 0,
+        maxPadding: 0.05,
+        plotLines: this.cropData.map((data) => {
+          return {
+            value: new Date(data.date).getTime(),
+            color: '#000000',
+            dashStyle: 'Dash',
+          };
+        }),
+        labels: { align: 'right' },
+      };
+      return axis;
+    } else {
+      return undefined;
     }
   }
 }
