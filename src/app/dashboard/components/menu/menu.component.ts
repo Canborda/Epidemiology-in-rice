@@ -6,7 +6,7 @@ import { MapListComponent } from '../../modals/map-list/map-list.component';
 import { MapImageComponent } from '../../modals/map-image/map-image.component';
 
 import { MapI } from 'src/app/models/map.model';
-import { ImageRequestI } from 'src/app/models/gee.model';
+import { GeeRequestI } from 'src/app/models/gee.model';
 
 @Component({
   selector: 'app-menu',
@@ -19,7 +19,7 @@ export class MenuComponent implements OnInit {
 
   @Output() drawMapEvent = new EventEmitter<void>();
   @Output() selectMapEvent = new EventEmitter<MapI>();
-  @Output() generateImageEvent = new EventEmitter<ImageRequestI>();
+  @Output() analyzeMapEvent = new EventEmitter<GeeRequestI>();
   @Output() logoutEvent = new EventEmitter<void>();
 
   constructor(private dialog: MatDialog) {}
@@ -46,17 +46,13 @@ export class MenuComponent implements OnInit {
       });
   }
 
-  onGenerateImage(): void {
+  onAnalyzeMap(): void {
     this.dialog
       .open(MapImageComponent)
       .afterClosed()
-      .subscribe((imgReq: ImageRequestI) => {
-        if (imgReq) this.generateImageEvent.emit(imgReq);
+      .subscribe((imgReq: GeeRequestI) => {
+        if (imgReq) this.analyzeMapEvent.emit(imgReq);
       });
-  }
-
-  onGenerateChart(): void {
-    console.log('ON GENERATE CHART');
   }
 
   onLogout(): void {

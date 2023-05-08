@@ -1,11 +1,17 @@
-export interface ImageRequestI {
+export interface GeeRequestI {
   map_id: string;
   index: string;
   cloudyPercentage: number;
 }
 
-export interface ImageResponseI {
+export interface GeeImageResponseI {
   url: string;
   date: Date;
   bbox: Array<Float32List>;
+}
+
+export interface GeeDataResponseI {
+  name?: string;
+  date: Date;
+  value: number;
 }

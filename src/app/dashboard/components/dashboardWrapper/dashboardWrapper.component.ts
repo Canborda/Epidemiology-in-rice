@@ -8,11 +8,16 @@ import { MapComponent } from '../map/map.component';
 import { ChartComponent } from '../chart/chart.component';
 
 import { UserService } from 'src/app/services/user.service';
+import { CropsService } from 'src/app/services/crops.service';
 import { GeeService } from 'src/app/services/gee.service';
 
 import { UserI } from 'src/app/models/user.model';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
-import { ImageRequestI, ImageResponseI } from 'src/app/models/gee.model';
+import {
+  GeeRequestI,
+  GeeImageResponseI,
+  GeeDataResponseI,
+} from 'src/app/models/gee.model';
 
 import { MapI } from 'src/app/models/map.model';
 
@@ -32,6 +37,7 @@ export class DashboardWrapperComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
+    private cropService: CropsService,
     private geeService: GeeService,
     private toastr: ToastrService
   ) {}
@@ -61,16 +67,54 @@ export class DashboardWrapperComponent implements OnInit {
     this.map?.drawExistingPolygon(map);
   }
 
-  onGenerateImage(imgReq: ImageRequestI): void {
+  onAnalyzeMap(geeReq: GeeRequestI): void {
     if (this.map?.currentMap?._id) {
       // Add map_id
-      imgReq.map_id = this.map?.currentMap?._id;
-      // Http request
-      this.geeService.getImage(imgReq).subscribe({
-        next: (v: ApiSuccessI<ImageResponseI>) => {
+      geeReq.map_id = this.map?.currentMap?._id;
+      // Http request to get image
+      this.geeService.getImage(geeReq).subscribe({
+        next: (v: ApiSuccessI<GeeImageResponseI>) => {
           this.map?.overlayImage(v.data);
           this.toastr.success(
-            `Obtenida imagen para índice ${imgReq.index} de ${v.data.date}`,
+            `Obtenida imagen para índice ${geeReq.index} de ${v.data.date}`,
+            'SUCCESS'
+          );
+        },
+        error: (e: HttpErrorResponse) => {
+          const error: ApiErrorI = e.error;
+          this.toastr.error(error.message, 'ERROR');
+        },
+      });
+      // Http request to get crop data from DB
+      this.cropService.getPhenology(geeReq).subscribe({
+        next: (v: ApiSuccessI<GeeDataResponseI[]>) => {
+          if (this.chart) {
+            // Set crop data into chart component
+            this.chart.cropData = v.data;
+            // Update chart
+            this.chart.updateChart(geeReq.index);
+          }
+          this.toastr.success(
+            `Obtenido modelo para índice ${geeReq.index} con ${v.count} etapas fenológicas`,
+            'SUCCESS'
+          );
+        },
+        error: (e: HttpErrorResponse) => {
+          const error: ApiErrorI = e.error;
+          this.toastr.error(error.message, 'ERROR');
+        },
+      });
+      // Http request to get crop data from GEE
+      this.geeService.getPhenology(geeReq).subscribe({
+        next: (v: ApiSuccessI<GeeDataResponseI[]>) => {
+          if (this.chart) {
+            // Set gee data into chart component
+            this.chart.geeData = v.data;
+            // Update chart
+            this.chart.updateChart(geeReq.index);
+          }
+          this.toastr.success(
+            `Obtenidos datos para índice ${geeReq.index} con ${v.count} imágenes`,
             'SUCCESS'
           );
         },
