@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 import { MapComponent } from '../../components/map/map.component';
 
 import { CropsService } from 'src/app/services/crops.service';
 
+import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 import { CropI } from 'src/app/models/crop.model';
 import { MapI } from 'src/app/models/map.model';
 
@@ -16,32 +19,29 @@ import { MapI } from 'src/app/models/map.model';
 })
 export class MapAddComponent implements OnInit {
   cropList!: CropI[];
-  crops: string[] = [];
   varieties: string[] = [];
   today = new Date();
   // Form variables
   name = new UntypedFormControl('', [Validators.required]);
-  crop = new UntypedFormControl('', [Validators.required]);
   variety = new UntypedFormControl('', [Validators.required]);
   date = new UntypedFormControl('', [Validators.required]);
 
   constructor(
     public dialogRef: MatDialogRef<MapComponent>,
-    private cropsService: CropsService
+    private cropsService: CropsService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.cropsService.getCrops().subscribe((result) => {
-      this.cropList = result.data as CropI[];
-      this.crops = this.cropList
-        .map((crop) => crop.name)
-        .filter((v, i, a) => a.indexOf(v) === i);
-      // Update varieties for selected crop
-      this.crop.valueChanges.subscribe((selectedCrop) => {
-        this.varieties = this.cropList
-          .filter((crop) => crop.name === selectedCrop)
-          .map((crop) => crop.variety);
-      });
+    this.cropsService.getCrops().subscribe({
+      next: (v: ApiSuccessI<CropI[]>) => {
+        this.cropList = v.data;
+        this.varieties = this.cropList.map((crop) => crop.variety);
+      },
+      error: (e: HttpErrorResponse) => {
+        const error: ApiErrorI = e.error;
+        this.toastr.error(error.message, 'ERROR');
+      },
     });
   }
 
@@ -50,18 +50,17 @@ export class MapAddComponent implements OnInit {
   onSave(): void {
     if (
       !this.getNameErrorMessage() &&
-      !this.getCropErrorMessage() &&
       !this.getVarietyErrorMessage() &&
       !this.getDateErrorMessage()
     ) {
       // Extract cropId from crop-variety combination
-      const selectedCrop = this.cropList
-        .filter((crop) => crop.name === this.crop.value)
-        .filter((crop) => crop.variety === this.variety.value);
+      const selectedCrop = this.cropList.find(
+        (crop) => crop.variety === this.variety.value
+      )!;
       // Build map info (polygon points added on MapComponent)
       const data: MapI = {
         name: this.name.value,
-        crop: selectedCrop[0]._id!,
+        crop: selectedCrop._id!,
         seedDate: this.date.value,
         polygon: [],
       };
@@ -75,11 +74,6 @@ export class MapAddComponent implements OnInit {
 
   getNameErrorMessage() {
     if (this.name.hasError('required')) return 'Campo obligatorio';
-    return null;
-  }
-
-  getCropErrorMessage() {
-    if (this.crop.hasError('required')) return 'Campo obligatorio';
     return null;
   }
 
