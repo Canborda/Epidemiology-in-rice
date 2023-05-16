@@ -5,9 +5,10 @@ export interface LoginI {
 
 export interface UserI {
   email: string;
-  password: string;
+  password?: string;
   name: string;
   region: string;
+  role?: number;
 }
 
 export interface AuthI {

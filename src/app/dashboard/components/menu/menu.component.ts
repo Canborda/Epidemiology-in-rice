@@ -16,6 +16,7 @@ import { GeeRequestI } from 'src/app/models/gee.model';
 export class MenuComponent implements OnInit {
   isExpanded: boolean = true;
   userName: string = 'USER NAME';
+  isAdmin: boolean = false;
 
   @Output() drawMapEvent = new EventEmitter<void>();
   @Output() selectMapEvent = new EventEmitter<MapI>();
@@ -24,7 +25,10 @@ export class MenuComponent implements OnInit {
 
   constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('IS ADMIN:');
+    console.log(this.isAdmin);
+  }
 
   // #region MENU OPTIONS actions
 
@@ -53,6 +57,10 @@ export class MenuComponent implements OnInit {
       .subscribe((imgReq: GeeRequestI) => {
         if (imgReq) this.analyzeMapEvent.emit(imgReq);
       });
+  }
+
+  onCropOptions(): void {
+    console.log('ON CROP OPTIONS');
   }
 
   onLogout(): void {

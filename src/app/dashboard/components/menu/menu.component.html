@@ -4,20 +4,33 @@
     <mat-icon mat-list-icon>menu</mat-icon>
   </mat-list-item>
   <!-- Menu options -->
-  <mat-list-item (click)="onDrawMap()">
-    <mat-icon mat-list-icon>edit_location_alt</mat-icon>
-    <span *ngIf="isExpanded">Dibujar lote</span>
-  </mat-list-item>
-  <mat-list-item (click)="onSelectMap()">
-    <mat-icon mat-list-icon>map</mat-icon>
-    <span *ngIf="isExpanded">Seleccionar lote</span>
-  </mat-list-item>
-  <mat-list-item (click)="onAnalyzeMap()">
-    <mat-icon mat-list-icon>satellite</mat-icon>
-    <span *ngIf="isExpanded">Analizar lote</span>
-  </mat-list-item>
+  <div class="user-options">
+    <mat-divider></mat-divider>
+    <mat-list-item (click)="onDrawMap()">
+      <mat-icon mat-list-icon>edit_location_alt</mat-icon>
+      <span *ngIf="isExpanded">Dibujar lote</span>
+    </mat-list-item>
+    <mat-list-item (click)="onSelectMap()">
+      <mat-icon mat-list-icon>map</mat-icon>
+      <span *ngIf="isExpanded">Seleccionar lote</span>
+    </mat-list-item>
+    <mat-list-item (click)="onAnalyzeMap()">
+      <mat-icon mat-list-icon>satellite</mat-icon>
+      <span *ngIf="isExpanded">Analizar lote</span>
+    </mat-list-item>
+  </div>
+  <!-- Admin options -->
+  <div class="admin-options" *ngIf="isAdmin">
+    <mat-divider></mat-divider>
+    <!-- <p *ngIf="isExpanded">ADMINISTRADOR</p> -->
+    <mat-list-item (click)="onCropOptions()">
+      <mat-icon mat-list-icon>perm_data_setting</mat-icon>
+      <span *ngIf="isExpanded">Opciones de Cultivo</span>
+    </mat-list-item>
+  </div>
   <!-- User config -->
   <div class="user-config">
+    <mat-divider></mat-divider>
     <mat-list-item>
       <mat-icon mat-list-icon>account_circle</mat-icon>
       <span *ngIf="isExpanded">{{userName}}</span>
