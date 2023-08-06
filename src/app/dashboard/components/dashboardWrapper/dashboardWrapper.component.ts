@@ -28,6 +28,7 @@ import { MapI } from 'src/app/models/map.model';
 })
 export class DashboardWrapperComponent implements OnInit {
   isExpanded: boolean = true;
+  chartVisible: boolean = false;
   currentUser?: UserI;
 
   @ViewChild(MenuComponent) menu?: MenuComponent;
@@ -50,9 +51,14 @@ export class DashboardWrapperComponent implements OnInit {
       this.router.navigate(['home/login']);
     } else {
       // Get user with token
-      this.userService.getUser().subscribe((result) => {
-        this.currentUser = result.data;
-        if (this.menu) this.menu.userName = this.currentUser.name;
+      this.userService.getUser().subscribe({
+        next: (v: ApiSuccessI<UserI>) => {
+          this.currentUser = v.data;
+          if (this.menu) {
+            this.menu.userName = this.currentUser.name;
+            this.menu.isAdmin = this.currentUser.role === 1;
+          }
+        },
       });
     }
   }
@@ -90,6 +96,7 @@ export class DashboardWrapperComponent implements OnInit {
         next: (v: ApiSuccessI<GeeDataResponseI[]>) => {
           if (this.chart) {
             // Set crop data into chart component
+            this.chartVisible = true;
             this.chart.cropData = v.data;
             // Update chart
             this.chart.updateChart(geeReq.index);
@@ -109,6 +116,7 @@ export class DashboardWrapperComponent implements OnInit {
         next: (v: ApiSuccessI<GeeDataResponseI[]>) => {
           if (this.chart) {
             // Set gee data into chart component
+            this.chartVisible = true;
             this.chart.geeData = v.data;
             // Update chart
             this.chart.updateChart(geeReq.index);
