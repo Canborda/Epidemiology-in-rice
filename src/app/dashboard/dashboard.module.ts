@@ -12,6 +12,7 @@ import { MapAddComponent } from './modals/map-add/map-add.component';
 import { MapListComponent } from './modals/map-list/map-list.component';
 import { MapImageComponent } from './modals/map-image/map-image.component';
 import { CropListComponent } from './modals/crop-list/crop-list.component';
+import { CellEditComponent } from './modals/cell-edit/cell-edit.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -41,6 +42,7 @@ import { FormsModule } from '@angular/forms';
     MapListComponent,
     MapImageComponent,
     CropListComponent,
+    CellEditComponent,
   ],
   imports: [
     CommonModule,

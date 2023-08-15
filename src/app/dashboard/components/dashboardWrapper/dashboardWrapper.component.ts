@@ -11,8 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 import { CropsService } from 'src/app/services/crops.service';
 import { GeeService } from 'src/app/services/gee.service';
 
-import { UserI } from 'src/app/models/user.model';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { UserI } from 'src/app/models/user.model';
 import {
   GeeRequestI,
   GeeImageResponseI,

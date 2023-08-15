@@ -24,7 +24,7 @@
         <tr *ngFor="let row of table">
           <td *ngFor="let col of tableHeaders; let i = index" [class.firstCol]="i < 2"
             (click)="onCellClick(row, col)">
-            {{row[col]}}
+            {{row[col] ?? '-'}}
           </td>
         </tr>
       </tbody>
@@ -41,6 +41,6 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onUpdate()" mat-raised-button color="primary">Guardar</button>
+  <button mat-button (click)="onSave()" mat-raised-button color="primary">Guardar</button>
   <button mat-button mat-stroked-button mat-dialog-close color="primary">Cancelar</button>
 </mat-dialog-actions>

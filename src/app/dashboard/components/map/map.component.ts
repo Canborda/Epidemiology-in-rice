@@ -10,8 +10,8 @@ import { MapAddComponent } from '../../modals/map-add/map-add.component';
 
 import { MapsService } from 'src/app/services/maps.service';
 
-import { MapI } from 'src/app/models/map.model';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { MapI } from 'src/app/models/map.model';
 import { GeeImageResponseI } from 'src/app/models/gee.model';
 
 @Component({
