@@ -7,29 +7,38 @@
       <mat-option *ngFor="let crop of cropList" [value]="crop">{{crop.variety}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <!-- Phenology vs. Index table -->
-  <p *ngIf="selectedCrop">ID: {{selectedCrop._id}}</p>
-  <table>
-    <thead>
-      <th *ngFor="let col of columnsToDisplay">{{col}}</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of table">
-        <td *ngFor="let col of columnsToDisplay; let i = index" [class.firstCol]="i < 2"
-          (click)="onCellClick(row, col)">
-          {{row[col]}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <button class="optButton" mat-button (click)="onAddRow()" mat-raised-button color="basic">
-    <mat-icon>library_add</mat-icon> Agregar etapa
+  <button mat-button color="basic" class="addButton" (click)="onAddCrop()">
+    <mat-icon>library_add</mat-icon>Agregar Variedad
   </button>
-  <button class="optButton" mat-button (click)="onDeleteRow()" mat-raised-button color="basic">
-    <mat-icon>delete_outline</mat-icon> Eliminar etapa
+  <button mat-button color="primary" class="delButton" (click)="onDeleteCrop()">
+    <mat-icon>delete_outline</mat-icon>Eliminar Variedad
   </button>
-  <br>
+  <div *ngIf="selectedCrop">
+    <p>ID: {{selectedCrop._id}}</p>
+    <!-- Phenology vs. Index table -->
+    <table>
+      <thead>
+        <th *ngFor="let col of tableHeaders">{{col}}</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of table">
+          <td *ngFor="let col of tableHeaders; let i = index" [class.firstCol]="i < 2"
+            (click)="onCellClick(row, col)">
+            {{row[col]}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <!-- Crop CRUD operations buttons -->
+    <button mat-button color="basic" class="addButton" (click)="onAddRow()">
+      <mat-icon>library_add</mat-icon> Agregar etapa
+    </button>
+    <button mat-button color="basic" class="delButton" (click)="onDeleteRow()">
+      <mat-icon>delete_outline</mat-icon> Eliminar etapa
+    </button>
+    <br>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onUpdate()" mat-raised-button color="primary">Guardar</button>

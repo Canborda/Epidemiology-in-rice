@@ -14,10 +14,10 @@ export class CropListComponent implements OnInit {
   cropList!: CropI[];
   selectedCrop?: CropI;
   table: any;
-  columnsToDisplay: string[];
+  tableHeaders: string[];
 
   constructor(private cropsService: CropsService) {
-    this.columnsToDisplay = ['Phenology', 'Days'].concat(
+    this.tableHeaders = ['Etapa Fenológica', 'Días'].concat(
       Object.values(INDEXES)
     );
   }
@@ -38,6 +38,16 @@ export class CropListComponent implements OnInit {
     }
   }
 
+  onAddCrop(): void {
+    console.log('ADD CROP BUTTON');
+    // TODO implement Add Crop button
+  }
+
+  onDeleteCrop(): void {
+    console.log('DELETE CROP BUTTON');
+    // TODO implement Delete Crop button
+  }
+
   onCellClick(row: any, col: string): void {
     console.log('CELL CLICKED');
     console.log(row);
@@ -48,9 +58,9 @@ export class CropListComponent implements OnInit {
     console.log('ADD ROW BUTTON');
     // TODO implement Add Row button
   }
-  
+
   onDeleteRow(): void {
-    console.log('DELETE ROW BUTTON'); 
+    console.log('DELETE ROW BUTTON');
     // TODO implement Delete Row button
   }
 
@@ -66,8 +76,8 @@ export class CropListComponent implements OnInit {
   phenology2table(phenologyList: PhenologyI[]) {
     return phenologyList.map((phenology) => {
       let row: any = {};
-      row['Phenology'] = phenology.name;
-      row['Days'] = phenology.days;
+      row[this.tableHeaders[0]] = phenology.name;
+      row[this.tableHeaders[1]] = phenology.days;
       Object.values(INDEXES).forEach((index) => {
         row[index] =
           phenology.indexes.find((i) => i.name === index)?.value ?? null;

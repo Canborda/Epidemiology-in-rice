@@ -1,3 +1,7 @@
+p {
+  color: darkgray;
+}
+
 table th {
   padding: 10px;
   color: white;
@@ -18,9 +22,18 @@ table td {
   color: darkgray;
 }
 
-.optButton {
+.addButton {
   margin: 10px;
-  color: white;
-  background-color: darkgray;
+  color: green;
+  border: 1px solid green;
+  font-size: small;
+  font-weight: normal;
+}
+
+.delButton {
+  margin: 10px;
+  color: red;
+  border: 1px solid red;
+  font-size: small;
   font-weight: normal;
 }
