@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MapDrawComponent } from '../../modals/map-draw/map-draw.component';
 import { MapListComponent } from '../../modals/map-list/map-list.component';
 import { MapImageComponent } from '../../modals/map-image/map-image.component';
+import { CropListComponent } from '../../modals/crop-list/crop-list.component';
 
 import { MapI } from 'src/app/models/map.model';
 import { GeeRequestI } from 'src/app/models/gee.model';
@@ -25,10 +26,7 @@ export class MenuComponent implements OnInit {
 
   constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void {
-    console.log('IS ADMIN:');
-    console.log(this.isAdmin);
-  }
+  ngOnInit(): void {}
 
   // #region MENU OPTIONS actions
 
@@ -60,7 +58,7 @@ export class MenuComponent implements OnInit {
   }
 
   onCropOptions(): void {
-    console.log('ON CROP OPTIONS');
+    this.dialog.open(CropListComponent);
   }
 
   onLogout(): void {

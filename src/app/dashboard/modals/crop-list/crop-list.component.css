@@ -1,0 +1,26 @@
+table th {
+  padding: 10px;
+  color: white;
+  background-color: darkgray;
+  font-weight: normal;
+}
+
+table tr {
+  border-bottom: 2px solid lightgray;
+}
+
+table td {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.firstCol {
+  color: darkgray;
+}
+
+.optButton {
+  margin: 10px;
+  color: white;
+  background-color: darkgray;
+  font-weight: normal;
+}

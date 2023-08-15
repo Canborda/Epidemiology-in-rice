@@ -11,6 +11,7 @@ import { MapDrawComponent } from './modals/map-draw/map-draw.component';
 import { MapAddComponent } from './modals/map-add/map-add.component';
 import { MapListComponent } from './modals/map-list/map-list.component';
 import { MapImageComponent } from './modals/map-image/map-image.component';
+import { CropListComponent } from './modals/crop-list/crop-list.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,10 +40,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MapAddComponent,
     MapListComponent,
     MapImageComponent,
+    CropListComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     DashboardRoutingModule,
     HighchartsChartModule,
     // Ng Material Modules
