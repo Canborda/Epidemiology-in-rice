@@ -14,7 +14,7 @@
     <mat-icon>delete_outline</mat-icon>Eliminar Variedad
   </button>
   <div *ngIf="selectedCrop">
-    <p>ID: {{selectedCrop._id}}</p>
+    <p>ID: {{selectedCrop._id ?? '-'}}</p>
     <!-- Phenology vs. Index table -->
     <table>
       <thead>
@@ -22,8 +22,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let row of table">
-          <td *ngFor="let col of tableHeaders; let i = index" [class.firstCol]="i < 2"
-            (click)="onCellClick(row, col)">
+          <td *ngFor="let col of tableHeaders; let i = index" [class.firstCol]="i < 2" (click)="onCellClick(row, col)">
             {{row[col] ?? '-'}}
           </td>
         </tr>

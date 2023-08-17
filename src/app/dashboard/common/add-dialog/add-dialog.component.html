@@ -1,0 +1,12 @@
+<mat-dialog-content>
+  <p>Ingrese el nombre de la <b>{{entity}}</b> a crear: </p>
+  <mat-form-field class="full-width" appearance="fill">
+    <input matInput [formControl]="value" required>
+    <mat-error *ngIf="value.invalid">{{getValidationError()}}</mat-error>
+  </mat-form-field>
+  <br>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="accept" (click)="onSave()">Agregar</button>
+  <button mat-stroked-button mat-dialog-close color="cancel">Cancelar</button>
+</mat-dialog-actions>

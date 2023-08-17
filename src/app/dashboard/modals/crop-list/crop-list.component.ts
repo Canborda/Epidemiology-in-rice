@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { MenuComponent } from '../../components/menu/menu.component';
 import { CellDialogComponent } from '../../common/cell-dialog/cell-dialog.component';
+import { AddDialogComponent } from '../../common/add-dialog/add-dialog.component';
 import { DeleteDialogComponent } from '../../common/delete-dialog/delete-dialog.component';
 
 import { CropsService } from 'src/app/services/crops.service';
@@ -56,13 +57,41 @@ export class CropListComponent implements OnInit {
   }
 
   onAddCrop(): void {
-    console.log('ADD CROP BUTTON');
-    // TODO implement Add Crop button
+    this.dialog
+      .open(AddDialogComponent, {
+        disableClose: true,
+        data: {
+          entity: 'Variedad',
+          list: this.cropList.map((crop) => crop.variety),
+        },
+      })
+      .afterClosed()
+      .subscribe((name: any) => {
+        if (name) {
+          const newCrop: CropI = {
+            variety: name,
+            phenology: [],
+          };
+          this.cropList.push(newCrop);
+          this.selectedCrop = this.cropList[this.cropList.length - 1];
+          this.table = this.phenology2table(this.selectedCrop!.phenology);
+        }
+      });
   }
 
   onDeleteCrop(): void {
-    console.log('DELETE CROP BUTTON');
-    // TODO implement Delete Crop button
+    this.dialog
+      .open(DeleteDialogComponent, {
+        disableClose: true,
+        data: { entity: 'Variedad' },
+      })
+      .afterClosed()
+      .subscribe((name: any) => {
+        this.cropList = this.cropList.filter(
+          (crop: CropI) => crop.variety !== name
+        );
+        if (this.selectedCrop?.variety === name) this.selectedCrop = undefined;
+      });
   }
 
   onCellClick(row: any, col: string): void {
@@ -80,15 +109,29 @@ export class CropListComponent implements OnInit {
   }
 
   onAddRow(): void {
-    const newPhenology: PhenologyI = {
-      name: `Etapa Fenológica ${this.table.length + 1}`,
-      days: Math.max(
-        ...this.table.map((row: any) => row[this.tableHeaders[1]])
-      ),
-      indexes: [],
-    };
-    this.selectedCrop!.phenology.push(newPhenology);
-    this.table = this.phenology2table(this.selectedCrop!.phenology);
+    this.dialog
+      .open(AddDialogComponent, {
+        disableClose: true,
+        data: {
+          entity: this.tableHeaders[0],
+          list: this.table.map((row: any) => row[this.tableHeaders[0]]),
+        },
+      })
+      .afterClosed()
+      .subscribe((name: any) => {
+        if (name) {
+          const allDays = this.table?.length
+            ? this.table.map((row: any) => row[this.tableHeaders[1]])
+            : [0];
+          const newPhenology: PhenologyI = {
+            name: name,
+            days: Math.max(...allDays),
+            indexes: [],
+          };
+          this.selectedCrop!.phenology.push(newPhenology);
+          this.table = this.phenology2table(this.selectedCrop!.phenology);
+        }
+      });
   }
 
   onDeleteRow(): void {

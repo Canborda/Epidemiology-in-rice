@@ -13,6 +13,7 @@ import { MapListComponent } from './modals/map-list/map-list.component';
 import { MapImageComponent } from './modals/map-image/map-image.component';
 import { CropListComponent } from './modals/crop-list/crop-list.component';
 import { CellDialogComponent } from './common/cell-dialog/cell-dialog.component';
+import { AddDialogComponent } from './common/add-dialog/add-dialog.component';
 import { DeleteDialogComponent } from './common/delete-dialog/delete-dialog.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -44,6 +45,7 @@ import { FormsModule } from '@angular/forms';
     MapImageComponent,
     CropListComponent,
     CellDialogComponent,
+    AddDialogComponent,
     DeleteDialogComponent,
   ],
   imports: [
