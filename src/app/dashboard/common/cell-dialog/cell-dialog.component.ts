@@ -3,16 +3,16 @@ import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { CropListComponent } from '../crop-list/crop-list.component';
+import { CropListComponent } from '../../modals/crop-list/crop-list.component';
 
 import { INDEXES } from 'src/utils/enums';
 
 @Component({
-  selector: 'app-cell-edit',
-  templateUrl: './cell-edit.component.html',
-  styleUrls: ['./cell-edit.component.css'],
+  selector: 'app-cell-dialog',
+  templateUrl: './cell-dialog.component.html',
+  styleUrls: ['./cell-dialog.component.css'],
 })
-export class CellEditComponent implements OnInit {
+export class CellDialogComponent implements OnInit {
   row!: any;
   col!: string;
   keys!: string[];

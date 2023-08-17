@@ -4,7 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { MenuComponent } from '../../components/menu/menu.component';
-import { CellEditComponent } from '../cell-edit/cell-edit.component';
+import { CellDialogComponent } from '../../common/cell-dialog/cell-dialog.component';
+import { DeleteDialogComponent } from '../../common/delete-dialog/delete-dialog.component';
 
 import { CropsService } from 'src/app/services/crops.service';
 
@@ -66,7 +67,7 @@ export class CropListComponent implements OnInit {
 
   onCellClick(row: any, col: string): void {
     this.dialog
-      .open(CellEditComponent, {
+      .open(CellDialogComponent, {
         disableClose: true,
         data: { row, col, keys: this.tableHeaders },
       })
@@ -79,13 +80,30 @@ export class CropListComponent implements OnInit {
   }
 
   onAddRow(): void {
-    console.log('ADD ROW BUTTON');
-    // TODO implement Add Row button
+    const newPhenology: PhenologyI = {
+      name: `Etapa Fenológica ${this.table.length + 1}`,
+      days: Math.max(
+        ...this.table.map((row: any) => row[this.tableHeaders[1]])
+      ),
+      indexes: [],
+    };
+    this.selectedCrop!.phenology.push(newPhenology);
+    this.table = this.phenology2table(this.selectedCrop!.phenology);
   }
 
   onDeleteRow(): void {
-    console.log('DELETE ROW BUTTON');
-    // TODO implement Delete Row button
+    this.dialog
+      .open(DeleteDialogComponent, {
+        disableClose: true,
+        data: { entity: this.tableHeaders[0] },
+      })
+      .afterClosed()
+      .subscribe((name: any) => {
+        this.selectedCrop!.phenology = this.selectedCrop!.phenology.filter(
+          (stage: PhenologyI) => stage.name !== name
+        );
+        this.table = this.phenology2table(this.selectedCrop!.phenology);
+      });
   }
 
   onSave(): void {
