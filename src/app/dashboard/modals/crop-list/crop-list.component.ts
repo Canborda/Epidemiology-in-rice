@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
+import { MenuComponent } from '../../components/menu/menu.component';
 import { CellEditComponent } from '../cell-edit/cell-edit.component';
 
 import { CropsService } from 'src/app/services/crops.service';
@@ -24,6 +25,7 @@ export class CropListComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
+    public dialogRef: MatDialogRef<MenuComponent>,
     private cropsService: CropsService,
     private toastr: ToastrService
   ) {
@@ -87,10 +89,16 @@ export class CropListComponent implements OnInit {
   }
 
   onSave(): void {
-    console.log('SAVE BUTTON!');
-    console.log(this.cropList);
-    // TODO implement update crop button
-    // TODO implement update ALL CROPS endpoint
+    this.cropsService.updateAllCrops(this.cropList).subscribe({
+      next: () => {
+        this.toastr.success('Cultivos actualizados exitosamente', 'SUCCESS');
+      },
+      error: (e: HttpErrorResponse) => {
+        const error: ApiErrorI = e.error;
+        this.toastr.error(error.message, 'ERROR');
+      },
+    });
+    this.dialogRef.close();
   }
 
   // #endregion

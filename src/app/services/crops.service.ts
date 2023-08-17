@@ -20,9 +20,7 @@ export class CropsService {
     const headers = { Authorization: `Bearer ${access_token}` };
     return this.http.get<ApiSuccessI<CropI[]>>(
       this.baseUrl + ROUTES.crops.BASE,
-      {
-        headers,
-      }
+      { headers }
     );
   }
 
@@ -34,5 +32,12 @@ export class CropsService {
       this.baseUrl + ROUTES.crops.phenology,
       { headers, params }
     );
+  }
+
+  updateAllCrops(cropList: CropI[]) {
+    const access_token = localStorage.getItem('access_token');
+    const headers = { Authorization: `Bearer ${access_token}` };
+    const body = { cropList };
+    return this.http.put(this.baseUrl + ROUTES.crops.BASE, body, { headers });
   }
 }
