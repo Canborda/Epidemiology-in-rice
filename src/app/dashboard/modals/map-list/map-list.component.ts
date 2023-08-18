@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { MenuComponent } from '../../components/menu/menu.component';
+import { MapAddComponent } from '../map-add/map-add.component';
 
 import { CropsService } from 'src/app/services/crops.service';
 import { MapsService } from 'src/app/services/maps.service';
@@ -28,6 +29,7 @@ export class MapListComponent implements OnInit {
   cropNames: any = {};
 
   constructor(
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<MenuComponent>,
     private cropsService: CropsService,
     private mapsService: MapsService,
@@ -59,10 +61,26 @@ export class MapListComponent implements OnInit {
 
   // #region BUTTON ACTIONS
 
-  onEditMap(map: MapI): void {
-    console.log('EDIT MAP');
-    console.log(map);
-    // TODO implement modal to edit map name, crop & seedDate (can use add-map modal ?)
+  onEditMap(oldMap: MapI): void {
+    this.dialog
+      .open(MapAddComponent, {
+        data: { map: oldMap },
+      })
+      .afterClosed()
+      .subscribe((newMap: MapI) => {
+        if (newMap) {
+          this.mapsService.updateMap(newMap).subscribe({
+            next: () => {
+              this.mapList[this.mapList.indexOf(oldMap)] = newMap;
+              this.toastr.success('Lote actualizado exitosamente', 'SUCCESS');
+            },
+            error: (e: HttpErrorResponse) => {
+              const error: ApiErrorI = e.error;
+              this.toastr.error(error.message, 'ERROR');
+            },
+          });
+        }
+      });
   }
 
   onSelectMap(map: MapI): void {

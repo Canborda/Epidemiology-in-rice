@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,6 +19,7 @@ import { MapI } from 'src/app/models/map.model';
   styleUrls: ['./map-add.component.css'],
 })
 export class MapAddComponent implements OnInit {
+  map?: MapI;
   cropList!: CropI[];
   varieties: string[] = [];
   today = new Date();
@@ -27,16 +29,25 @@ export class MapAddComponent implements OnInit {
   date = new UntypedFormControl('', [Validators.required]);
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<MapComponent>,
     private cropsService: CropsService,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.map = this.data?.map;
     this.cropsService.getCrops().subscribe({
       next: (v: ApiSuccessI<CropI[]>) => {
         this.cropList = v.data;
         this.varieties = this.cropList.map((crop) => crop.variety);
+        if (this.map) {
+          this.name.setValue(this.map.name);
+          this.variety.setValue(
+            this.cropList.find((crop) => crop._id === this.map!.crop)?.variety
+          );
+          this.date.setValue(new Date(this.map.seedDate));
+        }
       },
       error: (e: HttpErrorResponse) => {
         const error: ApiErrorI = e.error;
@@ -59,10 +70,11 @@ export class MapAddComponent implements OnInit {
       )!;
       // Build map info (polygon points added on MapComponent)
       const data: MapI = {
+        _id: this.map?._id,
         name: this.name.value,
         crop: selectedCrop._id!,
         seedDate: this.date.value,
-        polygon: [],
+        polygon: this.map?.polygon ?? [],
       };
       this.dialogRef.close(data);
     }

@@ -33,6 +33,17 @@ export class MapsService {
     );
   }
 
+  updateMap(map: MapI) {
+    const access_token = localStorage.getItem('access_token');
+    const headers = { Authorization: `Bearer ${access_token}` };
+    const body = map;
+    return this.http.patch(
+      this.baseUrl + ROUTES.maps.BASE + '/' + map._id,
+      body,
+      { headers }
+    );
+  }
+
   deleteMap(map_id: string) {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };

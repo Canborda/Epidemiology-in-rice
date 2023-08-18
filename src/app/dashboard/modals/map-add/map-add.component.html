@@ -1,4 +1,5 @@
-<h2>Agregar Nuevo Lote</h2>
+<h2 *ngIf="!map">Agregar Nuevo Lote</h2>
+<h2 *ngIf="map">Actualizar Lote</h2>
 <mat-dialog-content>
   <!-- Name -->
   <mat-form-field class="full-width" appearance="fill">
