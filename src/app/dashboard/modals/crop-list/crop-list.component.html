@@ -10,24 +10,27 @@
   <button mat-button color="basic" class="addButton" (click)="onAddCrop()">
     <mat-icon>library_add</mat-icon>Agregar Variedad
   </button>
-  <button mat-button color="primary" class="delButton" (click)="onDeleteCrop()">
+  <button mat-button color="basic" class="delButton" (click)="onDeleteCrop()">
     <mat-icon>delete_outline</mat-icon>Eliminar Variedad
   </button>
   <div *ngIf="selectedCrop">
     <p>ID: {{selectedCrop._id ?? '-'}}</p>
     <!-- Phenology vs. Index table -->
-    <table>
-      <thead>
-        <th *ngFor="let col of tableHeaders">{{col}}</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of table">
-          <td *ngFor="let col of tableHeaders; let i = index" [class.firstCol]="i < 2" (click)="onCellClick(row, col)">
-            {{row[col] ?? '-'}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="mat-elevation-z5">
+      <table>
+        <thead>
+          <th *ngFor="let col of tableHeaders">{{col}}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of table">
+            <td *ngFor="let col of tableHeaders; let i = index" [class.firstCol]="i < 2"
+              (click)="onCellClick(row, col)">
+              {{row[col] ?? '-'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <br>
     <!-- Crop CRUD operations buttons -->
     <button mat-button color="basic" class="addButton" (click)="onAddRow()">

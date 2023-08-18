@@ -1,32 +1,39 @@
 <h2>Lotes Guardados</h2>
 <mat-dialog-content>
-  <div class="mat-elevation-z8">
-    <mat-table [dataSource]="table">
-      <!-- Header -->
-      <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-      <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
-      <!-- Name column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-        <mat-cell (click)="onSelectMap(row)" class="cellName" *matCellDef="let row"> {{row.name}} </mat-cell>
-      </ng-container>
-      <!-- Actions column -->
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> Acciones</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <button (click)="onDeleteMap(row)" mat-icon-button color="warn">
-            <mat-icon>delete_outline</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <!-- Footer -->
-      <ng-container matColumnDef="noData">
-        <mat-footer-cell *matFooterCellDef>Aún no tiene mapas guardados.</mat-footer-cell>
-      </ng-container>
-      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(table != null && table.data.length == 0)}">
-      </mat-footer-row>
-    </mat-table>
+  <div class="mat-elevation-z5">
+    <table *ngIf="mapList?.length">
+      <thead>
+        <th *ngFor="let col of tableHeaders">{{col}}</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of mapList">
+          <td>
+            {{row.name}}
+          </td>
+          <td>
+            {{cropNames[row.crop]}}
+            <p *ngIf="!cropNames[row.crop]">No se encuentra el cultivo</p>
+          </td>
+          <td>
+            {{formatDate(row.seedDate)}}
+          </td>
+          <td>
+            <button mat-raised-button color="primary" [disabled]="!cropNames[row.crop]" (click)="onSelectMap(row)">
+              <mat-icon>play_arrow</mat-icon>Seleccionar lote
+            </button>
+            <button mat-icon-button (click)="onEditMap(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="onDeleteMap(row)" color="warn">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <p *ngIf="!mapList?.length">Aún no tiene mapas guardados.</p>
+  <br>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-stroked-button mat-dialog-close color="primary">Cerrar</button>

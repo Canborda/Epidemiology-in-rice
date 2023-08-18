@@ -1,17 +1,24 @@
-mat-footer-row mat-footer-cell {
+table th {
+  padding: 10px;
+  color: white;
+  background-color: darkgray;
+  font-weight: normal;
+}
+
+tr:hover {
+  background-color: rgb(220, 220, 220);
+}
+
+table td {
+  padding: 10px;
+}
+
+.mat-icon-button {
+  margin-left: 10px;
+}
+
+p {
   justify-content: center;
   font-style: italic;
   color: rgb(255, 0, 0);
-}
-
-.hide {
-  display: none;
-}
-
-.mat-row:hover {
-  background-color: rgb(200, 200, 200);
-}
-
-.cellName:hover {
-  cursor: pointer;
 }

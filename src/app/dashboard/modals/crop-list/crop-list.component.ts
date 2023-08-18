@@ -164,7 +164,7 @@ export class CropListComponent implements OnInit {
 
   // #endregion
 
-  // #region AUX method
+  // #region AUX methods
 
   phenology2table(phenologyList: PhenologyI[]): any {
     return phenologyList.map((phenology: PhenologyI) => {

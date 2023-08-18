@@ -13,7 +13,7 @@
   <!-- Cloudy Percentage -->
   <mat-label>Porcentaje de Nubosidad</mat-label>
   <mat-slider min="0" max="100" step="5" thumbLabel [displayWith]="formatLabel" [formControl]="cloudyPercentage"
-    required>
+    required color="primary">
     <input matSliderThumb value="30">
   </mat-slider>
   <mat-error *ngIf="index.invalid">{{getCloudyPercentageErrorMessage()}}</mat-error>
