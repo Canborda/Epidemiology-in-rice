@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Input } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -9,8 +9,10 @@ import 'leaflet-draw';
 import { MapAddComponent } from '../../modals/map-add/map-add.component';
 
 import { MapsService } from 'src/app/services/maps.service';
+import { LocationService } from 'src/app/services/location.service';
 
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { PositionI } from 'src/utils/interfaces';
 import { MapI } from 'src/app/models/map.model';
 import { GeeImageResponseI } from 'src/app/models/gee.model';
 
@@ -24,49 +26,63 @@ export class MapComponent implements AfterViewInit {
   private LEAFLET_MAP?: Leaflet.DrawMap;
   private currentPolygon?: Leaflet.Polygon;
   private currentImage?: Leaflet.ImageOverlay;
+  private defaultPosition!: PositionI;
 
   constructor(
     private dialog: MatDialog,
     private mapsService: MapsService,
+    private locationService: LocationService,
     private toastr: ToastrService
   ) {}
 
   ngAfterViewInit(): void {
-    // Create leaflet map
-    this.LEAFLET_MAP = Leaflet.map('map').setView([4.711, -74.0721], 12);
+    // Get user location
+    this.locationService
+      .getPosition()
+      .then((pos: PositionI) => {
+        this.defaultPosition = pos;
+      })
+      .then(() => {
+        // Create leaflet map
+        this.LEAFLET_MAP = Leaflet.map('map').setView(
+          [this.defaultPosition.latitude, this.defaultPosition.longitude],
+          this.defaultPosition.zoom
+        );
 
-    // Declare tile layers
-    let osm = Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>',
-    });
-    // TODO add google attributions
-    let googleSat = Leaflet.tileLayer(
-      'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-      {
-        minZoom: 2,
-        maxZoom: 21,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-      }
-    );
-    let googleHybrid = Leaflet.tileLayer(
-      'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
-      {
-        minZoom: 2,
-        maxZoom: 21,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-      }
-    );
+        // Declare tile layers
+        let osm = Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          attribution:
+            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>',
+        });
 
-    // Add tile layers
-    // this.LEAFLET_MAP.addLayer(osm);
-    // this.LEAFLET_MAP.addLayer(googleSat);
-    this.LEAFLET_MAP.addLayer(googleHybrid);
+        // TODO add google attributions
+        let googleSat = Leaflet.tileLayer(
+          'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+          {
+            minZoom: 2,
+            maxZoom: 21,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+          }
+        );
+        let googleHybrid = Leaflet.tileLayer(
+          'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
+          {
+            minZoom: 2,
+            maxZoom: 21,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+          }
+        );
 
-    // Add leaflet-draw callbacks
-    this.LEAFLET_MAP.on(Leaflet.Draw.Event.CREATED, (e) =>
-      this.storeNewPolygon(e)
-    );
+        // Add tile layers
+        // this.LEAFLET_MAP.addLayer(osm);
+        // this.LEAFLET_MAP.addLayer(googleSat);
+        this.LEAFLET_MAP.addLayer(googleHybrid);
+
+        // Add leaflet-draw callbacks
+        this.LEAFLET_MAP.on(Leaflet.Draw.Event.CREATED, (e) =>
+          this.storeNewPolygon(e)
+        );
+      });
   }
 
   // #region MAP actions
