@@ -1,2 +1,38 @@
-<p>analysis works!</p>
-<app-chart></app-chart>
+<mat-accordion multi [class.accordionExpanded]="countExpanded">
+    <!-- Map info panel -->
+    <mat-expansion-panel #info (opened)="onPanelClicked(1)" (closed)="onPanelClicked(-1)"
+        [class.panelExpanded]="info.expanded">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>info</mat-icon>
+                Información del lote
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        ADD BODY HERE
+        <!-- TODO Add MAP INFO component -->
+    </mat-expansion-panel>
+    <!-- Chart panel -->
+    <mat-expansion-panel #chart (opened)="onPanelClicked(1)" (closed)="onPanelClicked(-1)"
+        [class.panelExpanded]="chart.expanded">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>show_chart</mat-icon>
+                Comparación de índices
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        ADD BODY HERE
+        <!-- TODO Add CHART component -->
+    </mat-expansion-panel>
+    <!-- Messages panel -->
+    <mat-expansion-panel #msg (opened)="onPanelClicked(1)" (closed)="onPanelClicked(-1)"
+        [class.panelExpanded]="msg.expanded">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>message</mat-icon>
+                Recomendaciones
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        ADD BODY HERE
+        <!-- TODO Add MESSAGES component -->
+    </mat-expansion-panel>
+</mat-accordion>

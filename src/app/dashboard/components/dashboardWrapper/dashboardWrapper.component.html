@@ -5,14 +5,10 @@
             (analyzeMapEvent)="onAnalyzeMap($event)" (logoutEvent)="onLogout()"></app-menu>
     </mat-sidenav>
     <!-- Content -->
-    <div id="content">
-        <!-- MAP column -->
-        <div id="leftCol">
+    <div class="content">
+        <div class="mapbox">
             <app-map></app-map>
         </div>
-        <!-- CHART column -->
-        <div id="rightCol" [hidden]="!map?.currentMap">
-            <app-analysis></app-analysis>
-        </div>
+        <app-analysis></app-analysis>
     </div>
 </mat-sidenav-container>
