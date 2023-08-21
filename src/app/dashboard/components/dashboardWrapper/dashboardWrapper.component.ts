@@ -27,8 +27,6 @@ import { MapI } from 'src/app/models/map.model';
   styleUrls: ['./dashboardWrapper.component.css'],
 })
 export class DashboardWrapperComponent implements OnInit {
-  isExpanded: boolean = true;
-  chartVisible: boolean = false;
   currentUser?: UserI;
 
   @ViewChild(MenuComponent) menu?: MenuComponent;
@@ -66,6 +64,7 @@ export class DashboardWrapperComponent implements OnInit {
   // #region MENU OPTIONS actions
 
   onDrawMap(): void {
+    this.map?.clearCanvas();
     this.map?.drawNewPolygon();
   }
 
@@ -96,7 +95,6 @@ export class DashboardWrapperComponent implements OnInit {
         next: (v: ApiSuccessI<GeeDataResponseI[]>) => {
           if (this.chart) {
             // Set crop data into chart component
-            this.chartVisible = true;
             this.chart.cropData = v.data;
             // Update chart
             this.chart.updateChart(geeReq.index);
@@ -116,7 +114,6 @@ export class DashboardWrapperComponent implements OnInit {
         next: (v: ApiSuccessI<GeeDataResponseI[]>) => {
           if (this.chart) {
             // Set gee data into chart component
-            this.chartVisible = true;
             this.chart.geeData = v.data;
             // Update chart
             this.chart.updateChart(geeReq.index);

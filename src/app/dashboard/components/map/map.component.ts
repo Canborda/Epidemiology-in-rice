@@ -129,6 +129,8 @@ export class MapComponent implements AfterViewInit {
           });
           // Update current map
           this.currentMap = map;
+        } else {
+          this.clearCanvas();
         }
       });
   }
@@ -149,6 +151,22 @@ export class MapComponent implements AfterViewInit {
       );
       this.currentImage.addTo(this.LEAFLET_MAP as Leaflet.Map);
     }
+  }
+
+  // #endregion
+
+  // #region AUX methods
+
+  clearCanvas(): void {
+    this.currentMap = undefined;
+    // Clean previous map
+    this.currentPolygon?.remove();
+    this.currentImage?.remove();
+    // Restart view
+    this.LEAFLET_MAP?.setView(
+      [this.defaultPosition.latitude, this.defaultPosition.longitude],
+      this.defaultPosition.zoom
+    );
   }
 
   // #endregion
