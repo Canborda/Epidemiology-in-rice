@@ -6,6 +6,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { DashboardWrapperComponent } from './components/dashboardWrapper/dashboardWrapper.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { MapComponent } from './components/map/map.component';
+import { AnalysisComponent } from './components/analysis/analysis.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { MapDrawComponent } from './modals/map-draw/map-draw.component';
 import { MapAddComponent } from './modals/map-add/map-add.component';
@@ -37,6 +38,7 @@ import { FormsModule } from '@angular/forms';
     DashboardWrapperComponent,
     MenuComponent,
     MapComponent,
+    AnalysisComponent,
     ChartComponent,
     MapDrawComponent,
     MapAddComponent,

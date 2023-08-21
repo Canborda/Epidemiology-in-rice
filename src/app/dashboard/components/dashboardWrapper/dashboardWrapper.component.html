@@ -5,17 +5,14 @@
             (analyzeMapEvent)="onAnalyzeMap($event)" (logoutEvent)="onLogout()"></app-menu>
     </mat-sidenav>
     <!-- Content -->
-    <div class="container-fluid h-100">
-        <div class="row h-100">
-            <!-- MAP column -->
-            <div class="div_map" [ngClass]="chartVisible ? 'col-md-6' : 'col-md-12'">
-                <app-map></app-map>
-            </div>
-            <!-- CHART column -->
-            <div class="div_chart col-md-6" [hidden]="!chartVisible">
-                <h2>Visualización de modelos asociados a respuestas espectrales de Sistemas de producción de Arroz</h2>
-                <app-chart></app-chart>
-            </div>
+    <div id="content">
+        <!-- MAP column -->
+        <div id="leftCol">
+            <app-map></app-map>
+        </div>
+        <!-- CHART column -->
+        <div id="rightCol" [hidden]="!map?.currentMap">
+            <app-analysis></app-analysis>
         </div>
     </div>
 </mat-sidenav-container>
