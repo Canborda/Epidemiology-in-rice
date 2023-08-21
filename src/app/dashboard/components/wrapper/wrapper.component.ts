@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { MenuComponent } from './menu/menu.component';
 import { MapComponent } from './map/map.component';
+import { InfoComponent } from './info/info.component';
 import { ChartComponent } from '../chart/chart.component';
 
 import { UserService } from 'src/app/services/user.service';
@@ -13,13 +14,12 @@ import { GeeService } from 'src/app/services/gee.service';
 
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 import { UserI } from 'src/app/models/user.model';
+import { MapI } from 'src/app/models/map.model';
 import {
   GeeRequestI,
   GeeImageResponseI,
   GeeDataResponseI,
 } from 'src/app/models/gee.model';
-
-import { MapI } from 'src/app/models/map.model';
 
 @Component({
   selector: 'app-wrapper',
@@ -31,6 +31,9 @@ export class WrapperComponent implements OnInit {
 
   @ViewChild(MenuComponent) menu?: MenuComponent;
   @ViewChild(MapComponent) map?: MapComponent;
+  @ViewChild(InfoComponent) info?: InfoComponent;
+
+  // TODO Move component
   @ViewChild(ChartComponent) chart?: ChartComponent;
 
   constructor(
@@ -61,18 +64,18 @@ export class WrapperComponent implements OnInit {
     }
   }
 
-  // #region MENU OPTIONS actions
+  // #region RECEIVED_EVENTS methods
 
-  onDrawMap(): void {
+  onDrawMapEvent(): void {
     this.map?.clearCanvas();
     this.map?.drawNewPolygon();
   }
 
-  onSelectMap(map: MapI): void {
+  onSelectMapEvent(map: MapI): void {
     this.map?.drawExistingPolygon(map);
   }
 
-  onAnalyzeMap(geeReq: GeeRequestI): void {
+  onAnalyzeMapEvent(geeReq: GeeRequestI): void {
     if (this.map?.currentMap?._id) {
       // Add map_id
       geeReq.map_id = this.map?.currentMap?._id;
@@ -133,7 +136,7 @@ export class WrapperComponent implements OnInit {
     }
   }
 
-  onLogout(): void {
+  onLogoutEvent(): void {
     localStorage.clear();
     this.router.navigate(['']);
   }

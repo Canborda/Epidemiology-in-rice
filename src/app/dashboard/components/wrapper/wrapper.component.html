@@ -1,8 +1,12 @@
 <mat-sidenav-container autosize>
     <!-- Sidenav -->
-    <mat-sidenav #sidenav mode="side" opened="true">
-        <app-menu (drawMapEvent)="onDrawMap()" (selectMapEvent)="onSelectMap($event)"
-            (analyzeMapEvent)="onAnalyzeMap($event)" (logoutEvent)="onLogout()"></app-menu>
+    <mat-sidenav mode="side" opened="true">
+        <app-menu
+            (drawMapEvent)="onDrawMapEvent()"
+            (selectMapEvent)="onSelectMapEvent($event)"
+            (analyzeMapEvent)="onAnalyzeMapEvent($event)"
+            (logoutEvent)="onLogoutEvent()">
+        </app-menu>
     </mat-sidenav>
     <!-- Content -->
     <div class="content">
