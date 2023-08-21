@@ -15,11 +15,11 @@ import { CropI, PhenologyI } from 'src/app/models/crop.model';
 import { INDEXES } from 'src/utils/enums';
 
 @Component({
-  selector: 'app-crop-list',
-  templateUrl: './crop-list.component.html',
-  styleUrls: ['./crop-list.component.css'],
+  selector: 'app-crop-config',
+  templateUrl: './crop-config.component.html',
+  styleUrls: ['./crop-config.component.css'],
 })
-export class CropListComponent implements OnInit {
+export class CropConfigComponent implements OnInit {
   cropList!: CropI[];
   selectedCrop?: CropI;
   table: any;

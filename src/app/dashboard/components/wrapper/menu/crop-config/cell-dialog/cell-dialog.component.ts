@@ -3,7 +3,7 @@ import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { CropListComponent } from '../crop-list.component';
+import { CropConfigComponent } from '../crop-config.component';
 
 import { INDEXES } from 'src/utils/enums';
 
@@ -24,7 +24,7 @@ export class CellDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<CropListComponent>
+    public dialogRef: MatDialogRef<CropConfigComponent>
   ) {}
 
   ngOnInit(): void {

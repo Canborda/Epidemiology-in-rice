@@ -28,12 +28,14 @@ import { InfoComponent } from './components/wrapper/info/info.component';
 import { MapDrawComponent } from './components/wrapper/menu/map-draw/map-draw.component';
 import { MapListComponent } from './components/wrapper/menu/map-list/map-list.component';
 import { MapAnalyzeComponent } from './components/wrapper/menu/map-analyze/map-analyze.component';
-import { CropListComponent } from './components/wrapper/menu/crop-list/crop-list.component';
+import { CropConfigComponent } from './components/wrapper/menu/crop-config/crop-config.component';
+import { IndexConfigComponent } from './components/wrapper/menu/index-config/index-config.component';
+import { UserConfigComponent } from './components/wrapper/menu/user-config/user-config.component';
 import { MapAddComponent } from './components/wrapper/map/map-add/map-add.component';
 
-import { CellDialogComponent } from './components/wrapper/menu/crop-list/cell-dialog/cell-dialog.component';
-import { AddDialogComponent } from './components/wrapper/menu/crop-list/add-dialog/add-dialog.component';
-import { DeleteDialogComponent } from './components/wrapper/menu/crop-list/delete-dialog/delete-dialog.component';
+import { CellDialogComponent } from './components/wrapper/menu/crop-config/cell-dialog/cell-dialog.component';
+import { AddDialogComponent } from './components/wrapper/menu/crop-config/add-dialog/add-dialog.component';
+import { DeleteDialogComponent } from './components/wrapper/menu/crop-config/delete-dialog/delete-dialog.component';
 
 import { ChartComponent } from './components/chart/chart.component';
 
@@ -46,7 +48,9 @@ import { ChartComponent } from './components/chart/chart.component';
     MapDrawComponent,
     MapListComponent,
     MapAnalyzeComponent,
-    CropListComponent,
+    CropConfigComponent,
+    IndexConfigComponent,
+    UserConfigComponent,
     MapAddComponent,
     CellDialogComponent,
     AddDialogComponent,

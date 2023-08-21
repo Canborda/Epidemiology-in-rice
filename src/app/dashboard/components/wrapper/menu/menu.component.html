@@ -1,43 +1,46 @@
 <mat-nav-list>
-  <!-- Expand/Collapse menu -->
-  <mat-list-item (click)="isExpanded = !isExpanded">
-    <mat-icon mat-list-icon>menu</mat-icon>
-  </mat-list-item>
-  <!-- Menu options -->
-  <div class="user-options">
-    <mat-divider></mat-divider>
-    <mat-list-item (click)="onDrawMap()">
-      <mat-icon mat-list-icon>edit_location_alt</mat-icon>
-      <span *ngIf="isExpanded">Dibujar lote</span>
+    <!-- Expand/Collapse menu -->
+    <mat-list-item (click)="isExpanded = !isExpanded">
+        <mat-icon mat-list-icon>menu</mat-icon>
     </mat-list-item>
-    <mat-list-item (click)="onSelectMap()">
-      <mat-icon mat-list-icon>map</mat-icon>
-      <span *ngIf="isExpanded">Seleccionar lote</span>
-    </mat-list-item>
-    <mat-list-item (click)="onAnalyzeMap()">
-      <mat-icon mat-list-icon>satellite</mat-icon>
-      <span *ngIf="isExpanded">Analizar lote</span>
-    </mat-list-item>
-  </div>
-  <!-- Admin options -->
-  <div class="admin-options" *ngIf="isAdmin">
-    <mat-divider></mat-divider>
-    <!-- <p *ngIf="isExpanded">ADMINISTRADOR</p> -->
-    <mat-list-item (click)="onCropOptions()">
-      <mat-icon mat-list-icon>perm_data_setting</mat-icon>
-      <span *ngIf="isExpanded">Opciones de Cultivo</span>
-    </mat-list-item>
-  </div>
-  <!-- User config -->
-  <div class="user-config">
-    <mat-divider></mat-divider>
-    <mat-list-item>
-      <mat-icon mat-list-icon>account_circle</mat-icon>
-      <span *ngIf="isExpanded">{{userName}}</span>
-    </mat-list-item>
-    <mat-list-item (click)="onLogout()">
-      <mat-icon mat-list-icon>logout</mat-icon>
-      <span *ngIf="isExpanded">Cerrar sesión</span>
-    </mat-list-item>
-  </div>
+    <!-- Menu options -->
+    <div class="user-options">
+        <mat-divider></mat-divider>
+        <mat-list-item (click)="onDrawMap()">
+            <mat-icon mat-list-icon>edit_location_alt</mat-icon>
+            <span *ngIf="isExpanded">Dibujar lote</span>
+        </mat-list-item>
+        <mat-list-item (click)="onSelectMap()">
+            <mat-icon mat-list-icon>photo_library</mat-icon>
+            <span *ngIf="isExpanded">Seleccionar lote</span>
+        </mat-list-item>
+        <mat-list-item (click)="onAnalyzeMap()">
+            <mat-icon mat-list-icon>satellite</mat-icon>
+            <span *ngIf="isExpanded">Analizar lote</span>
+        </mat-list-item>
+    </div>
+    <!-- Admin options -->
+    <div class="admin-options" *ngIf="isAdmin">
+        <mat-divider></mat-divider>
+        <mat-list-item (click)="onCropOptions()">
+            <mat-icon mat-list-icon>map</mat-icon>
+            <span *ngIf="isExpanded">Opciones de Cultivo</span>
+        </mat-list-item>
+        <mat-list-item (click)="onIndexOptions()">
+            <mat-icon mat-list-icon>perm_data_setting</mat-icon>
+            <span *ngIf="isExpanded">Opciones de Índices</span>
+        </mat-list-item>
+    </div>
+    <!-- User config -->
+    <div class="user-config">
+        <mat-divider></mat-divider>
+        <mat-list-item (click)="onUserOptions()">
+            <mat-icon mat-list-icon>account_circle</mat-icon>
+            <span *ngIf="isExpanded">{{userName}}</span>
+        </mat-list-item>
+        <mat-list-item (click)="onLogout()">
+            <mat-icon mat-list-icon>logout</mat-icon>
+            <span *ngIf="isExpanded">Cerrar sesión</span>
+        </mat-list-item>
+    </div>
 </mat-nav-list>

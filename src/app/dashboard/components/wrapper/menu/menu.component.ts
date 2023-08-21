@@ -4,7 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MapDrawComponent } from './map-draw/map-draw.component';
 import { MapListComponent } from './map-list/map-list.component';
 import { MapAnalyzeComponent } from './map-analyze/map-analyze.component';
-import { CropListComponent } from './crop-list/crop-list.component';
+import { CropConfigComponent } from './crop-config/crop-config.component';
+import { IndexConfigComponent } from './index-config/index-config.component';
+import { UserConfigComponent } from './user-config/user-config.component';
 
 import { MapI } from 'src/app/models/map.model';
 import { GeeRequestI } from 'src/app/models/gee.model';
@@ -28,7 +30,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // #region MENU OPTIONS actions
+  // #region SENT_EVENTS methods
 
   onDrawMap(): void {
     this.dialog
@@ -58,7 +60,16 @@ export class MenuComponent implements OnInit {
   }
 
   onCropOptions(): void {
-    this.dialog.open(CropListComponent);
+    this.dialog.open(CropConfigComponent);
+  }
+
+  onIndexOptions(): void {
+    this.dialog.open(IndexConfigComponent);
+  }
+
+  onUserOptions(): void {
+    this.dialog.open(UserConfigComponent);
+    // TODO update user name after closed
   }
 
   onLogout(): void {

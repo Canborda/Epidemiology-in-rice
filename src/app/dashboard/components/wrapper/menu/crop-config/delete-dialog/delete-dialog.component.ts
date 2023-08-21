@@ -2,27 +2,25 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { CropListComponent } from '../crop-list.component';
+import { CropConfigComponent } from '../crop-config.component';
 
 @Component({
-  selector: 'app-add-dialog',
-  templateUrl: './add-dialog.component.html',
-  styleUrls: ['./add-dialog.component.css'],
+  selector: 'app-delete-dialog',
+  templateUrl: './delete-dialog.component.html',
+  styleUrls: ['./delete-dialog.component.css'],
 })
-export class AddDialogComponent implements OnInit {
+export class DeleteDialogComponent implements OnInit {
   entity!: string;
-  list!: string[];
   // Form variables
   value = new UntypedFormControl('', [Validators.required]);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<CropListComponent>
+    public dialogRef: MatDialogRef<CropConfigComponent>
   ) {}
 
   ngOnInit(): void {
     this.entity = this.data.entity;
-    this.list = this.data.list;
   }
 
   // #region BUTTON ACTIONS
@@ -38,10 +36,9 @@ export class AddDialogComponent implements OnInit {
   // #region form validations
 
   getValidationError() {
-    if (this.value.hasError('required'))
+    if (this.value.hasError('required')) {
       return `Ingrese un nombre para la ${this.entity}`;
-    if (this.list.includes(this.value.value))
-      return `El nombre ya existe para la ${this.entity}`;
+    }
     return null;
   }
 
