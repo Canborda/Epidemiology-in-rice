@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { MenuComponent } from '../../components/menu/menu.component';
+import { MenuComponent } from '../menu.component';
 
 import { GeeService } from 'src/app/services/gee.service';
 
@@ -12,11 +12,11 @@ import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 import { GeeRequestI } from 'src/app/models/gee.model';
 
 @Component({
-  selector: 'app-map-image',
-  templateUrl: './map-image.component.html',
-  styleUrls: ['./map-image.component.css'],
+  selector: 'app-map-analyze',
+  templateUrl: './map-analyze.component.html',
+  styleUrls: ['./map-analyze.component.css'],
 })
-export class MapImageComponent implements OnInit {
+export class MapAnalyzeComponent implements OnInit {
   indexList!: string[];
   // Form variables
   cloudyPercentage = new UntypedFormControl('', [Validators.required]);

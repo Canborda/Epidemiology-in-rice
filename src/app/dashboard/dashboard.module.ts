@@ -3,20 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HighchartsChartModule } from 'highcharts-angular';
 
-import { DashboardWrapperComponent } from './components/dashboardWrapper/dashboardWrapper.component';
-import { MenuComponent } from './components/menu/menu.component';
-import { MapComponent } from './components/map/map.component';
-import { AnalysisComponent } from './components/analysis/analysis.component';
-import { ChartComponent } from './components/chart/chart.component';
-import { MapDrawComponent } from './modals/map-draw/map-draw.component';
-import { MapAddComponent } from './modals/map-add/map-add.component';
-import { MapListComponent } from './modals/map-list/map-list.component';
-import { MapImageComponent } from './modals/map-image/map-image.component';
-import { CropListComponent } from './modals/crop-list/crop-list.component';
-import { CellDialogComponent } from './common/cell-dialog/cell-dialog.component';
-import { AddDialogComponent } from './common/add-dialog/add-dialog.component';
-import { DeleteDialogComponent } from './common/delete-dialog/delete-dialog.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -31,24 +19,39 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { WrapperComponent } from './components/wrapper/wrapper.component';
+
+import { MenuComponent } from './components/wrapper/menu/menu.component';
+import { MapComponent } from './components/wrapper/map/map.component';
+import { InfoComponent } from './components/wrapper/info/info.component';
+
+import { MapDrawComponent } from './components/wrapper/menu/map-draw/map-draw.component';
+import { MapListComponent } from './components/wrapper/menu/map-list/map-list.component';
+import { MapAnalyzeComponent } from './components/wrapper/menu/map-analyze/map-analyze.component';
+import { CropListComponent } from './components/wrapper/menu/crop-list/crop-list.component';
+import { MapAddComponent } from './components/wrapper/map/map-add/map-add.component';
+
+import { CellDialogComponent } from './components/wrapper/menu/crop-list/cell-dialog/cell-dialog.component';
+import { AddDialogComponent } from './components/wrapper/menu/crop-list/add-dialog/add-dialog.component';
+import { DeleteDialogComponent } from './components/wrapper/menu/crop-list/delete-dialog/delete-dialog.component';
+
+import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
   declarations: [
-    DashboardWrapperComponent,
+    WrapperComponent,
     MenuComponent,
     MapComponent,
-    AnalysisComponent,
-    ChartComponent,
+    InfoComponent,
     MapDrawComponent,
-    MapAddComponent,
     MapListComponent,
-    MapImageComponent,
+    MapAnalyzeComponent,
     CropListComponent,
+    MapAddComponent,
     CellDialogComponent,
     AddDialogComponent,
     DeleteDialogComponent,
+    ChartComponent,
   ],
   imports: [
     CommonModule,

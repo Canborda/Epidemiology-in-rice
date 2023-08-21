@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as Leaflet from 'leaflet';
 import 'leaflet-draw';
 
-import { MapAddComponent } from '../../modals/map-add/map-add.component';
+import { MapAddComponent } from './map-add/map-add.component';
 
 import { MapsService } from 'src/app/services/maps.service';
 import { LocationService } from 'src/app/services/location.service';

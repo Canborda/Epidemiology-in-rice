@@ -3,7 +3,7 @@ import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { CropListComponent } from '../../modals/crop-list/crop-list.component';
+import { CropListComponent } from '../crop-list.component';
 
 import { INDEXES } from 'src/utils/enums';
 

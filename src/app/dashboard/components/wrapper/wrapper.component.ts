@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { MenuComponent } from '../menu/menu.component';
-import { MapComponent } from '../map/map.component';
+import { MenuComponent } from './menu/menu.component';
+import { MapComponent } from './map/map.component';
 import { ChartComponent } from '../chart/chart.component';
 
 import { UserService } from 'src/app/services/user.service';
@@ -22,11 +22,11 @@ import {
 import { MapI } from 'src/app/models/map.model';
 
 @Component({
-  selector: 'app-dashboard-wrapper',
-  templateUrl: './dashboardWrapper.component.html',
-  styleUrls: ['./dashboardWrapper.component.css'],
+  selector: 'app-wrapper',
+  templateUrl: './wrapper.component.html',
+  styleUrls: ['./wrapper.component.css'],
 })
-export class DashboardWrapperComponent implements OnInit {
+export class WrapperComponent implements OnInit {
   currentUser?: UserI;
 
   @ViewChild(MenuComponent) menu?: MenuComponent;

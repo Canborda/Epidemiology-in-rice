@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-analysis',
-  templateUrl: './analysis.component.html',
-  styleUrls: ['./analysis.component.css'],
+  selector: 'app-info',
+  templateUrl: './info.component.html',
+  styleUrls: ['./info.component.css'],
 })
-export class AnalysisComponent implements OnInit {
+export class InfoComponent implements OnInit {
   countExpanded: number = 0;
 
   constructor() {}

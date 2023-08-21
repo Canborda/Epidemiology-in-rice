@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { MapComponent } from '../../components/map/map.component';
+import { MapComponent } from '../map.component';
 
 import { CropsService } from 'src/app/services/crops.service';
 

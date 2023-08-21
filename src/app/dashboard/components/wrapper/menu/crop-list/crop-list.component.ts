@@ -3,10 +3,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { MenuComponent } from '../../components/menu/menu.component';
-import { CellDialogComponent } from '../../common/cell-dialog/cell-dialog.component';
-import { AddDialogComponent } from '../../common/add-dialog/add-dialog.component';
-import { DeleteDialogComponent } from '../../common/delete-dialog/delete-dialog.component';
+import { MenuComponent } from '../menu.component';
+import { CellDialogComponent } from './cell-dialog/cell-dialog.component';
+import { AddDialogComponent } from './add-dialog/add-dialog.component';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 import { CropsService } from 'src/app/services/crops.service';
 

@@ -3,8 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-import { MenuComponent } from '../../components/menu/menu.component';
-import { MapAddComponent } from '../map-add/map-add.component';
+import { MenuComponent } from '../menu.component';
+import { MapAddComponent } from '../../map/map-add/map-add.component';
 
 import { CropsService } from 'src/app/services/crops.service';
 import { MapsService } from 'src/app/services/maps.service';

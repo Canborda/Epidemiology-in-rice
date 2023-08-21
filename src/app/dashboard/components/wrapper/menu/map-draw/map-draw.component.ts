@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
-import { MenuComponent } from '../../components/menu/menu.component';
+import { MenuComponent } from '../menu.component';
 
 @Component({
   selector: 'app-map-draw',

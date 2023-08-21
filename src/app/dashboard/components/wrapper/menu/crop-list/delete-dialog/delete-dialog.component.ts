@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { CropListComponent } from '../../modals/crop-list/crop-list.component';
+import { CropListComponent } from '../crop-list.component';
 
 @Component({
   selector: 'app-delete-dialog',

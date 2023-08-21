@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { MapDrawComponent } from '../../modals/map-draw/map-draw.component';
-import { MapListComponent } from '../../modals/map-list/map-list.component';
-import { MapImageComponent } from '../../modals/map-image/map-image.component';
-import { CropListComponent } from '../../modals/crop-list/crop-list.component';
+import { MapDrawComponent } from './map-draw/map-draw.component';
+import { MapListComponent } from './map-list/map-list.component';
+import { MapAnalyzeComponent } from './map-analyze/map-analyze.component';
+import { CropListComponent } from './crop-list/crop-list.component';
 
 import { MapI } from 'src/app/models/map.model';
 import { GeeRequestI } from 'src/app/models/gee.model';
@@ -50,7 +50,7 @@ export class MenuComponent implements OnInit {
 
   onAnalyzeMap(): void {
     this.dialog
-      .open(MapImageComponent)
+      .open(MapAnalyzeComponent)
       .afterClosed()
       .subscribe((imgReq: GeeRequestI) => {
         if (imgReq) this.analyzeMapEvent.emit(imgReq);
