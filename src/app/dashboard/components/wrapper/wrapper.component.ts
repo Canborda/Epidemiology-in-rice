@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MenuComponent } from './menu/menu.component';
 import { MapComponent } from './map/map.component';
 import { InfoComponent } from './info/info.component';
-import { ChartComponent } from '../chart/chart.component';
+import { ChartComponent } from './info/index-info/chart/chart.component';
 
 import { UserService } from 'src/app/services/user.service';
 import { CropsService } from 'src/app/services/crops.service';

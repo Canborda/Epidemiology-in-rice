@@ -8,8 +8,7 @@
                 Información del lote
             </mat-panel-title>
         </mat-expansion-panel-header>
-        ADD BODY HERE
-        <!-- TODO Add MAP INFO component -->
+        <app-crop-info></app-crop-info>
     </mat-expansion-panel>
     <!-- Chart panel -->
     <mat-expansion-panel #chart (opened)="onPanelClicked(1)" (closed)="onPanelClicked(-1)"
@@ -20,8 +19,7 @@
                 Comparación de índices
             </mat-panel-title>
         </mat-expansion-panel-header>
-        ADD BODY HERE
-        <!-- TODO Add CHART component -->
+        <app-index-info></app-index-info>
     </mat-expansion-panel>
     <!-- Messages panel -->
     <mat-expansion-panel #msg (opened)="onPanelClicked(1)" (closed)="onPanelClicked(-1)"
@@ -32,7 +30,6 @@
                 Recomendaciones
             </mat-panel-title>
         </mat-expansion-panel-header>
-        ADD BODY HERE
-        <!-- TODO Add MESSAGES component -->
+        <app-message-info></app-message-info>
     </mat-expansion-panel>
 </mat-accordion>

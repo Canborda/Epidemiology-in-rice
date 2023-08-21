@@ -32,12 +32,14 @@ import { CropConfigComponent } from './components/wrapper/menu/crop-config/crop-
 import { IndexConfigComponent } from './components/wrapper/menu/index-config/index-config.component';
 import { UserConfigComponent } from './components/wrapper/menu/user-config/user-config.component';
 import { MapAddComponent } from './components/wrapper/map/map-add/map-add.component';
+import { CropInfoComponent } from './components/wrapper/info/crop-info/crop-info.component';
+import { IndexInfoComponent } from './components/wrapper/info/index-info/index-info.component';
+import { MessageInfoComponent } from './components/wrapper/info/message-info/message-info.component';
 
 import { CellDialogComponent } from './components/wrapper/menu/crop-config/cell-dialog/cell-dialog.component';
 import { AddDialogComponent } from './components/wrapper/menu/crop-config/add-dialog/add-dialog.component';
 import { DeleteDialogComponent } from './components/wrapper/menu/crop-config/delete-dialog/delete-dialog.component';
-
-import { ChartComponent } from './components/chart/chart.component';
+import { ChartComponent } from './components/wrapper/info/index-info/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,9 @@ import { ChartComponent } from './components/chart/chart.component';
     IndexConfigComponent,
     UserConfigComponent,
     MapAddComponent,
+    CropInfoComponent,
+    IndexInfoComponent,
+    MessageInfoComponent,
     CellDialogComponent,
     AddDialogComponent,
     DeleteDialogComponent,
