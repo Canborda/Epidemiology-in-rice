@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { MapDrawComponent } from './map-draw/map-draw.component';
-import { MapListComponent } from './map-list/map-list.component';
+import { MapSelectComponent } from './map-select/map-select.component';
 import { MapAnalyzeComponent } from './map-analyze/map-analyze.component';
 import { CropConfigComponent } from './crop-config/crop-config.component';
 import { IndexConfigComponent } from './index-config/index-config.component';
@@ -43,7 +43,7 @@ export class MenuComponent implements OnInit {
 
   onSelectMap(): void {
     this.dialog
-      .open(MapListComponent)
+      .open(MapSelectComponent)
       .afterClosed()
       .subscribe((map: MapI) => {
         if (map) this.selectMapEvent.emit(map);

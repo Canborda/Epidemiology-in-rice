@@ -26,7 +26,7 @@ import { MapComponent } from './components/wrapper/map/map.component';
 import { InfoComponent } from './components/wrapper/info/info.component';
 
 import { MapDrawComponent } from './components/wrapper/menu/map-draw/map-draw.component';
-import { MapListComponent } from './components/wrapper/menu/map-list/map-list.component';
+import { MapSelectComponent } from './components/wrapper/menu/map-select/map-select.component';
 import { MapAnalyzeComponent } from './components/wrapper/menu/map-analyze/map-analyze.component';
 import { CropConfigComponent } from './components/wrapper/menu/crop-config/crop-config.component';
 import { IndexConfigComponent } from './components/wrapper/menu/index-config/index-config.component';
@@ -46,7 +46,7 @@ import { ChartComponent } from './components/chart/chart.component';
     MapComponent,
     InfoComponent,
     MapDrawComponent,
-    MapListComponent,
+    MapSelectComponent,
     MapAnalyzeComponent,
     CropConfigComponent,
     IndexConfigComponent,

@@ -14,11 +14,11 @@ import { CropI } from 'src/app/models/crop.model';
 import { MapI } from 'src/app/models/map.model';
 
 @Component({
-  selector: 'app-map-list',
-  templateUrl: './map-list.component.html',
-  styleUrls: ['./map-list.component.css'],
+  selector: 'app-map-select',
+  templateUrl: './map-select.component.html',
+  styleUrls: ['./map-select.component.css'],
 })
-export class MapListComponent implements OnInit {
+export class MapSelectComponent implements OnInit {
   mapList!: MapI[];
   tableHeaders: string[] = [
     'Nombre',
