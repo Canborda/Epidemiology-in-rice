@@ -6,7 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 import { MenuComponent } from './menu/menu.component';
 import { MapComponent } from './map/map.component';
 import { InfoComponent } from './info/info.component';
-import { ChartComponent } from './info/index-info/chart/chart.component';
 
 import { UserService } from 'src/app/services/user.service';
 import { CropsService } from 'src/app/services/crops.service';
@@ -15,11 +14,7 @@ import { GeeService } from 'src/app/services/gee.service';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 import { UserI } from 'src/app/models/user.model';
 import { MapI } from 'src/app/models/map.model';
-import {
-  GeeRequestI,
-  GeeImageResponseI,
-  GeeDataResponseI,
-} from 'src/app/models/gee.model';
+import { GeeRequestI } from 'src/app/models/gee.model';
 
 @Component({
   selector: 'app-wrapper',
@@ -27,14 +22,16 @@ import {
   styleUrls: ['./wrapper.component.css'],
 })
 export class WrapperComponent implements OnInit {
-  currentUser?: UserI;
-
+  // Children
   @ViewChild(MenuComponent) menu?: MenuComponent;
   @ViewChild(MapComponent) map?: MapComponent;
   @ViewChild(InfoComponent) info?: InfoComponent;
-
-  // TODO Move component
-  @ViewChild(ChartComponent) chart?: ChartComponent;
+  // Component-level variables
+  currentUser?: UserI;
+  // TODO add currentMap
+  // TODO add mapList
+  // TODO add cropList
+  // TODO add indexList
 
   constructor(
     private router: Router,
@@ -75,65 +72,10 @@ export class WrapperComponent implements OnInit {
     this.map?.drawExistingPolygon(map);
   }
 
-  onAnalyzeMapEvent(geeReq: GeeRequestI): void {
-    if (this.map?.currentMap?._id) {
-      // Add map_id
-      geeReq.map_id = this.map?.currentMap?._id;
-      // Http request to get image
-      this.geeService.getImage(geeReq).subscribe({
-        next: (v: ApiSuccessI<GeeImageResponseI>) => {
-          this.map?.overlayImage(v.data);
-          this.toastr.success(
-            `Obtenida imagen para índice ${geeReq.index} de ${v.data.date}`,
-            'SUCCESS'
-          );
-        },
-        error: (e: HttpErrorResponse) => {
-          const error: ApiErrorI = e.error;
-          this.toastr.error(error.message, 'ERROR');
-        },
-      });
-      // Http request to get crop data from DB
-      this.cropService.getPhenology(geeReq).subscribe({
-        next: (v: ApiSuccessI<GeeDataResponseI[]>) => {
-          if (this.chart) {
-            // Set crop data into chart component
-            this.chart.cropData = v.data;
-            // Update chart
-            this.chart.updateChart(geeReq.index);
-          }
-          this.toastr.success(
-            `Obtenido modelo para índice ${geeReq.index} con ${v.count} etapas fenológicas`,
-            'SUCCESS'
-          );
-        },
-        error: (e: HttpErrorResponse) => {
-          const error: ApiErrorI = e.error;
-          this.toastr.error(error.message, 'ERROR');
-        },
-      });
-      // Http request to get crop data from GEE
-      this.geeService.getPhenology(geeReq).subscribe({
-        next: (v: ApiSuccessI<GeeDataResponseI[]>) => {
-          if (this.chart) {
-            // Set gee data into chart component
-            this.chart.geeData = v.data;
-            // Update chart
-            this.chart.updateChart(geeReq.index);
-          }
-          this.toastr.success(
-            `Obtenidos datos para índice ${geeReq.index} con ${v.count} imágenes`,
-            'SUCCESS'
-          );
-        },
-        error: (e: HttpErrorResponse) => {
-          const error: ApiErrorI = e.error;
-          this.toastr.error(error.message, 'ERROR');
-        },
-      });
-    } else {
-      this.toastr.error('Debe seleccionar un mapa primero', 'ERROR');
-    }
+  onAnalyzeMapEvent(data: GeeRequestI): void {
+    console.log('ANALIZE MAP RECIVED EVENT');
+    console.log(data);
+    // TODO implement received event
   }
 
   onLogoutEvent(): void {

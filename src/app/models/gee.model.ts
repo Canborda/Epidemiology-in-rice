@@ -10,6 +10,7 @@ export interface GeeImageResponseI {
   bbox: Array<Float32List>;
 }
 
+// TODO remove deprecated interface when unused
 export interface GeeDataResponseI {
   name?: string;
   date: Date;
