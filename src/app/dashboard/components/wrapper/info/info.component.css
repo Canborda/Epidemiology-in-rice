@@ -35,3 +35,8 @@ mat-icon {
 .panelExpanded {
   opacity: 1;
 }
+
+.panelHeaderExpanded {
+  font-size: large;
+  font-weight: bold;
+}

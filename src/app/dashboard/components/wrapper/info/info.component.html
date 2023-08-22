@@ -2,7 +2,7 @@
     <!-- Map info panel -->
     <mat-expansion-panel #info (opened)="onPanelClicked(1)" (closed)="onPanelClicked(-1)"
         [class.panelExpanded]="info.expanded">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header [class.panelHeaderExpanded]="info.expanded">
             <mat-panel-title>
                 <mat-icon>info</mat-icon>
                 Información del lote
@@ -13,9 +13,9 @@
     <!-- Chart panel -->
     <mat-expansion-panel #chart (opened)="onPanelClicked(1)" (closed)="onPanelClicked(-1)"
         [class.panelExpanded]="chart.expanded">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header [class.panelHeaderExpanded]="chart.expanded">
             <mat-panel-title>
-                <mat-icon>show_chart</mat-icon>
+                <mat-icon>timeline</mat-icon>
                 Comparación de índices
             </mat-panel-title>
         </mat-expansion-panel-header>
@@ -24,7 +24,7 @@
     <!-- Messages panel -->
     <mat-expansion-panel #msg (opened)="onPanelClicked(1)" (closed)="onPanelClicked(-1)"
         [class.panelExpanded]="msg.expanded">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header [class.panelHeaderExpanded]="msg.expanded">
             <mat-panel-title>
                 <mat-icon>message</mat-icon>
                 Recomendaciones

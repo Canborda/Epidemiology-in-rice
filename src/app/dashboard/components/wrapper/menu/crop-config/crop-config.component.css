@@ -1,5 +1,8 @@
 p {
-  color: darkgray;
+  padding: 10px;
+  margin: 0;
+  font-size: small;
+  color: darkgray
 }
 
 table th {
