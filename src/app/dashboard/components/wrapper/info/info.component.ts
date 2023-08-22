@@ -4,6 +4,8 @@ import { CropInfoComponent } from './crop-info/crop-info.component';
 import { IndexInfoComponent } from './index-info/index-info.component';
 import { MessageInfoComponent } from './message-info/message-info.component';
 
+import { MESSAGE_TYPES } from 'src/utils/enums';
+
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
@@ -11,9 +13,9 @@ import { MessageInfoComponent } from './message-info/message-info.component';
 })
 export class InfoComponent implements OnInit {
   // Children
-  @ViewChild(CropInfoComponent) cropInfo?: CropInfoComponent;
-  @ViewChild(IndexInfoComponent) indexInfo?: IndexInfoComponent;
-  @ViewChild(MessageInfoComponent) messageInfo?: MessageInfoComponent;
+  @ViewChild(CropInfoComponent) cropInfo!: CropInfoComponent;
+  @ViewChild(IndexInfoComponent) indexInfo!: IndexInfoComponent;
+  @ViewChild(MessageInfoComponent) messageInfo!: MessageInfoComponent;
   // Component-level variables
   countExpanded: number = 0;
   currentIndex: string = 'NDVI'; // TODO replace hardcoded value for variable from mapAnalyze
@@ -38,6 +40,29 @@ export class InfoComponent implements OnInit {
   onMessageOpened(): void {
     console.log('MESSAGE PANEL OPENED');
     // TODO implement update messages
+    // TODO replace hardcoded values for stored messages (from endpoint?)
+    this.messageInfo.messageList = [
+      {
+        text: 'This is an INFORMATION message. To omit click on card.',
+        type: MESSAGE_TYPES.INFORMATION,
+        read: false,
+      },
+      {
+        text: 'This is a SUCCESS message. To omit click on card.',
+        type: MESSAGE_TYPES.SUCCESS,
+        read: false,
+      },
+      {
+        text: 'This is a WARNING message. To omit click on card.',
+        type: MESSAGE_TYPES.WARNING,
+        read: false,
+      },
+      {
+        text: 'This is a DANGER message. To omit click on card.',
+        type: MESSAGE_TYPES.DANGER,
+        read: false,
+      },
+    ];
   }
 
   // #endregion

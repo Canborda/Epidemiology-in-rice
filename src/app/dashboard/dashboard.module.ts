@@ -18,6 +18,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
 
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 
@@ -82,6 +83,7 @@ import { ChartComponent } from './components/wrapper/info/index-info/chart/chart
     MatNativeDateModule,
     MatButtonModule,
     MatExpansionModule,
+    MatCardModule,
   ],
 })
 export class DashboardModule {}

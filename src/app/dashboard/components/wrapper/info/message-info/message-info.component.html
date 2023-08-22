@@ -1,2 +1,17 @@
-<p>message-info works!</p>
-<!-- TODO Implement MESSAGE INFO component -->
+<mat-card *ngFor="let msg of messageList" (click)="onCardClick(msg)" [ngClass]="msg.type" [class.read]="msg.read">
+    <mat-card-content>
+        <table>
+            <tr>
+                <td>
+                    <mat-icon *ngIf="msg.type === 'I'">info</mat-icon>
+                    <mat-icon *ngIf="msg.type === 'S'">check_box</mat-icon>
+                    <mat-icon *ngIf="msg.type === 'W'">warning</mat-icon>
+                    <mat-icon *ngIf="msg.type === 'D'">cancel</mat-icon>
+                </td>
+                <td>
+                    {{msg.text}}
+                </td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>

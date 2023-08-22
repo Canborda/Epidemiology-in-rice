@@ -20,3 +20,10 @@ export enum INDEXES {
   CHLOROPHYLL_INDEX_WITH_RED_EDGE = 'Clre',
   VEGETATION_CONDITION_INDEX = 'VCI',
 }
+
+export enum MESSAGE_TYPES {
+  INFORMATION = 'I',
+  SUCCESS = 'S',
+  WARNING = 'W',
+  DANGER = 'D',
+}
