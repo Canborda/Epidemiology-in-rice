@@ -1,0 +1,107 @@
+<h2>Configuración de Valores Estandarizados por Índice</h2>
+<mat-dialog-content style="display: flex; flex-direction: column;">
+    <br>
+    <div style="display:flex; gap: 10px">
+        <!-- VARIETY section -->
+        <div class="mat-elevation-z5" style="width: 35%">
+            <mat-form-field appearance="fill">
+                <mat-label>Seleccione variedad</mat-label>
+                <mat-select name="variety" (selectionChange)="onVarietyChange($event.value)">
+                    <mat-option *ngFor="let variety of varietyList" [value]="variety._id">{{variety.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button class="addButton" (click)="onVarietyAdd()" matTooltip="Agregar una variedad">
+                <mat-icon class="icon-button">add_circle</mat-icon>
+            </button>
+            <button mat-icon-button class="delButton" (click)="onVarietyDelete()" matTooltip="Eliminar una variedad">
+                <mat-icon class="icon-button">remove_circle</mat-icon>
+            </button>
+            <button mat-icon-button class="editButton" (click)="onVarietyEdit()"
+                matTooltip="Editar la variedad seleccionada">
+                <mat-icon class="icon-button">create</mat-icon>
+            </button>
+        </div>
+        <!-- CLUSTER section -->
+        <div class="mat-elevation-z5" style="width: 35%">
+            <mat-form-field appearance="fill">
+                <mat-label>Seleccione cluster</mat-label>
+                <mat-select name="cluster" (selectionChange)="onClusterChange($event.value)"
+                    [disabled]="!selectedVarietyId">
+                    <mat-option *ngFor="let cluster of selectCluster"
+                        [value]="cluster._id">{{cluster.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button [disabled]="!selectedVarietyId" class="addButton" (click)="onClusterAdd()"
+                matTooltip="Agregar un clúster para la variedad seleccionada">
+                <mat-icon class="icon-button">add_circle</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="!selectedVarietyId" class="delButton" (click)="onClusterDelete()"
+                matTooltip="Eliminar un clúster para la variedad seleccionada">
+                <mat-icon class="icon-button">remove_circle</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="!selectedVarietyId" class="editButton" (click)="onClusterEdit()"
+                matTooltip="Editr el cluster seleccionado">
+                <mat-icon class="icon-button">create</mat-icon>
+            </button>
+        </div>
+        <!-- ID_INFO section -->
+        <div class="idPanel" style="width: 30%;">
+            <table class="idTable">
+                <tbody>
+                    <tr>
+                        <td>ID variedad:</td>
+                        <td>{{selectedVarietyId ?? ' - '}}</td>
+                    </tr>
+                    <tr>
+                        <td>ID clúster:</td>
+                        <td>{{selectedClusterId ?? ' - '}}</td>
+                    </tr>
+                    <tr>
+                        <td>ID fenología:</td>
+                        <td>{{selectedPhenologyId ?? ' - '}}</td>
+                    </tr>
+                    <tr>
+                        <td>ID índice:</td>
+                        <td>{{selectedIndexId ?? ' - '}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <!-- INDEX section -->
+    <div *ngIf="selectedVarietyId && selectedClusterId">
+        <mat-tab-group (selectedTabChange)="onIndexChange($event.index)" animationDuration="0ms">
+            <mat-tab *ngFor="let index of tabIndex" label="{{index}}">
+                <table class="indexTable mat-elevation-z5">
+                    <thead>
+                        <th *ngFor="let head of tableHeaders">{{head.label}}</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of table">
+                            <td *ngFor="let col of tableHeaders; let i = index" [class.headCol]="i < 2"
+                                (mouseover)="onCellHover(row, col)" (click)="onCellClick(row, col)">
+                                {{row[col.value] ?? '-'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="indexButtonPanel">
+                    <button mat-icon-button class="addButton" (click)="onPhenologyAdd()"
+                        matTooltip="Agregar etapa fenológica para la combinación variedad-clúster">
+                        <mat-icon class="icon-button">add_circle</mat-icon>
+                    </button>
+                    <button mat-icon-button class="delButton" (click)="onPhenologyDelete()"
+                        matTooltip="Eliminar etapa fenológica para la combinación variedad-clúster">
+                        <mat-icon class="icon-button">remove_circle</mat-icon>
+                    </button>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+        <mat-divider></mat-divider>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onSave()" mat-raised-button color="primary">Guardar</button>
+    <button mat-button mat-stroked-button mat-dialog-close color="primary">Cancelar</button>
+</mat-dialog-actions>

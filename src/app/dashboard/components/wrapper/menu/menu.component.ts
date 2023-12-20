@@ -6,6 +6,7 @@ import { MapSelectComponent } from './map-select/map-select.component';
 import { MapAnalyzeComponent } from './map-analyze/map-analyze.component';
 import { CropConfigComponent } from './crop-config/crop-config.component';
 import { IndexConfigComponent } from './index-config/index-config.component';
+import { StandardsConfigComponent } from './standards-config/standards-config.component';
 import { UserConfigComponent } from './user-config/user-config.component';
 
 import { MapI } from 'src/app/models/map.model';
@@ -65,6 +66,10 @@ export class MenuComponent implements OnInit {
 
   onIndexOptions(): void {
     this.dialog.open(IndexConfigComponent);
+  }
+
+  onStandardOptions(): void {
+    this.dialog.open(StandardsConfigComponent);
   }
 
   onUserOptions(): void {

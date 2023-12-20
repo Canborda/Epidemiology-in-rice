@@ -11,12 +11,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 
@@ -31,6 +33,7 @@ import { MapSelectComponent } from './components/wrapper/menu/map-select/map-sel
 import { MapAnalyzeComponent } from './components/wrapper/menu/map-analyze/map-analyze.component';
 import { CropConfigComponent } from './components/wrapper/menu/crop-config/crop-config.component';
 import { IndexConfigComponent } from './components/wrapper/menu/index-config/index-config.component';
+import { StandardsConfigComponent } from './components/wrapper/menu/standards-config/standards-config.component';
 import { UserConfigComponent } from './components/wrapper/menu/user-config/user-config.component';
 import { MapAddComponent } from './components/wrapper/map/map-add/map-add.component';
 import { CropInfoComponent } from './components/wrapper/info/crop-info/crop-info.component';
@@ -53,6 +56,7 @@ import { ChartComponent } from './components/wrapper/info/index-info/chart/chart
     MapAnalyzeComponent,
     CropConfigComponent,
     IndexConfigComponent,
+    StandardsConfigComponent,
     UserConfigComponent,
     MapAddComponent,
     CropInfoComponent,
@@ -76,12 +80,14 @@ import { ChartComponent } from './components/wrapper/info/index-info/chart/chart
     MatToolbarModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatTabsModule,
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
+    MatTooltipModule,
     MatExpansionModule,
     MatCardModule,
   ],
