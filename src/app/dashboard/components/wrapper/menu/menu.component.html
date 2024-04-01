@@ -14,7 +14,7 @@
             <mat-icon mat-list-icon>photo_library</mat-icon>
             <span *ngIf="isExpanded">Seleccionar lote</span>
         </mat-list-item>
-        <mat-list-item (click)="onAnalyzeMap()">
+        <mat-list-item (click)="onAnalyzeMap()" [disabled]="!isMapSelected">
             <mat-icon mat-list-icon>satellite</mat-icon>
             <span *ngIf="isExpanded">Analizar lote</span>
         </mat-list-item>

@@ -14,7 +14,7 @@ import { GeeService } from 'src/app/services/gee.service';
 import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
 import { UserI } from 'src/app/models/user.model';
 import { MapI } from 'src/app/models/map.model';
-import { GeeRequestI } from 'src/app/models/gee.model';
+import { GeeImageResponseI, GeeRequestI } from 'src/app/models/gee.model';
 
 @Component({
   selector: 'app-wrapper',
@@ -39,7 +39,7 @@ export class WrapperComponent implements OnInit {
     private cropService: CropsService,
     private geeService: GeeService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Check if login
@@ -73,8 +73,7 @@ export class WrapperComponent implements OnInit {
   }
 
   onAnalyzeMapEvent(data: GeeRequestI): void {
-    console.log('ANALIZE MAP RECIVED EVENT');
-    console.log(data);
+    data.map_id = this.map!.currentMap!._id!;
     // TODO implement received event
   }
 

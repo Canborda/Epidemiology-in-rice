@@ -21,15 +21,16 @@ export class MenuComponent implements OnInit {
   isExpanded: boolean = true;
   userName: string = 'USER NAME';
   isAdmin: boolean = false;
+  isMapSelected: boolean = false;
 
   @Output() drawMapEvent = new EventEmitter<void>();
   @Output() selectMapEvent = new EventEmitter<MapI>();
   @Output() analyzeMapEvent = new EventEmitter<GeeRequestI>();
   @Output() logoutEvent = new EventEmitter<void>();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   // #region SENT_EVENTS methods
 
@@ -47,7 +48,10 @@ export class MenuComponent implements OnInit {
       .open(MapSelectComponent)
       .afterClosed()
       .subscribe((map: MapI) => {
-        if (map) this.selectMapEvent.emit(map);
+        if (map) {
+          this.selectMapEvent.emit(map);
+          this.isMapSelected = true;
+        }
       });
   }
 
