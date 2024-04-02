@@ -23,6 +23,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<p *ngIf="!varietiesList.length">No se ha creado ninguna variedad.</p>
 	<button mat-button mat-raised-button class="addButton" color="primary" (click)="onAdd()">
 		<mat-icon>library_add</mat-icon>&nbsp;&nbsp;Agregar Variedad
 	</button>

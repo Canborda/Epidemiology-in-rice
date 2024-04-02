@@ -71,7 +71,7 @@ export class AdminVarietiesComponent implements OnInit {
 			.subscribe((name: string) => {
 				if (name) {
 					variety.name = name;
-					this.varietiesService.update(variety).subscribe({
+					this.varietiesService.updateName(variety._id!, name).subscribe({
 						next: s => {
 							this.toastr.success(`Variedad "${s.data.name}" actualizada`);
 						},
@@ -93,7 +93,7 @@ export class AdminVarietiesComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((flag: boolean) => {
 				if (flag) {
-					this.varietiesService.delete(variety).subscribe({
+					this.varietiesService.delete(variety._id!).subscribe({
 						next: s => {
 							this.varietiesList = this.varietiesList.filter(v => v != variety);
 							this.toastr.success(`Variedad "${variety.name}" eliminada`);

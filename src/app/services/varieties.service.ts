@@ -33,21 +33,21 @@ export class VarietiesService {
 		);
 	}
 
-	update(variety: IVariety): Observable<ApiSuccessI<IVariety>> {
+	updateName(varietyId: string, name: string): Observable<ApiSuccessI<IVariety>> {
 		const access_token = localStorage.getItem('access_token');
 		const headers = { Authorization: `Bearer ${access_token}` };
 		return this.http.patch<ApiSuccessI<IVariety>>(
-			this.baseUrl + ROUTES.varieties + `/${variety._id}`,
-			{ name: variety.name },
+			this.baseUrl + ROUTES.varieties + `/${varietyId}`,
+			{ name },
 			{ headers },
 		);
 	}
 
-	delete(variety: IVariety): Observable<ApiSuccessI<void>> {
+	delete(varietyId: string): Observable<ApiSuccessI<void>> {
 		const access_token = localStorage.getItem('access_token');
 		const headers = { Authorization: `Bearer ${access_token}` };
 		return this.http.delete<ApiSuccessI<void>>(
-			this.baseUrl + ROUTES.varieties + `/${variety._id}`,
+			this.baseUrl + ROUTES.varieties + `/${varietyId}`,
 			{ headers },
 		);
 	}

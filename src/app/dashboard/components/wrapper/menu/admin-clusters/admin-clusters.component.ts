@@ -15,10 +15,10 @@ import { ICluster, IVariety } from 'src/app/models/admin.models';
 	styleUrls: ['./admin-clusters.component.css']
 })
 export class AdminClustersComponent implements OnInit {
-	selectedVariety?: IVariety;
-	selectedClusters?: ICluster[];
 	varietiesList!: IVariety[];
 	clustersList!: ICluster[];
+	varietyClusters?: ICluster[];
+	selectedVariety?: IVariety;
 
 	constructor(
 		private dialog: MatDialog,
@@ -51,7 +51,7 @@ export class AdminClustersComponent implements OnInit {
 	// #region BUTTONS actions
 
 	onSelectedVariety(): void {
-		this.selectedClusters = this.clustersList.filter(cluster => cluster.varietyId === this.selectedVariety?._id);
+		this.varietyClusters = this.clustersList.filter(cluster => cluster.varietyId === this.selectedVariety?._id);
 	}
 
 	onAdd(): void {
@@ -59,7 +59,7 @@ export class AdminClustersComponent implements OnInit {
 			.open(DialogAddComponent, {
 				data: {
 					entity: 'Clúster',
-					list: this.selectedClusters!.map(cluster => cluster.name),
+					list: this.varietyClusters!.map(cluster => cluster.name),
 				}
 			}).afterClosed()
 			.subscribe((name: string) => {
@@ -89,13 +89,13 @@ export class AdminClustersComponent implements OnInit {
 				data: {
 					entity: 'Clúster',
 					value: cluster.name,
-					list: this.selectedClusters!.map(cluster => cluster.name),
+					list: this.varietyClusters!.map(cluster => cluster.name),
 				}
 			}).afterClosed()
 			.subscribe((name: string) => {
 				if (name) {
 					cluster.name = name;
-					this.clustersService.update(cluster).subscribe({
+					this.clustersService.updateName(cluster._id!, name).subscribe({
 						next: s => {
 							this.toastr.success(`Clúster "${s.data.name}" actualizado`);
 						},
@@ -122,7 +122,7 @@ export class AdminClustersComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((flag: boolean) => {
 				if (flag) {
-					this.clustersService.delete(cluster).subscribe({
+					this.clustersService.delete(cluster._id!).subscribe({
 						next: s => {
 							this.clustersList = this.clustersList.filter(c => c != cluster);
 							this.onSelectedVariety();

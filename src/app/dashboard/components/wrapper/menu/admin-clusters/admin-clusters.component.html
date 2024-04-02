@@ -6,7 +6,7 @@
 </div>
 <mat-spinner *ngIf="!varietiesList && !clustersList"></mat-spinner>
 <mat-dialog-content *ngIf="varietiesList && clustersList">
-	<mat-form-field appearance="fill" onchange="onSelectVariety(variety)">
+	<mat-form-field appearance="fill">
 		<mat-label>Variedad</mat-label>
 		<mat-select [(ngModel)]="selectedVariety" (selectionChange)="onSelectedVariety()">
 			<mat-option *ngFor="let variety of varietiesList" [value]="variety">{{variety.name}}</mat-option>
@@ -14,7 +14,7 @@
 	</mat-form-field>
 	<table *ngIf="selectedVariety">
 		<tbody>
-			<tr *ngFor="let cluster of selectedClusters">
+			<tr *ngFor="let cluster of varietyClusters">
 				<td class="firstColumn">
 					{{cluster.name}}
 				</td>
@@ -32,7 +32,8 @@
 			</tr>
 		</tbody>
 	</table>
-	<p *ngIf="selectedVariety && !selectedClusters?.length">Esta variedad no tiene ningún clúster.</p>
+	<p *ngIf="!varietiesList.length">No se ha creado ninguna variedad.</p>
+	<p *ngIf="selectedVariety && !varietyClusters?.length">Esta variedad no tiene ningún clúster.</p>
 	<button *ngIf="selectedVariety" mat-button mat-raised-button class="addButton" color="primary" (click)="onAdd()">
 		<mat-icon>library_add</mat-icon>&nbsp;&nbsp;Agregar Clúster
 	</button>

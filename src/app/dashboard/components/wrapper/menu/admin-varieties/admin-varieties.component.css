@@ -16,3 +16,9 @@ tr:hover {
 	font-size: small;
 	font-weight: normal;
 }
+
+p {
+	justify-content: center;
+	font-style: italic;
+	color: rgb(180, 180, 180);
+}

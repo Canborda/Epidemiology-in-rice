@@ -33,21 +33,21 @@ export class ClustersService {
 		);
 	}
 
-	update(cluster: ICluster): Observable<ApiSuccessI<ICluster>> {
+	updateName(clusterId: string, name: string): Observable<ApiSuccessI<ICluster>> {
 		const access_token = localStorage.getItem('access_token');
 		const headers = { Authorization: `Bearer ${access_token}` };
 		return this.http.patch<ApiSuccessI<ICluster>>(
-			this.baseUrl + ROUTES.clusters + `/${cluster._id}`,
-			{ name: cluster.name },
+			this.baseUrl + ROUTES.clusters + `/${clusterId}`,
+			{ name },
 			{ headers },
 		);
 	}
 
-	delete(cluster: ICluster): Observable<ApiSuccessI<void>> {
+	delete(clusterId: string): Observable<ApiSuccessI<void>> {
 		const access_token = localStorage.getItem('access_token');
 		const headers = { Authorization: `Bearer ${access_token}` };
 		return this.http.delete<ApiSuccessI<void>>(
-			this.baseUrl + ROUTES.clusters + `/${cluster._id}`,
+			this.baseUrl + ROUTES.clusters + `/${clusterId}`,
 			{ headers },
 		);
 	}
