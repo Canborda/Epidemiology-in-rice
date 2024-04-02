@@ -4,6 +4,7 @@ export const ROUTES = {
     signup: '/api/v1/users/signup',
     login: '/api/v1/users/login',
   },
+  // TODO REMOVE
   crops: {
     BASE: '/api/v1/crops',
     phenology: '/api/v1/crops/phenology',
@@ -17,4 +18,6 @@ export const ROUTES = {
     images: '/api/v1/gee/images',
     phenology: '/api/v1/gee/phenology',
   },
+  varieties: '/api/v1/varieties',
+  clusters: '/api/v1/clusters',
 };

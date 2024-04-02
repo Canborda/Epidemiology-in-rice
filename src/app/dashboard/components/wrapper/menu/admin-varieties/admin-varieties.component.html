@@ -4,8 +4,9 @@
 		<mat-icon>close</mat-icon>
 	</button>
 </div>
-<mat-dialog-content>
-	<table *ngIf="varietiesList.length">
+<mat-spinner *ngIf="!varietiesList"></mat-spinner>
+<mat-dialog-content *ngIf="varietiesList">
+	<table>
 		<tbody>
 			<tr *ngFor="let variety of varietiesList">
 				<td class="firstColumn">

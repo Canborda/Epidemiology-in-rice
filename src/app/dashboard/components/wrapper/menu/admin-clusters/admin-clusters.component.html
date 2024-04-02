@@ -4,8 +4,9 @@
 		<mat-icon>close</mat-icon>
 	</button>
 </div>
-<mat-dialog-content>
-	<mat-form-field appearance="fill" *ngIf="varietiesList.length" onchange="onSelectVariety(variety)">
+<mat-spinner *ngIf="!varietiesList && !clustersList"></mat-spinner>
+<mat-dialog-content *ngIf="varietiesList && clustersList">
+	<mat-form-field appearance="fill" onchange="onSelectVariety(variety)">
 		<mat-label>Variedad</mat-label>
 		<mat-select [(ngModel)]="selectedVariety" (selectionChange)="onSelectedVariety()">
 			<mat-option *ngFor="let variety of varietiesList" [value]="variety">{{variety.name}}</mat-option>

@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ICluster, IVariety } from 'src/app/models/admin.models';
+import { ToastrService } from 'ngx-toastr';
+
 import { DialogAddComponent } from '../../../common/dialog-add/dialog-add.component';
 import { DialogDeleteComponent } from '../../../common/dialog-delete/dialog-delete.component';
+import { VarietiesService } from 'src/app/services/varieties.service';
+import { ClustersService } from 'src/app/services/clusters.service';
+
+import { ICluster, IVariety } from 'src/app/models/admin.models';
 
 @Component({
 	selector: 'app-admin-clusters',
@@ -12,35 +17,36 @@ import { DialogDeleteComponent } from '../../../common/dialog-delete/dialog-dele
 export class AdminClustersComponent implements OnInit {
 	selectedVariety?: IVariety;
 	selectedClusters?: ICluster[];
-	varietiesList: IVariety[] = [
-		{ _id: 'varietyId_1', name: 'GENEROSA' },
-		{ _id: 'varietyId_2', name: 'FEDEARROZ 70' },
-		{ _id: 'varietyId_3', name: 'FEDEARROZ 68' },
-	];
-	clustersList: ICluster[] = [
-		{
-			_id: 'clusterId_1',
-			varietyId: 'varietyId_1',
-			name: 'Caribe',
-			polygon: [],
-		},
-		{
-			_id: 'clusterId_2',
-			varietyId: 'varietyId_2',
-			name: 'Llanos',
-			polygon: [],
-		},
-		{
-			_id: 'clusterId_3',
-			varietyId: 'varietyId_1',
-			name: 'Cluster 3',
-			polygon: [],
-		}
-	];
+	varietiesList!: IVariety[];
+	clustersList!: ICluster[];
 
-	constructor(private dialog: MatDialog) { }
+	constructor(
+		private dialog: MatDialog,
+		private toastr: ToastrService,
+		private varietiesService: VarietiesService,
+		private clustersService: ClustersService,
+	) { }
 
-	ngOnInit(): void { }
+	ngOnInit(): void {
+		this.varietiesService.getAll().subscribe({
+			next: s => {
+				this.varietiesList = s.data;
+				this.toastr.success(`Obtenidas ${s.count} variedades`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
+		this.clustersService.getAll().subscribe({
+			next: s => {
+				this.clustersList = s.data;
+				this.toastr.success(`Obtenidos ${s.count} clusters`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
+	}
 
 	// #region BUTTONS actions
 
@@ -58,8 +64,21 @@ export class AdminClustersComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((name: string) => {
 				if (name) {
-					console.log('ADD');
-					console.log(name);
+					const cluster: ICluster = {
+						varietyId: this.selectedVariety!._id!,
+						name: name,
+						polygon: [],
+					};
+					this.clustersService.create(cluster).subscribe({
+						next: s => {
+							this.clustersList.push(s.data);
+							this.onSelectedVariety();
+							this.toastr.success(`Clúster "${s.data.name}" creado`);
+						},
+						error: e => {
+							this.toastr.error(e.error.message);
+						},
+					});
 				}
 			});
 	}
@@ -75,8 +94,15 @@ export class AdminClustersComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((name: string) => {
 				if (name) {
-					console.log('EDIT NAME');
-					console.log(name);
+					cluster.name = name;
+					this.clustersService.update(cluster).subscribe({
+						next: s => {
+							this.toastr.success(`Clúster "${s.data.name}" actualizado`);
+						},
+						error: e => {
+							this.toastr.error(e.error.message);
+						},
+					});
 				}
 			});
 	}
@@ -96,9 +122,16 @@ export class AdminClustersComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((flag: boolean) => {
 				if (flag) {
-					console.log('DELETE');
-					console.log(cluster);
-
+					this.clustersService.delete(cluster).subscribe({
+						next: s => {
+							this.clustersList = this.clustersList.filter(c => c != cluster);
+							this.onSelectedVariety();
+							this.toastr.success(`Clúster "${cluster.name}" eliminado`);
+						},
+						error: e => {
+							this.toastr.error(e.error.message);
+						},
+					});
 				}
 			});
 	}

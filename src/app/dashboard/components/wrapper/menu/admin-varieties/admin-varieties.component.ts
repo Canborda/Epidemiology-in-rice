@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { IVariety } from 'src/app/models/admin.models';
+import { ToastrService } from 'ngx-toastr';
+
 import { DialogAddComponent } from '../../../common/dialog-add/dialog-add.component';
 import { DialogDeleteComponent } from '../../../common/dialog-delete/dialog-delete.component';
+import { VarietiesService } from 'src/app/services/varieties.service';
+
+import { IVariety } from 'src/app/models/admin.models';
 
 @Component({
 	selector: 'app-admin-varieties',
@@ -10,14 +14,25 @@ import { DialogDeleteComponent } from '../../../common/dialog-delete/dialog-dele
 	styleUrls: ['./admin-varieties.component.css']
 })
 export class AdminVarietiesComponent implements OnInit {
-	varietiesList: IVariety[] = [
-		{ _id: 'varietyId_1', name: 'GENEROSA' },
-		{ _id: 'varietyId_2', name: 'FEDEARROZ 70' },
-	];
+	varietiesList!: IVariety[];
 
-	constructor(private dialog: MatDialog) { }
+	constructor(
+		private dialog: MatDialog,
+		private toastr: ToastrService,
+		private varietiesService: VarietiesService,
+	) { }
 
-	ngOnInit(): void { }
+	ngOnInit(): void {
+		this.varietiesService.getAll().subscribe({
+			next: s => {
+				this.varietiesList = s.data;
+				this.toastr.success(`Obtenidas ${s.count} variedades`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
+	}
 
 	// #region BUTTONS actions
 
@@ -31,8 +46,15 @@ export class AdminVarietiesComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((name: string) => {
 				if (name) {
-					console.log('ADD');
-					console.log(name);
+					this.varietiesService.create({ name }).subscribe({
+						next: s => {
+							this.varietiesList.push(s.data);
+							this.toastr.success(`Variedad "${s.data.name}" creada`);
+						},
+						error: e => {
+							this.toastr.error(e.error.message);
+						},
+					});
 				}
 			});
 	}
@@ -48,8 +70,15 @@ export class AdminVarietiesComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((name: string) => {
 				if (name) {
-					console.log('EDIT NAME');
-					console.log(name);
+					variety.name = name;
+					this.varietiesService.update(variety).subscribe({
+						next: s => {
+							this.toastr.success(`Variedad "${s.data.name}" actualizada`);
+						},
+						error: e => {
+							this.toastr.error(e.error.message);
+						},
+					});
 				}
 			});
 	}
@@ -64,9 +93,15 @@ export class AdminVarietiesComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((flag: boolean) => {
 				if (flag) {
-					console.log('DELETE');
-					console.log(variety);
-
+					this.varietiesService.delete(variety).subscribe({
+						next: s => {
+							this.varietiesList = this.varietiesList.filter(v => v != variety);
+							this.toastr.success(`Variedad "${variety.name}" eliminada`);
+						},
+						error: e => {
+							this.toastr.error(e.error.message);
+						},
+					});
 				}
 			});
 	}

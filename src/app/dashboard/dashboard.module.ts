@@ -21,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { DialogAddComponent } from './components/common/dialog-add/dialog-add.component';
 import { DialogDeleteComponent } from './components/common/dialog-delete/dialog-delete.component';
@@ -88,6 +89,7 @@ import { ChartComponent } from './components/wrapper/info/index-info/chart/chart
     MatTooltipModule,
     MatExpansionModule,
     MatCardModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class DashboardModule { }
