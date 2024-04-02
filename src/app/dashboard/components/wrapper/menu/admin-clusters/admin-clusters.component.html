@@ -1,0 +1,38 @@
+<div class="flex-container">
+	<h2>Administrar Clústers</h2>
+	<button mat-button mat-dialog-close class="close">
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<mat-dialog-content>
+	<mat-form-field appearance="fill" *ngIf="varietiesList.length" onchange="onSelectVariety(variety)">
+		<mat-label>Variedad</mat-label>
+		<mat-select [(ngModel)]="selectedVariety" (selectionChange)="onSelectedVariety()">
+			<mat-option *ngFor="let variety of varietiesList" [value]="variety">{{variety.name}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<table *ngIf="selectedVariety">
+		<tbody>
+			<tr *ngFor="let cluster of selectedClusters">
+				<td class="firstColumn">
+					{{cluster.name}}
+				</td>
+				<td>
+					<button mat-icon-button (click)="onEditName(cluster)">
+						<mat-icon>edit</mat-icon>
+					</button>
+					<button mat-icon-button (click)="onEditPolygon(cluster)">
+						<mat-icon>location_on</mat-icon>
+					</button>
+					<button mat-icon-button (click)="onDelete(cluster)">
+						<mat-icon>delete_outline</mat-icon>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p *ngIf="selectedVariety && !selectedClusters?.length">Esta variedad no tiene ningún clúster.</p>
+	<button *ngIf="selectedVariety" mat-button mat-raised-button class="addButton" color="primary" (click)="onAdd()">
+		<mat-icon>library_add</mat-icon>&nbsp;&nbsp;Agregar Clúster
+	</button>
+</mat-dialog-content>

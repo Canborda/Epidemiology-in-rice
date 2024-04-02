@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MapDrawComponent } from './map-draw/map-draw.component';
 import { MapSelectComponent } from './map-select/map-select.component';
 import { MapAnalyzeComponent } from './map-analyze/map-analyze.component';
-import { CropConfigComponent } from './crop-config/crop-config.component';
-import { IndexConfigComponent } from './index-config/index-config.component';
-import { StandardsConfigComponent } from './standards-config/standards-config.component';
+import { StandardsConfigComponent } from './standards-config/standards-config.component'; //TODO REMOVE
+import { AdminVarietiesComponent } from './admin-varieties/admin-varieties.component';
+import { AdminClustersComponent } from './admin-clusters/admin-clusters.component';
 import { UserConfigComponent } from './user-config/user-config.component';
 
 import { MapI } from 'src/app/models/map.model';
@@ -32,7 +32,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  // #region SENT_EVENTS methods
+  // #region MAP SECTION methods
 
   onDrawMap(): void {
     this.dialog
@@ -64,17 +64,26 @@ export class MenuComponent implements OnInit {
       });
   }
 
-  onCropOptions(): void {
-    this.dialog.open(CropConfigComponent);
-  }
+  // #endregion
 
-  onIndexOptions(): void {
-    this.dialog.open(IndexConfigComponent);
-  }
+  // #region ADMIN SECTION methods
 
+  // TODO REMOVE
   onStandardOptions(): void {
     this.dialog.open(StandardsConfigComponent);
   }
+
+  onAdminVarieties(): void {
+    this.dialog.open(AdminVarietiesComponent, { panelClass: 'custom-dialog', disableClose: true });
+  }
+
+  onAdminClusters(): void {
+    this.dialog.open(AdminClustersComponent, { panelClass: 'custom-dialog', disableClose: true });
+  }
+
+  // #endregion
+
+  // #region USER SECTION methods
 
   onUserOptions(): void {
     this.dialog.open(UserConfigComponent);

@@ -22,17 +22,18 @@
     <!-- Admin options -->
     <div class="admin-options" *ngIf="isAdmin">
         <mat-divider></mat-divider>
-        <mat-list-item (click)="onCropOptions()">
-            <mat-icon mat-list-icon>map</mat-icon>
-            <span *ngIf="isExpanded">Opciones de Cultivo</span>
-        </mat-list-item>
-        <mat-list-item (click)="onIndexOptions()">
-            <mat-icon mat-list-icon>perm_data_setting</mat-icon>
-            <span *ngIf="isExpanded">Opciones de Índices</span>
-        </mat-list-item>
+        <!-- TODO REMOVE -->
         <mat-list-item (click)="onStandardOptions()">
             <mat-icon mat-list-icon>settings</mat-icon>
             <span *ngIf="isExpanded">Valores Estándar</span>
+        </mat-list-item>
+        <mat-list-item (click)="onAdminVarieties()">
+            <mat-icon mat-list-icon>category</mat-icon>
+            <span *ngIf="isExpanded">Administrar Variedades</span>
+        </mat-list-item>
+        <mat-list-item (click)="onAdminClusters()">
+            <mat-icon mat-list-icon>group_work</mat-icon>
+            <span *ngIf="isExpanded">Administrar Clústers</span>
         </mat-list-item>
     </div>
     <!-- User config -->
