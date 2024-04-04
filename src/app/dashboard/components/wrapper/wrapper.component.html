@@ -1,46 +1,15 @@
 <mat-sidenav-container autosize>
-    <!-- Sidenav options -->
-    <mat-sidenav #sidenav mode="side" opened="true">
-        <mat-nav-list>
-            <!-- Expand/Collapse menu -->
-            <mat-list-item (click)="isExpanded = !isExpanded">
-                <mat-icon mat-list-icon>menu</mat-icon>
-            </mat-list-item>
-            <!-- Menu options -->
-            <mat-list-item (click)="onMapList()">
-                <mat-icon mat-list-icon>map</mat-icon>
-                <span *ngIf="isExpanded">Mis lotes</span>
-            </mat-list-item>
-            <mat-list-item (click)="geeTest()">
-                <mat-icon mat-list-icon>timeline</mat-icon>
-                <span *ngIf="isExpanded">Seleccionar Cultivo</span>
-            </mat-list-item>
-            <mat-list-item>
-                <mat-icon mat-list-icon>upload</mat-icon>
-                <span *ngIf="isExpanded">Cargar datos</span>
-            </mat-list-item>
-            <!-- User config -->
-            <div class="user-config">
-                <mat-list-item>
-                    <mat-icon mat-list-icon>account_circle</mat-icon>
-                    <span *ngIf="isExpanded">{{currentUser?.name}}</span>
-                </mat-list-item>
-                <mat-list-item (click)="onLogout()">
-                    <mat-icon mat-list-icon>logout</mat-icon>
-                    <span *ngIf="isExpanded">Cerrar sesión</span>
-                </mat-list-item>
-            </div>
-        </mat-nav-list>
-    </mat-sidenav>
-    <!-- Content -->
-    <div class="container-fluid h-100">
-        <div class="row h-100">
-            <div class="div_map col-md-6">
-                <app-map></app-map>
-            </div>
-            <div class="div_chart col-md-6">
-                <app-chart></app-chart>
-            </div>
-        </div>
-    </div>
+	<!-- Sidenav -->
+	<mat-sidenav mode="side" opened="true">
+		<app-menu (drawMapEvent)="onDrawMapEvent()" (selectMapEvent)="onSelectMapEvent($event)"
+			(analyzeMapEvent)="onAnalyzeMapEvent($event)" (logoutEvent)="onLogoutEvent()">
+		</app-menu>
+	</mat-sidenav>
+	<!-- Content -->
+	<div class="content">
+		<div class="mapbox">
+			<app-map (mapChangedEvent)="onMapChangedEvent($event)"></app-map>
+		</div>
+		<app-info></app-info>
+	</div>
 </mat-sidenav-container>

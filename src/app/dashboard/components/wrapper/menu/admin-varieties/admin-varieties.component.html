@@ -1,0 +1,30 @@
+<div class="flex-container">
+	<h2>Administrar Variedades</h2>
+	<button mat-button mat-dialog-close class="close">
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<mat-spinner *ngIf="!varietiesList"></mat-spinner>
+<mat-dialog-content *ngIf="varietiesList">
+	<table>
+		<tbody>
+			<tr *ngFor="let variety of varietiesList">
+				<td class="firstColumn">
+					{{variety.name}}
+				</td>
+				<td>
+					<button mat-icon-button (click)="onEditName(variety)">
+						<mat-icon>edit</mat-icon>
+					</button>
+					<button mat-icon-button (click)="onDelete(variety)">
+						<mat-icon>delete_outline</mat-icon>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p *ngIf="!varietiesList.length">No se ha creado ninguna variedad.</p>
+	<button mat-button mat-raised-button class="addButton" color="primary" (click)="onAdd()">
+		<mat-icon>library_add</mat-icon>&nbsp;&nbsp;Agregar Variedad
+	</button>
+</mat-dialog-content>

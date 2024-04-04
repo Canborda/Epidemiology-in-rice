@@ -1,0 +1,7 @@
+<mat-dialog-content>
+	<p>¿Está seguro que desea eliminar <b>{{data.entity}}</b> "{{data.value}}"?</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+	<button mat-stroked-button mat-dialog-close color="warn" (click)="onDelete()">Eliminar</button>
+	<button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
+</mat-dialog-actions>

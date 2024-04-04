@@ -1,0 +1,22 @@
+tr {
+	border-top: 1px solid rgb(220, 220, 220);
+	border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+tr:hover {
+	background-color: rgb(220, 220, 220);
+}
+
+table td {
+	padding: 10px 20px;
+}
+
+.mat-icon-button {
+	margin-left: 10px;
+}
+
+p {
+	justify-content: center;
+	font-style: italic;
+	color: rgb(255, 0, 0);
+}

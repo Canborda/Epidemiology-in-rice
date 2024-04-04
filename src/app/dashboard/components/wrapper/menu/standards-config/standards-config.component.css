@@ -1,0 +1,89 @@
+/* Selector section styles */
+
+mat-form-field {
+	margin: 3%;
+	width: 94%;
+}
+
+.mat-icon-button.addButton {
+	margin: 5px;
+	color: green;
+}
+
+.mat-icon-button.delButton {
+	margin: 5px;
+	color: red;
+}
+
+.mat-icon-button.editButton {
+	margin: 5px;
+	color: black;
+}
+
+.mat-icon-button.mat-button-disabled {
+	color: lightgray;
+}
+
+/* ID Panel styles */
+
+.idPanel {
+	border: 1px solid rgb(220, 220, 220);
+	font-size: smaller;
+	color: rgb(200, 200, 200);
+}
+
+.idTable {
+	height: 100%;
+}
+
+.idTable tr {
+	height: 25%;
+}
+
+.idTable td {
+	padding-left: 10px;
+}
+
+/* Table styles */
+
+.mat-tab-label.mat-tab-label-active {
+	background-color: rgb(220, 220, 220);
+}
+
+.mat-tab-label {
+	min-width: 0px !important;
+}
+
+.indexTable {
+	margin: 10px auto 10px auto;
+}
+
+.indexButtonPanel {
+	text-align: center;
+}
+
+
+.indexTable th {
+	padding: 10px 20px;
+	color: white;
+	background-color: gray;
+	border: 2px solid gray;
+	font-weight: normal;
+}
+
+.indexTable td {
+	padding: 10px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.indexTable td:hover {
+	color: gray;
+	background-color: rgb(240, 240, 240);
+	border-bottom: 2px solid #3f51b5;
+}
+
+.headCol {
+	background-color: lightgray;
+	border-bottom: 2px solid lightgray;
+}

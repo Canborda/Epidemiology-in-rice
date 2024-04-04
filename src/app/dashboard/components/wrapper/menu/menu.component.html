@@ -1,0 +1,55 @@
+<mat-nav-list>
+	<!-- Expand/Collapse menu -->
+	<mat-list-item (click)="isExpanded = !isExpanded">
+		<mat-icon mat-list-icon>menu</mat-icon>
+	</mat-list-item>
+	<!-- Menu options -->
+	<div class="user-options">
+		<mat-divider></mat-divider>
+		<mat-list-item (click)="onDrawMap()">
+			<mat-icon mat-list-icon>edit_location_alt</mat-icon>
+			<span *ngIf="isExpanded">Dibujar lote</span>
+		</mat-list-item>
+		<mat-list-item (click)="onSelectMap()">
+			<mat-icon mat-list-icon>photo_library</mat-icon>
+			<span *ngIf="isExpanded">Seleccionar lote</span>
+		</mat-list-item>
+		<mat-list-item (click)="onAnalyzeMap()" [disabled]="!isMapSelected">
+			<mat-icon mat-list-icon>satellite</mat-icon>
+			<span *ngIf="isExpanded">Analizar lote</span>
+		</mat-list-item>
+	</div>
+	<!-- Admin options -->
+	<div class="admin-options" *ngIf="isAdmin">
+		<mat-divider></mat-divider>
+		<!-- TODO REMOVE -->
+		<mat-list-item (click)="onStandardOptions()">
+			<mat-icon mat-list-icon>settings</mat-icon>
+			<span *ngIf="isExpanded">Valores Estándar</span>
+		</mat-list-item>
+		<mat-list-item (click)="onAdminVarieties()">
+			<mat-icon mat-list-icon>category</mat-icon>
+			<span *ngIf="isExpanded">Administrar Variedades</span>
+		</mat-list-item>
+		<mat-list-item (click)="onAdminClusters()">
+			<mat-icon mat-list-icon>group_work</mat-icon>
+			<span *ngIf="isExpanded">Administrar Clústers</span>
+		</mat-list-item>
+		<mat-list-item (click)="onAdminIndexes()">
+			<mat-icon mat-list-icon>settings</mat-icon>
+			<span *ngIf="isExpanded">Valores Estándar</span>
+		</mat-list-item>
+	</div>
+	<!-- User config -->
+	<div class="user-config">
+		<mat-divider></mat-divider>
+		<mat-list-item (click)="onUserOptions()">
+			<mat-icon mat-list-icon>account_circle</mat-icon>
+			<span *ngIf="isExpanded">{{userName}}</span>
+		</mat-list-item>
+		<mat-list-item (click)="onLogout()">
+			<mat-icon mat-list-icon>logout</mat-icon>
+			<span *ngIf="isExpanded">Cerrar sesión</span>
+		</mat-list-item>
+	</div>
+</mat-nav-list>

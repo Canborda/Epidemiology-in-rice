@@ -1,0 +1,43 @@
+<h2 *ngIf="!data.map">Agregar Nuevo Lote</h2>
+<h2 *ngIf="data.map">Actualizar Lote</h2>
+<p> {{data.map ? 'ID: ' + data.map._id : ''}}</p>
+<mat-spinner *ngIf="!varietiesList && !clustersList"></mat-spinner>
+<mat-dialog-content *ngIf="varietiesList && clustersList">
+	<!-- Name -->
+	<mat-form-field appearance="fill">
+		<mat-label>Nombre del lote</mat-label>
+		<input matInput [formControl]="name">
+		<mat-error *ngIf="name.invalid">{{getNameErrorMessage()}}</mat-error>
+	</mat-form-field>
+	<br>
+	<!-- Variety & Cluster -->
+	<mat-form-field appearance="fill">
+		<mat-label>Variedad</mat-label>
+		<mat-select [formControl]="variety" (selectionChange)="onVarietyChange()">
+			<mat-option *ngFor="let variety of varietiesList" [value]="variety">{{variety.name}}</mat-option>
+		</mat-select>
+		<mat-error *ngIf="variety.invalid">{{getVarietyErrorMessage()}}</mat-error>
+	</mat-form-field>
+	<mat-form-field appearance="fill">
+		<mat-label>Clúster</mat-label>
+		<mat-select [formControl]="cluster" [disabled]="!variety.value">
+			<mat-option *ngFor="let cluster of varietyClusters" [value]="cluster">{{cluster.name}}</mat-option>
+		</mat-select>
+		<mat-error *ngIf="cluster.invalid">{{getClusterErrorMessage()}}</mat-error>
+	</mat-form-field>
+	<br>
+	<!-- Seed date -->
+	<mat-form-field appearance="fill">
+		<mat-label>Fecha de Emergencia</mat-label>
+		<input matInput [matDatepicker]="picker" [max]="today" [formControl]="date">
+		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-hint>MM/DD/YYYY</mat-hint>
+		<mat-datepicker #picker></mat-datepicker>
+		<mat-error *ngIf="date.invalid">{{getDateErrorMessage()}}</mat-error>
+	</mat-form-field>
+	<br>
+</mat-dialog-content>
+<mat-dialog-actions>
+	<button mat-button mat-raised-button (click)="onSave()" [disabled]="hasErrors()" color="primary">Guardar</button>
+	<button mat-button mat-stroked-button mat-dialog-close color="primary">Cancelar</button>
+</mat-dialog-actions>

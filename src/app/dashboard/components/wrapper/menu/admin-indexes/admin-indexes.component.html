@@ -1,0 +1,49 @@
+<div class="flex-container">
+	<h2>Valores Estandarizados por Índice</h2>
+	<button mat-button mat-dialog-close class="close">
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<mat-spinner *ngIf="!varietiesList && !clustersList"></mat-spinner>
+<mat-dialog-content *ngIf="varietiesList && clustersList">
+	<!-- VARIETY & CLUSTER selection -->
+	<div class="selectorSection">
+		<div class="selectorWrapper">
+			<mat-form-field appearance="fill">
+				<mat-label>Variedad</mat-label>
+				<mat-select [(ngModel)]="selectedVariety" (selectionChange)="onVarietyChange()">
+					<mat-option *ngFor="let variety of varietiesList" [value]="variety">{{variety.name}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+		<div class="selectorWrapper">
+			<mat-form-field appearance="fill">
+				<mat-label>Clúster</mat-label>
+				<mat-select [(ngModel)]="selectedCluster" (selectionChange)="onClusterChange()"
+					[disabled]="!selectedVariety">
+					<mat-option *ngFor="let cluster of varietyClusters" [value]="cluster">{{cluster.name}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+	</div>
+	<!-- PHENOLOGY & INDEX selection -->
+	<div *ngIf="selectedVariety && selectedCluster">
+		<mat-tab-group (selectedTabChange)="onIndexChange($event.index)" animationDuration="0ms">
+			<mat-tab *ngFor="let index of indexesNames" label="{{index}}">
+				<table class="indexTable mat-elevation-z5">
+					<thead>
+						<th *ngFor="let head of tableHeaders">{{head.label}}</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let row of tableContents">
+							<td *ngFor="let col of tableHeaders; let i = index" [class.headCol]="i < 2"
+								(click)="onCellClick(row, col)">
+								{{row[col.value] ?? '-'}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</mat-tab>
+		</mat-tab-group>
+	</div>
+</mat-dialog-content>

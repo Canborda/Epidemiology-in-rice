@@ -1,76 +1,100 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
+import { MenuComponent } from './menu/menu.component';
+import { MapComponent } from './map/map.component';
+import { InfoComponent } from './info/info.component';
 import { UserService } from 'src/app/services/user.service';
-import { SignupI } from 'src/app/models/user.model';
+import { GeeService } from 'src/app/services/gee.service';
 
-import { MapComponent } from '../map/map.component';
-import { MapListComponent } from '../map-list/map-list.component';
+import { IUser } from 'src/app/models/user.model';
+import { IMap } from 'src/app/models/map.model';
+import { IGeeRequest } from 'src/app/models/gee.model';
 
 @Component({
-  selector: 'app-wrapper',
-  templateUrl: './wrapper.component.html',
-  styleUrls: ['./wrapper.component.css'],
+	selector: 'app-wrapper',
+	templateUrl: './wrapper.component.html',
+	styleUrls: ['./wrapper.component.css'],
 })
 export class WrapperComponent implements OnInit {
-  isExpanded: boolean = true;
-  currentUser?: SignupI;
+	// Children
+	@ViewChild(MenuComponent) menu?: MenuComponent;
+	@ViewChild(MapComponent) map?: MapComponent;
+	@ViewChild(InfoComponent) info?: InfoComponent;
+	// Component-level variables
+	currentUser?: IUser;
 
-  @ViewChild(MapComponent) map?: MapComponent;
+	constructor(
+		private router: Router,
+		private toastr: ToastrService,
+		private userService: UserService,
+		private geeService: GeeService,
+	) { }
 
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private userService: UserService,
-    private toastr: ToastrService
-  ) {}
+	ngOnInit(): void {
+		// Check if login
+		const access_token = localStorage.getItem('access_token');
+		if (!access_token) {
+			this.toastr.error('No has iniciado sesión', 'ERROR');
+			this.router.navigate(['home/login']);
+		} else {
+			// Get user with token
+			this.userService.getUser().subscribe({
+				next: s => {
+					this.currentUser = s.data;
+					if (this.menu) {
+						this.menu.userName = this.currentUser.name;
+						this.menu.isAdmin = this.currentUser.role === 1;
+					}
+				},
+			});
+		}
+	}
 
-  ngOnInit(): void {
-    // Check if login
-    const access_token = localStorage.getItem('access_token');
-    if (!access_token) {
-      this.toastr.error('No has iniciado sesión', 'ERROR');
-      this.router.navigate(['home/login']);
-    } else {
-      // Get user with token
-      this.userService.getUser().subscribe((result) => {
-        this.currentUser = result.data;
-      });
-      this.onMapList();
-    }
-  }
+	// #region RECEIVED MENU EVENTS methods
 
-  // #region NavBar actions
+	onDrawMapEvent(): void {
+		this.map?.clearCanvas();
+		this.map?.drawNewPolygon();
+	}
 
-  onMapList(): void {
-    const dialogRef = this.dialog.open(MapListComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result?.event === 'select') {
-        this.map?.drawExistingPolygon(result.data);
-        this.toastr.info(
-          `Obteniendo información del lote "${result.data.name}".`,
-          'INFO'
-        );
-      } else if (result?.event === 'create') {
-        this.map?.drawNewPolygon();
-        this.toastr.info(
-          `Agregue puntos en el mapa hasta crear una forma cerrada.`,
-          'INFO'
-        );
-      }
-    });
-  }
+	onSelectMapEvent(map: IMap): void {
+		this.map?.drawExistingPolygon(map);
+		this.info?.indexInfo.resetChart();
+	}
 
-  onLogout(): void {
-    localStorage.clear();
-    this.router.navigate(['']);
-  }
+	onAnalyzeMapEvent(data: IGeeRequest): void {
+		data.mapId = this.map!.currentMap!._id!;
+		if (this.info?.indexInfo.chart)
+			this.info.indexInfo.chart.isProcessing = true;
+		if (this.map?.currentMap) {
+			this.info?.indexInfo.updateStandarizedValues(data.index, this.map.currentMap);
+			this.info?.indexInfo.updateGeeValues(data);
+		}
+		this.geeService.getImage(data).subscribe({
+			next: s => {
+				this.map?.overlayImage(s.data);
+				this.toastr.success(`Obtenida imagen de GoogleEarthEngine capturada en ${s.data.date}`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
+	}
 
-  geeTest(): void {
-    this.map?.overlayImage();
-  }
+	onLogoutEvent(): void {
+		localStorage.clear();
+		this.router.navigate(['']);
+	}
 
-  // #endregion
+	// #endregion
+
+	// #rergion RECEIVED MAP EVENTS methods
+
+	onMapChangedEvent(map?: IMap): void {
+		this.info?.cropInfo.setTable(map);
+	}
+
+	// #endregion
 }

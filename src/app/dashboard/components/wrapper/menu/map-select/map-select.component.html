@@ -1,0 +1,31 @@
+<div class="flex-container">
+	<h2>Administrar Lotes</h2>
+	<button mat-button mat-dialog-close class="close">
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<mat-spinner *ngIf="!varietiesList && !clustersList && !mapList"></mat-spinner>
+<mat-dialog-content *ngIf="varietiesList && clustersList && mapList">
+	<table>
+		<tbody>
+			<tr *ngFor="let row of mapList">
+				<td>
+					{{row.name}}
+				</td>
+				<td>
+					<button mat-raised-button color="primary" (click)="onSelectMap(row)">
+						<mat-icon>play_arrow</mat-icon>&nbsp;Seleccionar
+					</button>
+					<button mat-icon-button (click)="onEditMap(row)">
+						<mat-icon>edit</mat-icon>
+					</button>
+					<button mat-icon-button (click)="onDeleteMap(row)">
+						<mat-icon>delete_outline</mat-icon>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p *ngIf="!mapList?.length">Aún no tiene mapas guardados.</p>
+	<br>
+</mat-dialog-content>
