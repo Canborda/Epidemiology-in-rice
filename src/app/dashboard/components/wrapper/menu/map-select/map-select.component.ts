@@ -1,112 +1,124 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { MenuComponent } from '../menu.component';
 import { MapAddComponent } from '../../map/map-add/map-add.component';
-
-import { CropsService } from 'src/app/services/crops.service';
+import { DialogDeleteComponent } from '../../../common/dialog-delete/dialog-delete.component';
+import { VarietiesService } from 'src/app/services/varieties.service';
+import { ClustersService } from 'src/app/services/clusters.service';
 import { MapsService } from 'src/app/services/maps.service';
 
-import { IApiError, IApiSuccess } from 'src/app/models/api.model';
-import { CropI } from 'src/app/models/crop.model';
-import { MapI } from 'src/app/models/map.model';
+import { IMap } from 'src/app/models/map.model';
+import { ICluster, IVariety } from 'src/app/models/admin.models';
 
 @Component({
-  selector: 'app-map-select',
-  templateUrl: './map-select.component.html',
-  styleUrls: ['./map-select.component.css'],
+	selector: 'app-map-select',
+	templateUrl: './map-select.component.html',
+	styleUrls: ['./map-select.component.css'],
 })
 export class MapSelectComponent implements OnInit {
-  mapList!: MapI[];
-  tableHeaders: string[] = [
-    'Nombre',
-    'Cultivo',
-    'Fecha de Emergencia',
-    'Acciones',
-  ];
-  cropNames: any = {};
+	varietiesList!: IVariety[];
+	clustersList!: ICluster[];
+	mapList!: IMap[];
 
-  constructor(
-    private dialog: MatDialog,
-    public dialogRef: MatDialogRef<MenuComponent>,
-    private cropsService: CropsService,
-    private mapsService: MapsService,
-    private toastr: ToastrService
-  ) {}
+	constructor(
+		public dialogRef: MatDialogRef<MenuComponent>,
+		private dialog: MatDialog,
+		private toastr: ToastrService,
+		private varietiesService: VarietiesService,
+		private clustersService: ClustersService,
+		private mapsService: MapsService,
+	) { }
 
-  ngOnInit(): void {
-    this.mapsService.getMaps().subscribe({
-      next: (v_map: IApiSuccess<MapI[]>) => {
-        this.mapList = v_map.data;
-        this.cropsService.getCrops().subscribe({
-          next: (v_crop: IApiSuccess<CropI[]>) => {
-            v_crop.data.forEach((crop) => {
-              this.cropNames[crop._id!] = crop.variety;
-            });
-          },
-          error: (e: HttpErrorResponse) => {
-            const error: IApiError = e.error;
-            this.toastr.error(error.message, 'ERROR');
-          },
-        });
-      },
-      error: (e: HttpErrorResponse) => {
-        const error: IApiError = e.error;
-        this.toastr.error(error.message, 'ERROR');
-      },
-    });
-  }
+	ngOnInit(): void {
+		this.varietiesService.getAll().subscribe({
+			next: s => {
+				this.varietiesList = s.data;
+				this.toastr.success(`Obtenidas ${s.count} variedades`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
+		this.clustersService.getAll().subscribe({
+			next: s => {
+				this.clustersList = s.data;
+				this.toastr.success(`Obtenidos ${s.count} clusters`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
+		this.mapsService.getAll().subscribe({
+			next: s => {
+				this.mapList = s.data;
+				this.toastr.success(`Obtenidos ${s.count} lotes`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
+	}
 
-  // #region BUTTON ACTIONS
+	// #region BUTTON ACTIONS
 
-  onEditMap(oldMap: MapI): void {
-    this.dialog
-      .open(MapAddComponent, {
-        data: { map: oldMap },
-      })
-      .afterClosed()
-      .subscribe((newMap: MapI) => {
-        if (newMap) {
-          this.mapsService.updateMap(newMap).subscribe({
-            next: () => {
-              this.mapList[this.mapList.indexOf(oldMap)] = newMap;
-              this.toastr.success('Lote actualizado exitosamente', 'SUCCESS');
-            },
-            error: (e: HttpErrorResponse) => {
-              const error: IApiError = e.error;
-              this.toastr.error(error.message, 'ERROR');
-            },
-          });
-        }
-      });
-  }
+	onSelectMap(map: IMap): void {
+		const variety = this.varietiesList.find(v => v._id === map.varietyId);
+		const cluster = this.clustersList.find(c => c._id === map.clusterId);
+		if (!variety) this.toastr.error(`No se encuentra la variedad. Debe actualizar lote`);
+		if (!cluster) this.toastr.error(`No se encuentra el clúster. Debe actualizar lote`);
+		if (variety && cluster) this.dialogRef.close(map);
+	}
 
-  onSelectMap(map: MapI): void {
-    this.dialogRef.close(map);
-  }
+	onEditMap(oldMap: IMap): void {
+		this.dialog
+			.open(MapAddComponent, {
+				data: {
+					map: oldMap,
+				},
+			}).afterClosed()
+			.subscribe((newMap: IMap) => {				
+				if (newMap) {
+					this.mapsService.update(newMap).subscribe({
+						next: s => {
+							this.mapList[this.mapList.indexOf(oldMap)] = newMap;
+							this.toastr.success(`Lote "${newMap.name}" actualizado exitosamente`);
+						},
+						error: e => {
+							this.toastr.error(e.error.message);
+						},
+					});
+				}
+			});
+	}
 
-  onDeleteMap(deletedMap: MapI): void {
-    this.mapsService.deleteMap(deletedMap._id!).subscribe({
-      next: () => {
-        this.mapList = this.mapList.filter((map) => map._id !== deletedMap._id);
-        this.toastr.success('Lote eliminado exitosamente', 'SUCCESS');
-      },
-      error: (e: HttpErrorResponse) => {
-        const error: IApiError = e.error;
-        this.toastr.error(error.message, 'ERROR');
-      },
-    });
-  }
+	onDeleteMap(map: IMap): void {
+		this.dialog
+			.open(DialogDeleteComponent, {
+				data: {
+					entity: 'Lote',
+					value: map.name,
+				},
+			}).afterClosed()
+			.subscribe((flag: boolean) => {
+				if (flag) {
+					this.mapsService.delete(map._id!).subscribe({
+						next: s => {
+							this.mapList = this.mapList.filter((m) => m._id !== map._id);
+							this.toastr.success(`Lote "${map.name}" eliminado exitosamente`);
+						},
+						error: e => {
+							this.toastr.error(e.error.message);
+						},
+					});
+				}
+			});
+	}
 
-  // #endregion
+	// #endregion
 
-  // #region AUX methods
+	// #region AUX methods
 
-  formatDate(date: any) {
-    return new Date(date).toISOString().slice(0, 10);
-  }
-
-  // #endregion
+	// #endregion
 }

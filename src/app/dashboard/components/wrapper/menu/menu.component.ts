@@ -10,94 +10,94 @@ import { AdminClustersComponent } from './admin-clusters/admin-clusters.componen
 import { AdminIndexesComponent } from './admin-indexes/admin-indexes.component';
 import { UserConfigComponent } from './user-config/user-config.component';
 
-import { MapI } from 'src/app/models/map.model';
+import { IMap } from 'src/app/models/map.model';
 import { GeeRequestI } from 'src/app/models/gee.model';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+	selector: 'app-menu',
+	templateUrl: './menu.component.html',
+	styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  isExpanded: boolean = true;
-  userName: string = 'USER NAME';
-  isAdmin: boolean = false;
-  isMapSelected: boolean = false;
+	isExpanded: boolean = true;
+	userName: string = 'USER NAME';
+	isAdmin: boolean = false;
+	isMapSelected: boolean = false;
 
-  @Output() drawMapEvent = new EventEmitter<void>();
-  @Output() selectMapEvent = new EventEmitter<MapI>();
-  @Output() analyzeMapEvent = new EventEmitter<GeeRequestI>();
-  @Output() logoutEvent = new EventEmitter<void>();
+	@Output() drawMapEvent = new EventEmitter<void>();
+	@Output() selectMapEvent = new EventEmitter<IMap>();
+	@Output() analyzeMapEvent = new EventEmitter<GeeRequestI>();
+	@Output() logoutEvent = new EventEmitter<void>();
 
-  constructor(private dialog: MatDialog) { }
+	constructor(private dialog: MatDialog) { }
 
-  ngOnInit(): void { }
+	ngOnInit(): void { }
 
-  // #region MAP SECTION methods
+	// #region MAP SECTION methods
 
-  onDrawMap(): void {
-    this.dialog
-      .open(MapDrawComponent)
-      .afterClosed()
-      .subscribe((flag: boolean) => {
-        if (flag) this.drawMapEvent.emit();
-      });
-  }
+	onDrawMap(): void {
+		this.dialog
+			.open(MapDrawComponent)
+			.afterClosed()
+			.subscribe((flag: boolean) => {
+				if (flag) this.drawMapEvent.emit();
+			});
+	}
 
-  onSelectMap(): void {
-    this.dialog
-      .open(MapSelectComponent)
-      .afterClosed()
-      .subscribe((map: MapI) => {
-        if (map) {
-          this.selectMapEvent.emit(map);
-          this.isMapSelected = true;
-        }
-      });
-  }
+	onSelectMap(): void {
+		this.dialog
+			.open(MapSelectComponent, { panelClass: 'custom-dialog', disableClose: true })
+			.afterClosed()
+			.subscribe((map: IMap) => {
+				if (map) {
+					this.selectMapEvent.emit(map);
+					this.isMapSelected = true;
+				}
+			});
+	}
 
-  onAnalyzeMap(): void {
-    this.dialog
-      .open(MapAnalyzeComponent)
-      .afterClosed()
-      .subscribe((imgReq: GeeRequestI) => {
-        if (imgReq) this.analyzeMapEvent.emit(imgReq);
-      });
-  }
+	onAnalyzeMap(): void {
+		this.dialog
+			.open(MapAnalyzeComponent)
+			.afterClosed()
+			.subscribe((imgReq: GeeRequestI) => {
+				if (imgReq) this.analyzeMapEvent.emit(imgReq);
+			});
+	}
 
-  // #endregion
+	// #endregion
 
-  // #region ADMIN SECTION methods
+	// #region ADMIN SECTION methods
 
-  // TODO REMOVE
-  onStandardOptions(): void {
-    this.dialog.open(StandardsConfigComponent);
-  }
+	// TODO REMOVE
+	onStandardOptions(): void {
+		this.dialog.open(StandardsConfigComponent);
+	}
 
-  onAdminVarieties(): void {
-    this.dialog.open(AdminVarietiesComponent, { panelClass: 'custom-dialog', disableClose: true });
-  }
+	onAdminVarieties(): void {
+		this.dialog.open(AdminVarietiesComponent, { panelClass: 'custom-dialog', disableClose: true });
+	}
 
-  onAdminClusters(): void {
-    this.dialog.open(AdminClustersComponent, { panelClass: 'custom-dialog', disableClose: true });
-  }
+	onAdminClusters(): void {
+		this.dialog.open(AdminClustersComponent, { panelClass: 'custom-dialog', disableClose: true });
+	}
 
-  onAdminIndexes(): void {
-    this.dialog.open(AdminIndexesComponent, { panelClass: 'custom-dialog', disableClose: true });
-  }
+	onAdminIndexes(): void {
+		this.dialog.open(AdminIndexesComponent, { panelClass: 'custom-dialog', disableClose: true });
+	}
 
-  // #endregion
+	// #endregion
 
-  // #region USER SECTION methods
+	// #region USER SECTION methods
 
-  onUserOptions(): void {
-    this.dialog.open(UserConfigComponent);
-    // TODO update user name after closed
-  }
+	onUserOptions(): void {
+		this.dialog.open(UserConfigComponent);
+		// TODO update user name after closed
+	}
 
-  onLogout(): void {
-    this.logoutEvent.emit();
-  }
+	onLogout(): void {
+		this.logoutEvent.emit();
+	}
 
-  // #endregion
+	// #endregion
 }

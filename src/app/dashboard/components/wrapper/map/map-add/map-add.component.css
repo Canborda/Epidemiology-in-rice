@@ -1,14 +1,14 @@
 h2 {
-  margin: 0;
+	margin: 0;
 }
 
 p {
-  padding: 10px;
-  margin: 0;
-  font-size: small;
-  color: darkgray
+	padding: 10px;
+	margin: 0;
+	font-size: small;
+	color: darkgray
 }
 
 mat-form-field {
-  width: 100%;
+	width: 100%;
 }
