@@ -1,19 +1,19 @@
 table {
-  margin: 0;
-  width: 100%;
+	margin: 0;
+	width: 100%;
 }
 
 td {
-  width: 50%;
-  border-top: 2px solid rgb(220, 220, 220);
-  border-bottom: 2px solid rgb(220, 220, 220);
-  padding: 5px;
+	width: 50%;
+	border-top: 2px solid rgb(220, 220, 220);
+	border-bottom: 2px solid rgb(220, 220, 220);
+	padding: 5px;
 }
 
 tr:hover {
-  background-color: rgb(220, 220, 220);
+	background-color: rgb(220, 220, 220);
 }
 
 .secondCol {
-  color: darkgray;
+	color: darkgray;
 }

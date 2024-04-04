@@ -4,11 +4,6 @@ export const ROUTES = {
 		signup: '/api/v1/users/signup',
 		login: '/api/v1/users/login',
 	},
-	// TODO REMOVE
-	crops: {
-		BASE: '/api/v1/crops',
-		phenology: '/api/v1/crops/phenology',
-	},
 	maps: {
 		BASE: '/api/v1/maps',
 	},

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-crop-info',
-  templateUrl: './crop-info.component.html',
-  styleUrls: ['./crop-info.component.css']
+	selector: 'app-crop-info',
+	templateUrl: './crop-info.component.html',
+	styleUrls: ['./crop-info.component.css']
 })
 export class CropInfoComponent implements OnInit {
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+	}
 
 }

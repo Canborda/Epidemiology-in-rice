@@ -1,42 +1,42 @@
 mat-accordion {
-  position: absolute;
-  top: 10px;
-  right: 0px;
-  z-index: 1000;
-  width: 100px;
+	position: absolute;
+	top: 10px;
+	right: 0px;
+	z-index: 1000;
+	width: 100px;
 }
 
 mat-accordion:hover {
-  width: 40%;
+	width: 40%;
 }
 
 mat-expansion-panel {
-  margin: 10px;
-  opacity: 0.7;
+	margin: 10px;
+	opacity: 0.7;
 }
 
 mat-expansion-panel:hover {
-  opacity: 1;
+	opacity: 1;
 }
 
 mat-expansion-panel-header {
-  padding: 0px 10px;
+	padding: 0px 10px;
 }
 
 mat-icon {
-  margin-left: 10px;
-  margin-right: 20px;
+	margin-left: 10px;
+	margin-right: 20px;
 }
 
 .accordionExpanded {
-  width: 40%;
+	width: 40%;
 }
 
 .panelExpanded {
-  opacity: 1;
+	opacity: 1;
 }
 
 .panelHeaderExpanded {
-  font-size: large;
-  font-weight: bold;
+	font-size: large;
+	font-weight: bold;
 }

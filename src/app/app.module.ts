@@ -9,16 +9,16 @@ import { AppComponent } from './app.component';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    // Custom modules
-    ToastrModule.forRoot(),
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+	declarations: [AppComponent],
+	imports: [
+		AppRoutingModule,
+		HttpClientModule,
+		BrowserModule,
+		BrowserAnimationsModule,
+		// Custom modules
+		ToastrModule.forRoot(),
+	],
+	providers: [],
+	bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

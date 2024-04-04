@@ -1,35 +1,35 @@
 <mat-accordion multi [class.accordionExpanded]="countExpanded">
-    <!-- Crop info panel -->
-    <mat-expansion-panel #cropInfo (opened)="onPanelClicked(1);onInfoOpened()" (closed)="onPanelClicked(-1)"
-        [class.panelExpanded]="cropInfo.expanded">
-        <mat-expansion-panel-header [class.panelHeaderExpanded]="cropInfo.expanded">
-            <mat-panel-title>
-                <mat-icon>info</mat-icon>
-                Información del lote
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-crop-info></app-crop-info>
-    </mat-expansion-panel>
-    <!-- Index info panel -->
-    <mat-expansion-panel #indexInfo (opened)="onPanelClicked(1);onIndexOpened()" (closed)="onPanelClicked(-1)"
-        [class.panelExpanded]="indexInfo.expanded">
-        <mat-expansion-panel-header [class.panelHeaderExpanded]="indexInfo.expanded">
-            <mat-panel-title>
-                <mat-icon>timeline</mat-icon>
-                Comparación de índices
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-index-info></app-index-info>
-    </mat-expansion-panel>
-    <!-- Message info panel -->
-    <mat-expansion-panel #messageInfo (opened)="onPanelClicked(1);onMessageOpened()" (closed)="onPanelClicked(-1)"
-        [class.panelExpanded]="messageInfo.expanded">
-        <mat-expansion-panel-header [class.panelHeaderExpanded]="messageInfo.expanded">
-            <mat-panel-title>
-                <mat-icon>message</mat-icon>
-                Recomendaciones
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-message-info></app-message-info>
-    </mat-expansion-panel>
+	<!-- Crop info panel -->
+	<mat-expansion-panel #cropInfo (opened)="onPanelClicked(1);onInfoOpened()" (closed)="onPanelClicked(-1)"
+		[class.panelExpanded]="cropInfo.expanded">
+		<mat-expansion-panel-header [class.panelHeaderExpanded]="cropInfo.expanded">
+			<mat-panel-title>
+				<mat-icon>info</mat-icon>
+				Información del lote
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+		<app-crop-info></app-crop-info>
+	</mat-expansion-panel>
+	<!-- Index info panel -->
+	<mat-expansion-panel #indexInfo (opened)="onPanelClicked(1);onIndexOpened()" (closed)="onPanelClicked(-1)"
+		[class.panelExpanded]="indexInfo.expanded">
+		<mat-expansion-panel-header [class.panelHeaderExpanded]="indexInfo.expanded">
+			<mat-panel-title>
+				<mat-icon>timeline</mat-icon>
+				Comparación de índices
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+		<app-index-info></app-index-info>
+	</mat-expansion-panel>
+	<!-- Message info panel -->
+	<mat-expansion-panel #messageInfo (opened)="onPanelClicked(1);onMessageOpened()" (closed)="onPanelClicked(-1)"
+		[class.panelExpanded]="messageInfo.expanded">
+		<mat-expansion-panel-header [class.panelHeaderExpanded]="messageInfo.expanded">
+			<mat-panel-title>
+				<mat-icon>message</mat-icon>
+				Recomendaciones
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+		<app-message-info></app-message-info>
+	</mat-expansion-panel>
 </mat-accordion>
