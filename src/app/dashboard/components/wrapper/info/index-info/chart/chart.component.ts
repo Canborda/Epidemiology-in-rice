@@ -4,7 +4,9 @@ import * as Highcharts from 'highcharts';
 import addMore from 'highcharts/highcharts-more';
 import { Options } from 'highcharts';
 
-import { ChartDatabaseI, ChartGeeI } from 'src/app/models/chart.model';
+import { IStandarizedValue } from 'src/app/models/values.model';
+import { IGeeValueByDate } from 'src/app/models/gee.model';
+import { INDEXES } from 'src/utils/enums';
 
 addMore(Highcharts);
 
@@ -17,60 +19,20 @@ export class ChartComponent implements OnInit {
 	// Children
 	@ViewChild('mainChart') mainChartRef!: ElementRef<HTMLDivElement>;
 	// Component-level vaiables
-	// TODO replace hardcoded dbData values for http responses
-	dbData?: ChartDatabaseI[] = [
-		{
-			name: 'Emergencia',
-			date: new Date('2023-05-02T05:00:00.000Z'),
-			value: 0.1,
-			min: 0.08,
-			max: 0.2,
-		},
-		{
-			name: 'Primordio',
-			date: new Date('2023-05-17T05:00:00.000Z'),
-			value: 0.25,
-			min: 0.22,
-			max: 0.29,
-		},
-		{
-			name: 'Floración',
-			date: new Date('2023-05-22T05:00:00.000Z'),
-			value: 0.5,
-			min: 0.4,
-			max: 0.6,
-		},
-		{
-			name: 'Cosecha',
-			date: new Date('2023-06-21T05:00:00.000Z'),
-			value: 0.4,
-			min: 0.32,
-			max: 0.43,
-		},
-	];
-	// TODO replace hardcoded geeData values for http responses
-	geeData?: ChartGeeI[] = [
-		{
-			date: new Date('2023-05-03T15:31:45.490Z'),
-			value: 0.1685908450687934,
-		},
-		{
-			date: new Date('2023-05-18T15:31:49.875Z'),
-			value: 0.03840523722937094,
-		},
-		{
-			date: new Date('2023-06-12T15:31:49.241Z'),
-			value: 0.07687465609431005,
-		},
-	];
+	isProcessing: boolean;
+	stdData?: IStandarizedValue[];
+	geeData?: IGeeValueByDate[];
 
-	constructor() { }
+	constructor() {
+		this.isProcessing = false;
+	}
 
 	ngOnInit(): void { }
 
 	// #region HIGHCHART features
 
-	updateChart(index: string) {
+	updateChart(index?: INDEXES) {
+		if (this.stdData && this.geeData) this.isProcessing = false;
 		const selectedSeries: Highcharts.SeriesOptionsType[] =
 			this.buildChartData();
 		if (selectedSeries.length) {
@@ -103,7 +65,7 @@ export class ChartComponent implements OnInit {
 
 	private buildChartData(): Highcharts.SeriesOptionsType[] {
 		const series: Highcharts.SeriesOptionsType[] = [];
-		if (this.dbData) {
+		if (this.stdData) {
 			// Add standardized serie
 			const cropSerie: Highcharts.SeriesOptionsType = {
 				type: 'line',
@@ -114,8 +76,8 @@ export class ChartComponent implements OnInit {
 					symbol: 'circle',
 					radius: 5,
 				},
-				data: this.dbData.map((data: ChartDatabaseI) => {
-					return { x: new Date(data.date).getTime(), y: data.value };
+				data: this.stdData.map((data: IStandarizedValue) => {
+					return { x: new Date(data.date).getTime(), y: data.mean };
 				}),
 			};
 			series.push(cropSerie);
@@ -130,7 +92,7 @@ export class ChartComponent implements OnInit {
 				marker: {
 					enabled: false,
 				},
-				data: this.dbData.map((data: ChartDatabaseI) => [
+				data: this.stdData.map((data: IStandarizedValue) => [
 					new Date(data.date).getTime(),
 					data.min,
 					data.max,
@@ -159,12 +121,12 @@ export class ChartComponent implements OnInit {
 	}
 
 	private buildXAxis(): Highcharts.XAxisOptions | undefined {
-		if (this.dbData) {
+		if (this.stdData) {
 			const axis: Highcharts.XAxisOptions = {
 				type: 'datetime',
 				minPadding: 0,
 				maxPadding: 0.05,
-				plotLines: this.dbData.map((data) => {
+				plotLines: this.stdData.map((data) => {
 					// TODO add phenology stage name to vertical lines
 					return {
 						value: new Date(data.date).getTime(),

@@ -61,24 +61,21 @@ export class WrapperComponent implements OnInit {
 
 	onSelectMapEvent(map: IMap): void {
 		this.map?.drawExistingPolygon(map);
+		this.info?.indexInfo.resetChart();
 	}
 
 	onAnalyzeMapEvent(data: IGeeRequest): void {
 		data.mapId = this.map!.currentMap!._id!;
+		if (this.info?.indexInfo.chart)
+			this.info.indexInfo.chart.isProcessing = true;
+		if (this.map?.currentMap) {
+			this.info?.indexInfo.updateStandarizedValues(data.index, this.map.currentMap);
+			this.info?.indexInfo.updateGeeValues(data);
+		}
 		this.geeService.getImage(data).subscribe({
 			next: s => {
 				this.map?.overlayImage(s.data);
-				this.toastr.success(`Obtenida imagen capturada en ${s.data.date}`);
-			},
-			error: e => {
-				this.toastr.error(e.error.message);
-			},
-		});
-		this.geeService.getValuesByDate(data).subscribe({
-			next: s => {
-				console.log(s.data);
-				// TODO send data to chart
-				this.toastr.success(`Obtenidos los valores de ${s.count} imágenes`);
+				this.toastr.success(`Obtenida imagen de GoogleEarthEngine capturada en ${s.data.date}`);
 			},
 			error: e => {
 				this.toastr.error(e.error.message);
@@ -95,7 +92,7 @@ export class WrapperComponent implements OnInit {
 
 	// #rergion RECEIVED MAP EVENTS methods
 
-	onMapChangedEvent(map: IMap): void {
+	onMapChangedEvent(map?: IMap): void {
 		this.info?.cropInfo.setTable(map);
 	}
 

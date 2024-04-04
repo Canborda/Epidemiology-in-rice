@@ -18,7 +18,6 @@ export class InfoComponent implements OnInit {
 	@ViewChild(MessageInfoComponent) messageInfo!: MessageInfoComponent;
 	// Component-level variables
 	countExpanded: number = 0;
-	currentIndex: string = 'NDVI'; // TODO replace hardcoded value for variable from mapAnalyze
 
 	constructor() { }
 
@@ -34,7 +33,6 @@ export class InfoComponent implements OnInit {
 	onIndexOpened(): void {
 		console.log('INDEX PANEL OPENED');
 		// TODO implement update chart (data source?)
-		this.indexInfo?.chart?.updateChart(this.currentIndex);
 	}
 
 	onMessageOpened(): void {

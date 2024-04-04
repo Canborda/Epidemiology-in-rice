@@ -13,6 +13,9 @@ export const ROUTES = {
 		images: '/api/v1/gee/images',
 		valuesByDate: '/api/v1/gee/values/date',
 	},
+	values: {
+		standarized: '/api/v1/values/standarized',
+	},
 	varieties: '/api/v1/varieties',
 	clusters: '/api/v1/clusters',
 	phenologies: '/api/v1/phenologies',
