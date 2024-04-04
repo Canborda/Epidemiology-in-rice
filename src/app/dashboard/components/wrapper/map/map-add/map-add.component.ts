@@ -9,7 +9,7 @@ import { MapComponent } from '../map.component';
 
 import { CropsService } from 'src/app/services/crops.service';
 
-import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { IApiSuccess, IApiError } from 'src/app/models/api.model';
 import { CropI } from 'src/app/models/crop.model';
 import { MapI } from 'src/app/models/map.model';
 
@@ -38,7 +38,7 @@ export class MapAddComponent implements OnInit {
   ngOnInit(): void {
     this.map = this.data?.map;
     this.cropsService.getCrops().subscribe({
-      next: (v: ApiSuccessI<CropI[]>) => {
+      next: (v: IApiSuccess<CropI[]>) => {
         this.cropList = v.data;
         this.varieties = this.cropList.map((crop) => crop.variety);
         if (this.map) {
@@ -50,7 +50,7 @@ export class MapAddComponent implements OnInit {
         }
       },
       error: (e: HttpErrorResponse) => {
-        const error: ApiErrorI = e.error;
+        const error: IApiError = e.error;
         this.toastr.error(error.message, 'ERROR');
       },
     });

@@ -8,8 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
 
-import { UserI } from 'src/app/models/user.model';
-import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { IUser } from 'src/app/models/user.model';
+import { IApiSuccess, IApiError } from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-signup',
@@ -94,19 +94,19 @@ export class SignupComponent implements OnInit {
       !this.getNameErrorMessage() &&
       !this.getRegionErrorMessage()
     ) {
-      const data: UserI = {
+      const data: IUser = {
         email: this.email.value,
         password: this.password.value,
         name: this.name.value,
         region: this.region.value,
       };
       this.userService.signup(data).subscribe({
-        next: (v: ApiSuccessI<UserI>) => {
+        next: (v: IApiSuccess<IUser>) => {
           this.toastr.success('Usuario creado correctamente', 'SUCCESS');
           this.router.navigate(['home/login']);
         },
         error: (e: HttpErrorResponse) => {
-          const error: ApiErrorI = e.error;
+          const error: IApiError = e.error;
           this.toastr.error(error.message, 'ERROR');
         },
       });

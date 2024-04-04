@@ -1,9 +1,9 @@
-export interface ApiSuccessI<T> {
+export interface IApiSuccess<T> {
   count?: number;
   data: T;
 }
 
-export interface ApiErrorI {
+export interface IApiError {
   error: string;
   message: string;
   details: string[];

@@ -8,7 +8,7 @@ import { MenuComponent } from '../menu.component';
 
 import { GeeService } from 'src/app/services/gee.service';
 
-import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { IApiSuccess, IApiError } from 'src/app/models/api.model';
 import { GeeRequestI } from 'src/app/models/gee.model';
 
 @Component({
@@ -32,11 +32,11 @@ export class MapAnalyzeComponent implements OnInit {
     // Load index list from backend info
     if (!this.indexList) {
       this.geeService.getIndexes().subscribe({
-        next: (v: ApiSuccessI<string[]>) => {
+        next: (v: IApiSuccess<string[]>) => {
           this.indexList = v.data;
         },
         error: (e: HttpErrorResponse) => {
-          const error: ApiErrorI = e.error;
+          const error: IApiError = e.error;
           this.toastr.error(error.message, 'ERROR');
         },
       });

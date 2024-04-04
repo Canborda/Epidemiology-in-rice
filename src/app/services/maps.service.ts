@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
 
-import { ApiSuccessI } from '../models/api.model';
+import { IApiSuccess } from '../models/api.model';
 import { MapI } from '../models/map.model';
 
 @Injectable({ providedIn: 'root' })
@@ -14,19 +14,19 @@ export class MapsService {
 
   constructor(private http: HttpClient) {}
 
-  getMaps(): Observable<ApiSuccessI<MapI[]>> {
+  getMaps(): Observable<IApiSuccess<MapI[]>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
-    return this.http.get<ApiSuccessI<MapI[]>>(this.baseUrl + ROUTES.maps.BASE, {
+    return this.http.get<IApiSuccess<MapI[]>>(this.baseUrl + ROUTES.maps.BASE, {
       headers,
     });
   }
 
-  createMap(map: MapI): Observable<ApiSuccessI<MapI>> {
+  createMap(map: MapI): Observable<IApiSuccess<MapI>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
     const body = map;
-    return this.http.post<ApiSuccessI<MapI>>(
+    return this.http.post<IApiSuccess<MapI>>(
       this.baseUrl + ROUTES.maps.BASE,
       body,
       { headers }

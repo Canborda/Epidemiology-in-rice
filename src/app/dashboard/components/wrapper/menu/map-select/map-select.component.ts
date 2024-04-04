@@ -9,7 +9,7 @@ import { MapAddComponent } from '../../map/map-add/map-add.component';
 import { CropsService } from 'src/app/services/crops.service';
 import { MapsService } from 'src/app/services/maps.service';
 
-import { ApiErrorI, ApiSuccessI } from 'src/app/models/api.model';
+import { IApiError, IApiSuccess } from 'src/app/models/api.model';
 import { CropI } from 'src/app/models/crop.model';
 import { MapI } from 'src/app/models/map.model';
 
@@ -38,22 +38,22 @@ export class MapSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.mapsService.getMaps().subscribe({
-      next: (v_map: ApiSuccessI<MapI[]>) => {
+      next: (v_map: IApiSuccess<MapI[]>) => {
         this.mapList = v_map.data;
         this.cropsService.getCrops().subscribe({
-          next: (v_crop: ApiSuccessI<CropI[]>) => {
+          next: (v_crop: IApiSuccess<CropI[]>) => {
             v_crop.data.forEach((crop) => {
               this.cropNames[crop._id!] = crop.variety;
             });
           },
           error: (e: HttpErrorResponse) => {
-            const error: ApiErrorI = e.error;
+            const error: IApiError = e.error;
             this.toastr.error(error.message, 'ERROR');
           },
         });
       },
       error: (e: HttpErrorResponse) => {
-        const error: ApiErrorI = e.error;
+        const error: IApiError = e.error;
         this.toastr.error(error.message, 'ERROR');
       },
     });
@@ -75,7 +75,7 @@ export class MapSelectComponent implements OnInit {
               this.toastr.success('Lote actualizado exitosamente', 'SUCCESS');
             },
             error: (e: HttpErrorResponse) => {
-              const error: ApiErrorI = e.error;
+              const error: IApiError = e.error;
               this.toastr.error(error.message, 'ERROR');
             },
           });
@@ -94,7 +94,7 @@ export class MapSelectComponent implements OnInit {
         this.toastr.success('Lote eliminado exitosamente', 'SUCCESS');
       },
       error: (e: HttpErrorResponse) => {
-        const error: ApiErrorI = e.error;
+        const error: IApiError = e.error;
         this.toastr.error(error.message, 'ERROR');
       },
     });

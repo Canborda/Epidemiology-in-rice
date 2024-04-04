@@ -6,8 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from 'src/app/services/user.service';
 
-import { AuthI, LoginI } from 'src/app/models/user.model';
-import { ApiErrorI } from 'src/app/models/api.model';
+import { IAuth, ILogin } from 'src/app/models/user.model';
+import { IApiError } from 'src/app/models/api.model';
 
 @Component({
   selector: 'app-login',
@@ -35,18 +35,18 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.getEmailErrorMessage() && !this.getPasswordErrorMessage()) {
-      const data: LoginI = {
+      const data: ILogin = {
         email: this.email.value,
         password: this.password.value,
       };
       this.userService.login(data).subscribe({
-        next: (v: AuthI) => {
+        next: (v: IAuth) => {
           this.toastr.success('Bienvenido(a)', 'SUCCESS');
           localStorage.setItem('access_token', v.access_token);
           this.router.navigate(['dashboard']);
         },
         error: (e: HttpErrorResponse) => {
-          const error: ApiErrorI = e.error;
+          const error: IApiError = e.error;
           this.toastr.error(error.message, 'ERROR');
         },
       });

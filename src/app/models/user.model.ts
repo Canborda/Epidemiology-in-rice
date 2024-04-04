@@ -1,9 +1,9 @@
-export interface LoginI {
+export interface ILogin {
   email: string;
   password: string;
 }
 
-export interface UserI {
+export interface IUser {
   email: string;
   password?: string;
   name: string;
@@ -11,7 +11,7 @@ export interface UserI {
   role?: number;
 }
 
-export interface AuthI {
+export interface IAuth {
   access_token: string;
   token_type: string;
   expires_in: string;

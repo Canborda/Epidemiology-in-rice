@@ -11,7 +11,7 @@ import { MapAddComponent } from './map-add/map-add.component';
 import { MapsService } from 'src/app/services/maps.service';
 import { LocationService } from 'src/app/services/location.service';
 
-import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
+import { IApiSuccess, IApiError } from 'src/app/models/api.model';
 import { PositionI } from 'src/utils/interfaces';
 import { MapI } from 'src/app/models/map.model';
 import { GeeImageResponseI } from 'src/app/models/gee.model';
@@ -118,12 +118,12 @@ export class MapComponent implements AfterViewInit {
           );
           // Http request
           this.mapsService.createMap(map).subscribe({
-            next: (v: ApiSuccessI<MapI>) => {
+            next: (v: IApiSuccess<MapI>) => {
               this.toastr.success('Lote guardado exitosamente', 'SUCCESS');
               this.drawExistingPolygon(map);
             },
             error: (e: HttpErrorResponse) => {
-              const error: ApiErrorI = e.error;
+              const error: IApiError = e.error;
               this.toastr.error(error.message, 'ERROR');
             },
           });

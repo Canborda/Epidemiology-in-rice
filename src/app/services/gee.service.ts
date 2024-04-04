@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
 
-import { ApiSuccessI } from '../models/api.model';
+import { IApiSuccess } from '../models/api.model';
 import {
   GeeRequestI,
   GeeImageResponseI,
@@ -18,10 +18,10 @@ export class GeeService {
 
   constructor(private http: HttpClient) {}
 
-  getIndexes(): Observable<ApiSuccessI<string[]>> {
+  getIndexes(): Observable<IApiSuccess<string[]>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
-    return this.http.get<ApiSuccessI<string[]>>(
+    return this.http.get<IApiSuccess<string[]>>(
       this.baseUrl + ROUTES.gee.indexes,
       {
         headers,
@@ -29,21 +29,21 @@ export class GeeService {
     );
   }
 
-  getImage(data: GeeRequestI): Observable<ApiSuccessI<GeeImageResponseI>> {
+  getImage(data: GeeRequestI): Observable<IApiSuccess<GeeImageResponseI>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
     const params = data as {};
-    return this.http.get<ApiSuccessI<GeeImageResponseI>>(
+    return this.http.get<IApiSuccess<GeeImageResponseI>>(
       this.baseUrl + ROUTES.gee.images,
       { headers, params }
     );
   }
 
-  getPhenology(data: GeeRequestI): Observable<ApiSuccessI<GeeDataResponseI[]>> {
+  getPhenology(data: GeeRequestI): Observable<IApiSuccess<GeeDataResponseI[]>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
     const params = data as {};
-    return this.http.get<ApiSuccessI<GeeDataResponseI[]>>(
+    return this.http.get<IApiSuccess<GeeDataResponseI[]>>(
       this.baseUrl + ROUTES.gee.phenology,
       { headers, params }
     );

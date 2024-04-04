@@ -11,8 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 import { CropsService } from 'src/app/services/crops.service';
 import { GeeService } from 'src/app/services/gee.service';
 
-import { ApiSuccessI, ApiErrorI } from 'src/app/models/api.model';
-import { UserI } from 'src/app/models/user.model';
+import { IApiSuccess, IApiError } from 'src/app/models/api.model';
+import { IUser } from 'src/app/models/user.model';
 import { MapI } from 'src/app/models/map.model';
 import { GeeImageResponseI, GeeRequestI } from 'src/app/models/gee.model';
 
@@ -27,7 +27,7 @@ export class WrapperComponent implements OnInit {
   @ViewChild(MapComponent) map?: MapComponent;
   @ViewChild(InfoComponent) info?: InfoComponent;
   // Component-level variables
-  currentUser?: UserI;
+  currentUser?: IUser;
   // TODO add currentMap
   // TODO add mapList
   // TODO add cropList
@@ -50,7 +50,7 @@ export class WrapperComponent implements OnInit {
     } else {
       // Get user with token
       this.userService.getUser().subscribe({
-        next: (v: ApiSuccessI<UserI>) => {
+        next: (v: IApiSuccess<IUser>) => {
           this.currentUser = v.data;
           if (this.menu) {
             this.menu.userName = this.currentUser.name;

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ROUTES } from 'src/utils/constants';
 
-import { ApiSuccessI } from '../models/api.model';
+import { IApiSuccess } from '../models/api.model';
 import { IPhenology } from '../models/admin.models';
 
 @Injectable({ providedIn: 'root' })
@@ -14,19 +14,19 @@ export class PhenologiesService {
 
 	constructor(private http: HttpClient) { }
 
-	getAll(): Observable<ApiSuccessI<IPhenology[]>> {
+	getAll(): Observable<IApiSuccess<IPhenology[]>> {
 		const access_token = localStorage.getItem('access_token');
 		const headers = { Authorization: `Bearer ${access_token}` };
-		return this.http.get<ApiSuccessI<IPhenology[]>>(
+		return this.http.get<IApiSuccess<IPhenology[]>>(
 			this.baseUrl + ROUTES.phenologies,
 			{ headers },
 		);
 	}
 
-	updateDays(phenologyId: string, days: number): Observable<ApiSuccessI<IPhenology>> {
+	updateDays(phenologyId: string, days: number): Observable<IApiSuccess<IPhenology>> {
 		const access_token = localStorage.getItem('access_token');
 		const headers = { Authorization: `Bearer ${access_token}` };
-		return this.http.patch<ApiSuccessI<IPhenology>>(
+		return this.http.patch<IApiSuccess<IPhenology>>(
 			this.baseUrl + ROUTES.phenologies + `/${phenologyId}`,
 			{ days },
 			{ headers },
