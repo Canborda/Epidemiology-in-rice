@@ -8,7 +8,7 @@
 	<!-- Content -->
 	<div class="content">
 		<div class="mapbox">
-			<app-map></app-map>
+			<app-map (mapChangedEvent)="onMapChangedEvent($event)"></app-map>
 		</div>
 		<app-info></app-info>
 	</div>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
@@ -23,6 +23,8 @@ export class MapComponent implements AfterViewInit {
 	private currentPolygon?: Leaflet.Polygon;
 	private currentImage?: Leaflet.ImageOverlay;
 	private defaultPosition!: IPosition;
+
+	@Output() mapChangedEvent = new EventEmitter<IMap>();
 
 	constructor(
 		private dialog: MatDialog,
@@ -96,6 +98,7 @@ export class MapComponent implements AfterViewInit {
 		this.currentPolygon.bindPopup(map.name).openPopup();
 		// Update current map
 		this.currentMap = map;
+		this.mapChangedEvent.emit(map);
 	}
 
 	drawNewPolygon(): void {
@@ -121,6 +124,7 @@ export class MapComponent implements AfterViewInit {
 						},
 					});
 					this.currentMap = map;
+					this.mapChangedEvent.emit(map);
 				} else {
 					this.clearCanvas();
 				}
@@ -151,6 +155,7 @@ export class MapComponent implements AfterViewInit {
 
 	clearCanvas(): void {
 		this.currentMap = undefined;
+		this.mapChangedEvent.emit();
 		// Clean previous map
 		this.currentPolygon?.remove();
 		this.currentImage?.remove();

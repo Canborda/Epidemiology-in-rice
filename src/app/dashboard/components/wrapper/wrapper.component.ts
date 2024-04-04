@@ -52,7 +52,7 @@ export class WrapperComponent implements OnInit {
 		}
 	}
 
-	// #region RECEIVED_EVENTS methods
+	// #region RECEIVED MENU EVENTS methods
 
 	onDrawMapEvent(): void {
 		this.map?.clearCanvas();
@@ -89,6 +89,14 @@ export class WrapperComponent implements OnInit {
 	onLogoutEvent(): void {
 		localStorage.clear();
 		this.router.navigate(['']);
+	}
+
+	// #endregion
+
+	// #rergion RECEIVED MAP EVENTS methods
+
+	onMapChangedEvent(map: IMap): void {
+		this.info?.cropInfo.setTable(map);
 	}
 
 	// #endregion
