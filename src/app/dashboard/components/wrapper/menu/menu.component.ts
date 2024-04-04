@@ -11,7 +11,7 @@ import { AdminIndexesComponent } from './admin-indexes/admin-indexes.component';
 import { UserConfigComponent } from './user-config/user-config.component';
 
 import { IMap } from 'src/app/models/map.model';
-import { GeeRequestI } from 'src/app/models/gee.model';
+import { IGeeRequest } from 'src/app/models/gee.model';
 
 @Component({
 	selector: 'app-menu',
@@ -26,7 +26,7 @@ export class MenuComponent implements OnInit {
 
 	@Output() drawMapEvent = new EventEmitter<void>();
 	@Output() selectMapEvent = new EventEmitter<IMap>();
-	@Output() analyzeMapEvent = new EventEmitter<GeeRequestI>();
+	@Output() analyzeMapEvent = new EventEmitter<IGeeRequest>();
 	@Output() logoutEvent = new EventEmitter<void>();
 
 	constructor(private dialog: MatDialog) { }
@@ -60,7 +60,7 @@ export class MenuComponent implements OnInit {
 		this.dialog
 			.open(MapAnalyzeComponent)
 			.afterClosed()
-			.subscribe((imgReq: GeeRequestI) => {
+			.subscribe((imgReq: IGeeRequest) => {
 				if (imgReq) this.analyzeMapEvent.emit(imgReq);
 			});
 	}

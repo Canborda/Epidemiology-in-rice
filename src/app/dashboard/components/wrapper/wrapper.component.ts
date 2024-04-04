@@ -5,13 +5,12 @@ import { ToastrService } from 'ngx-toastr';
 import { MenuComponent } from './menu/menu.component';
 import { MapComponent } from './map/map.component';
 import { InfoComponent } from './info/info.component';
-
 import { UserService } from 'src/app/services/user.service';
+import { GeeService } from 'src/app/services/gee.service';
 
-import { IApiSuccess } from 'src/app/models/api.model';
 import { IUser } from 'src/app/models/user.model';
 import { IMap } from 'src/app/models/map.model';
-import { GeeImageResponseI, GeeRequestI } from 'src/app/models/gee.model';
+import { IGeeRequest } from 'src/app/models/gee.model';
 
 @Component({
 	selector: 'app-wrapper',
@@ -25,15 +24,12 @@ export class WrapperComponent implements OnInit {
 	@ViewChild(InfoComponent) info?: InfoComponent;
 	// Component-level variables
 	currentUser?: IUser;
-	// TODO add currentMap
-	// TODO add mapList
-	// TODO add cropList
-	// TODO add indexList
 
 	constructor(
 		private router: Router,
+		private toastr: ToastrService,
 		private userService: UserService,
-		private toastr: ToastrService
+		private geeService: GeeService,
 	) { }
 
 	ngOnInit(): void {
@@ -45,8 +41,8 @@ export class WrapperComponent implements OnInit {
 		} else {
 			// Get user with token
 			this.userService.getUser().subscribe({
-				next: (v: IApiSuccess<IUser>) => {
-					this.currentUser = v.data;
+				next: s => {
+					this.currentUser = s.data;
 					if (this.menu) {
 						this.menu.userName = this.currentUser.name;
 						this.menu.isAdmin = this.currentUser.role === 1;
@@ -67,9 +63,27 @@ export class WrapperComponent implements OnInit {
 		this.map?.drawExistingPolygon(map);
 	}
 
-	onAnalyzeMapEvent(data: GeeRequestI): void {
-		data.map_id = this.map!.currentMap!._id!;
-		// TODO implement received event
+	onAnalyzeMapEvent(data: IGeeRequest): void {
+		data.mapId = this.map!.currentMap!._id!;
+		this.geeService.getImage(data).subscribe({
+			next: s => {
+				this.map?.overlayImage(s.data);
+				this.toastr.success(`Obtenida imagen capturada en ${s.data.date}`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
+		this.geeService.getValuesByDate(data).subscribe({
+			next: s => {
+				console.log(s.data);
+				// TODO send data to chart
+				this.toastr.success(`Obtenidos los valores de ${s.count} imágenes`);
+			},
+			error: e => {
+				this.toastr.error(e.error.message);
+			},
+		});
 	}
 
 	onLogoutEvent(): void {

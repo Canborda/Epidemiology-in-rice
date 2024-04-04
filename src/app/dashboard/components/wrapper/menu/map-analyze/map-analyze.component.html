@@ -1,25 +1,25 @@
 <h2>Opciones de imagen</h2>
 <mat-dialog-content>
-  <!-- Index -->
-  <mat-form-field class="full-width" appearance="fill">
-    <mat-label>Índice</mat-label>
-    <mat-select [formControl]="index" required>
-      <mat-option *ngFor="let index of indexList" [value]="index">{{index}}</mat-option>
-    </mat-select>
-    <mat-error *ngIf="index.invalid">{{getIndexErrorMessage()}}</mat-error>
-  </mat-form-field>
-  <br>
-  <br>
-  <!-- Cloudy Percentage -->
-  <mat-label>Porcentaje de Nubosidad</mat-label>
-  <mat-slider min="0" max="100" step="5" thumbLabel [displayWith]="formatLabel" [formControl]="cloudyPercentage"
-    required color="primary">
-    <input matSliderThumb value="30">
-  </mat-slider>
-  <mat-error *ngIf="index.invalid">{{getCloudyPercentageErrorMessage()}}</mat-error>
-  <br>
+	<!-- Index -->
+	<mat-form-field appearance="fill">
+		<mat-label>Índice</mat-label>
+		<mat-select [formControl]="index" required>
+			<mat-option *ngFor="let index of indexList" [value]="index">{{index}}</mat-option>
+		</mat-select>
+		<mat-error *ngIf="index.invalid">{{getIndexErrorMessage()}}</mat-error>
+	</mat-form-field>
+	<br>
+	<br>
+	<!-- Cloudy Percentage -->
+	<mat-label>Porcentaje de Nubosidad</mat-label>
+	<mat-slider min="0" max="100" step="5" thumbLabel [displayWith]="formatLabel" [formControl]="cloudyPercentage"
+		required color="primary">
+		<input matSliderThumb value="30">
+	</mat-slider>
+	<mat-error *ngIf="index.invalid">{{getCloudyPercentageErrorMessage()}}</mat-error>
+	<br>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onGenerate()" mat-raised-button color="primary">Generar</button>
-  <button mat-button mat-stroked-button mat-dialog-close color="primary">Cancelar</button>
+	<button mat-button mat-raised-button (click)="onGenerate()" [disabled]="hasErrors()" color="primary">Generar</button>
+	<button mat-button mat-stroked-button mat-dialog-close color="primary">Cancelar</button>
 </mat-dialog-actions>

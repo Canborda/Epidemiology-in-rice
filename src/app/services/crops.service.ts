@@ -7,7 +7,7 @@ import { ROUTES } from 'src/utils/constants';
 
 import { IApiSuccess } from '../models/api.model';
 import { CropI } from '../models/crop.model';
-import { GeeDataResponseI, GeeRequestI } from '../models/gee.model';
+import { IGeeValueByDate, IGeeRequest } from '../models/gee.model';
 
 @Injectable({ providedIn: 'root' })
 export class CropsService {
@@ -24,11 +24,11 @@ export class CropsService {
     );
   }
 
-  getPhenology(data: GeeRequestI): Observable<IApiSuccess<GeeDataResponseI[]>> {
+  getPhenology(data: IGeeRequest): Observable<IApiSuccess<IGeeValueByDate[]>> {
     const access_token = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${access_token}` };
-    const params = { map_id: data.map_id, index: data.index };
-    return this.http.get<IApiSuccess<GeeDataResponseI[]>>(
+    const params = { map_id: data.mapId, index: data.index };
+    return this.http.get<IApiSuccess<IGeeValueByDate[]>>(
       this.baseUrl + ROUTES.crops.phenology,
       { headers, params }
     );

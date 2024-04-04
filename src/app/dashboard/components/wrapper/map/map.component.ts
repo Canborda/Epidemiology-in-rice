@@ -10,7 +10,7 @@ import { MapsService } from 'src/app/services/maps.service';
 import { LocationService } from 'src/app/services/location.service';
 
 import { IMap, IPosition } from 'src/app/models/map.model';
-import { GeeImageResponseI } from 'src/app/models/gee.model';
+import { IGeeImage } from 'src/app/models/gee.model';
 
 @Component({
 	selector: 'app-map',
@@ -131,7 +131,7 @@ export class MapComponent implements AfterViewInit {
 
 	// #region GEE actions
 
-	overlayImage(data: GeeImageResponseI): void {
+	overlayImage(data: IGeeImage): void {
 		// Clean previous map
 		this.currentPolygon?.remove();
 		this.currentImage?.remove();
