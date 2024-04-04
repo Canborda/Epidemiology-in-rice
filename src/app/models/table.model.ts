@@ -1,4 +1,4 @@
-export interface TableRowI {
+export interface ITableRow {
   name: string;
   days: number;
   min?: number;
@@ -6,7 +6,7 @@ export interface TableRowI {
   max?: number;
 }
 
-export interface TableColI {
+export interface ITableCol {
   label: string;
   value: string;
 }

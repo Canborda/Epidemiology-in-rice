@@ -20,4 +20,6 @@ export const ROUTES = {
   },
   varieties: '/api/v1/varieties',
   clusters: '/api/v1/clusters',
+  phenologies: '/api/v1/phenologies',
+  indexes: '/api/v1/indexes',
 };

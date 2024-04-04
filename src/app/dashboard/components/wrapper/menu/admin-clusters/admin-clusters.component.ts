@@ -94,9 +94,9 @@ export class AdminClustersComponent implements OnInit {
 			}).afterClosed()
 			.subscribe((name: string) => {
 				if (name) {
-					cluster.name = name;
 					this.clustersService.updateName(cluster._id!, name).subscribe({
 						next: s => {
+							cluster.name = name;
 							this.toastr.success(`Clúster "${s.data.name}" actualizado`);
 						},
 						error: e => {

@@ -25,6 +25,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { DialogAddComponent } from './components/common/dialog-add/dialog-add.component';
 import { DialogDeleteComponent } from './components/common/dialog-delete/dialog-delete.component';
+import { DialogNumericComponent } from './components/common/dialog-numeric/dialog-numeric.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 
 import { MenuComponent } from './components/wrapper/menu/menu.component';
@@ -37,6 +38,7 @@ import { MapAnalyzeComponent } from './components/wrapper/menu/map-analyze/map-a
 import { StandardsConfigComponent } from './components/wrapper/menu/standards-config/standards-config.component';
 import { AdminVarietiesComponent } from './components/wrapper/menu/admin-varieties/admin-varieties.component';
 import { AdminClustersComponent } from './components/wrapper/menu/admin-clusters/admin-clusters.component';
+import { AdminIndexesComponent } from './components/wrapper/menu/admin-indexes/admin-indexes.component';
 import { UserConfigComponent } from './components/wrapper/menu/user-config/user-config.component';
 import { MapAddComponent } from './components/wrapper/map/map-add/map-add.component';
 import { CropInfoComponent } from './components/wrapper/info/crop-info/crop-info.component';
@@ -49,6 +51,7 @@ import { ChartComponent } from './components/wrapper/info/index-info/chart/chart
   declarations: [
     DialogAddComponent,
     DialogDeleteComponent,
+    DialogNumericComponent,
     WrapperComponent,
     MenuComponent,
     MapComponent,
@@ -59,6 +62,7 @@ import { ChartComponent } from './components/wrapper/info/index-info/chart/chart
     StandardsConfigComponent,
     AdminVarietiesComponent,
     AdminClustersComponent,
+    AdminIndexesComponent,
     UserConfigComponent,
     MapAddComponent,
     CropInfoComponent,

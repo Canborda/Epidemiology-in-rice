@@ -7,6 +7,7 @@ import { MapAnalyzeComponent } from './map-analyze/map-analyze.component';
 import { StandardsConfigComponent } from './standards-config/standards-config.component'; //TODO REMOVE
 import { AdminVarietiesComponent } from './admin-varieties/admin-varieties.component';
 import { AdminClustersComponent } from './admin-clusters/admin-clusters.component';
+import { AdminIndexesComponent } from './admin-indexes/admin-indexes.component';
 import { UserConfigComponent } from './user-config/user-config.component';
 
 import { MapI } from 'src/app/models/map.model';
@@ -79,6 +80,10 @@ export class MenuComponent implements OnInit {
 
   onAdminClusters(): void {
     this.dialog.open(AdminClustersComponent, { panelClass: 'custom-dialog', disableClose: true });
+  }
+
+  onAdminIndexes(): void {
+    this.dialog.open(AdminIndexesComponent, { panelClass: 'custom-dialog', disableClose: true });
   }
 
   // #endregion

@@ -4,7 +4,7 @@ import { VarietyI } from 'src/app/models/variety.model';
 import { ClusterI } from 'src/app/models/cluster.model';
 import { PhenologyI } from 'src/app/models/phenology.model';
 import { IndexI } from 'src/app/models/index.model';
-import { TableColI, TableRowI } from 'src/app/models/table.model';
+import { ITableCol, ITableRow } from 'src/app/models/table.model';
 
 import { INDEXES } from 'src/utils/enums';
 
@@ -18,7 +18,7 @@ export class StandardsConfigComponent implements OnInit {
   // HTML variables
   selectCluster: ClusterI[] = [];
   tabIndex = Object.values(INDEXES);
-  tableHeaders: TableColI[] = [
+  tableHeaders: ITableCol[] = [
     { label: 'Etapa Fenológica', value: 'name' },
     { label: 'Días', value: 'days' },
     { label: 'Límite inferior', value: 'min' },
@@ -187,7 +187,7 @@ export class StandardsConfigComponent implements OnInit {
     console.log('DELETE PHENOLOGY');
   }
 
-  onCellHover(row: TableRowI, col: TableColI): void {
+  onCellHover(row: ITableRow, col: ITableCol): void {
     // Update phenologyId
     console.log(row);
     
@@ -211,7 +211,7 @@ export class StandardsConfigComponent implements OnInit {
     this.selectedIndexId = index?._id;
   }
 
-  onCellClick(row: TableRowI, col: TableColI): void {
+  onCellClick(row: ITableRow, col: ITableCol): void {
     console.log('CELL CLICKED');
     //TODO implement modal to update cell values
   }
@@ -225,7 +225,7 @@ export class StandardsConfigComponent implements OnInit {
 
   // #region AUX methods
 
-  models2table(): TableRowI[] {
+  models2table(): ITableRow[] {
     return this.phenologyList
       .filter(
         (phenology: PhenologyI) =>
@@ -240,7 +240,7 @@ export class StandardsConfigComponent implements OnInit {
             index.phenologyId === phenology._id &&
             index.name === this.selectedIndex
         );
-        const currentRow: TableRowI = {
+        const currentRow: ITableRow = {
           name: phenology.name,
           days: phenology.days,
           min: currentIndex?.min,
